@@ -33,7 +33,7 @@ CREATE TABLE reserva (
   status_reserva BOOLEAN NOT NULL
 )
 
-CREATE TABLE user (
+CREATE TABLE users (
   id SERIAL PRIMARY KEY,
   nome VARCHAR(255) NOT NULL,
   email VARCHAR(255) NOT NULL UNIQUE,
