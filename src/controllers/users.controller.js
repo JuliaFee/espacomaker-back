@@ -35,13 +35,13 @@ export const getUserById = async (req, res) => {
 
 export const createUser = async (req, res) => {
   try {
-    const { name, email, password } = req.body;
+    const { nome, email, senha } = req.body;
     const userAlreadyExists = await usersRepository.getUserByEmail(email);
     if (userAlreadyExists) {
       return res.status(409).send({ message: "Usuário já cadastrado" });
     }
-    const passwordHash = await hash(password, 8);
-    const user = new User(name, email, passwordHash);
+    const senhaHash = await hash(senha, 8);
+    const user = new User(nome, email, turma, senhaHash);
     await usersRepository.createUser(user);
     return res
       .status(201)
@@ -56,7 +56,7 @@ export const createUser = async (req, res) => {
 export const updateUser = async (req, res) => {
   try {
     const { id } = req.params;
-    const { name, email, password } = req.body;
+    const { nome, email, turma, senha } = req.body;
     const userById = await usersRepository.getUserById(id);
     if (!userById) {
       return res.status(404).send({ message: "Usuário não encontrado" });
@@ -65,12 +65,13 @@ export const updateUser = async (req, res) => {
     if (userByEmail && userByEmail.id !== id) {
       return res.status(409).send({ message: "Email já cadastrado" });
     }
-    const passwordHash = await hash(password, 8);
+    const senhaHash = await hash(senha, 8);
     const updatedUser = await usersRepository.updateUser(
       id,
-      name,
+      nome,
       email,
-      passwordHash
+      turma,
+      senhaHash
     );
     return res
       .status(200)
