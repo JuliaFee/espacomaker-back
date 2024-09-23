@@ -1,4 +1,3 @@
-// import { hash } from "bcrypt";
 import Reservas from "../models/reservas/Reservas.js";
 import ReservasRepository from "../models/reservas/ReservasRepository.js";
 
