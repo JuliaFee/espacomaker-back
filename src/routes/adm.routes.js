@@ -1,20 +1,20 @@
-// import { Router } from "express";
+ import { Router } from "express";
 
+ import {
+    getAdms,
+    getAgetAdmById,
+    registerAdm,
+    updateAdm,
+    deleteAdm,
+  } from "../controllers/adm.controller.js";
+  
+  const admRouter = Router();
+  
+  admRouter.get("/", getAdms);
+  admRouter.get("/:id", getAgetAdmById);
+  admRouter.post("/", registerAdm);
+  admRouter.put("/:id", updateAdm);
+  admRouter.delete("/:id", deleteAdm);
+  
+  export default admRouter;
 
-// import {
-//   getStudents,
-//   getStudent,
-//   createStudent,
-//   updateStudent,
-//   deleteStudent,
-// } from "../controllers/students.controller.js";
-
-// const studentsRouter = Router();
-
-// studentsRouter.get("/", getStudents);
-// studentsRouter.get("/:id", getStudent);
-// studentsRouter.post("/", createStudent);
-// studentsRouter.put("/:id", updateStudent);
-// studentsRouter.delete("/:id", deleteStudent);
-
-// export default studentsRouter;

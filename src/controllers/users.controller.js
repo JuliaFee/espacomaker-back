@@ -33,7 +33,7 @@ export const getUserById = async (req, res) => {
   }
 };
 
-export const createUser = async (req, res) => {
+export const addUser = async (req, res) => {
   try {
     const { nome, email, senha } = req.body;
     const userAlreadyExists = await usersRepository.getUserByEmail(email);
@@ -42,7 +42,7 @@ export const createUser = async (req, res) => {
     }
     const senhaHash = await hash(senha, 8);
     const user = new User(nome, email, turma, senhaHash);
-    await usersRepository.createUser(user);
+    await usersRepository.addUser(user);
     return res
       .status(201)
       .send({ message: "Usuário criado com sucesso", user });
