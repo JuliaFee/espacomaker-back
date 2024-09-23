@@ -35,7 +35,7 @@ export const getUserById = async (req, res) => {
 
 export const addUser = async (req, res) => {
   try {
-    const { nome, email, senha } = req.body;
+    const { nome, email, turma, senha } = req.body;
     const userAlreadyExists = await usersRepository.getUserByEmail(email);
     if (userAlreadyExists) {
       return res.status(409).send({ message: "Usuário já cadastrado" });
