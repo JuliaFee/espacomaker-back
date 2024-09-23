@@ -42,7 +42,7 @@ export default class UsersRepository{
          }
        }
     
-       async createUser(user) {
+       async addUser(user) {
          try {
            await this.db.none(
              "INSERT INTO users (id, nome, email, turma, senha) VALUES ($1, $2, $3, $4, $5)",
