@@ -3,7 +3,7 @@ import { Router } from "express";
 import {
     getFerramentas,
     getFerramentaById,
-    addFerramenta,
+    registerFerramenta,
     updateFerramenta,
     deleteFerramenta
  } from "../controllers/ferramentas.controller.js";
@@ -12,7 +12,7 @@ import {
  
  ferramentaRouter.get("/", getFerramentas);
  ferramentaRouter.get("/:id", getFerramentaById);
- ferramentaRouter.post("/", addFerramenta);
+ ferramentaRouter.post("/", registerFerramenta);
  ferramentaRouter.put("/:id", updateFerramenta);
  ferramentaRouter.delete("/:id", deleteFerramenta);
  
