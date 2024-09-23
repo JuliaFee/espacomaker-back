@@ -32,7 +32,7 @@ CREATE TABLE users (
   email VARCHAR(255) NOT NULL UNIQUE,
   turma VARCHAR(255) NOT NULL,
   senha VARCHAR(255) NOT NULL
-);
+)
 
 /*tabela reserva*/
 CREATE TABLE reserva (
@@ -70,3 +70,21 @@ INSERT INTO ferramentas (nome, descricao, img, status) VALUES ('Cola de Madeira'
 INSERT INTO ferramentas (nome, descricao, img, status) VALUES ('Cola Quente-1', 'Cola em bastão que derrete em pistolas de cola quente, ideal para fixações rápidas e temporárias.', 'https://i.imgur.com/wXTYXGo.jpg', true);
 INSERT INTO ferramentas (nome, descricao, img, status) VALUES ('Cola Quente-2', 'Cola em bastão que derrete em pistolas de cola quente, ideal para fixações rápidas e temporárias.', 'https://i.imgur.com/ph5eASu.jpg', true);
 INSERT INTO ferramentas (nome, descricao, img, status) VALUES ('Cola Quente-3', 'Cola em bastão que derrete em pistolas de cola quente, ideal para fixações rápidas e temporárias.', 'https://i.imgur.com/ZI1tooI.jpg', true);
+INSERT INTO ferramentas (nome, descricao, img, status) VALUES ('Espátula', 'Ferramenta de mão usada para espalhar ou remover materiais, como massas e tintas.', 'https://i.imgur.com/tg85XRG.jpg', true);
+INSERT INTO ferramentas (nome, descricao, img, status) VALUES ('Espátula-2', 'Ferramenta de mão usada para espalhar ou remover materiais, como massas e tintas.', 'https://i.imgur.com/KfI70RB.jpg', true);
+INSERT INTO ferramentas (nome, descricao, img, status) VALUES ('Espátula-3', 'Ferramenta de mão usada para espalhar ou remover materiais, como massas e tintas.', 'https://i.imgur.com/N0fgYzo.jpg', true);
+INSERT INTO ferramentas (nome, descricao, img, status) VALUES ('Fita Métrica 5m Starrett', 'Instrumento de medição portátil util para edições precisas em diversas aplicações.', 'https://i.imgur.com/CZlXvQZ.jpg', true);
+INSERT INTO ferramentas (nome, descricao, img, status) VALUES ('Fita Métrica 5m Starrett-2', 'Instrumento de medição portátil util para edições precisas em diversas aplicações.', 'https://i.imgur.com/01Cv6TQ.jpg', true);
+INSERT INTO ferramentas (nome, descricao, img, status) VALUES ('Fita PVC cor Chumbo', 'Fita desiva de PVC, resistente a umidade e ideal para isolamento elétrico.', 'https://i.imgur.com/R3pgmSt.jpg', true);
+INSERT INTO ferramentas (nome, descricao, img, status) VALUES ('Fuadeira/Parafusadeira', 'Ferraenta elétrica que combina funções de perfuração e parafusamento, versátil para diversos projetos.', 'https://i.imgur.com/BdV3CRQ.jpg', true);
+INSERT INTO ferramentas (nome, descricao, img, status) VALUES ('Fuadeira/Parafusadeira-2', 'Ferraenta elétrica que combina funções de perfuração e parafusamento, versátil para diversos projetos.', 'https://i.imgur.com/npP4HFt.jpg', true);
+INSERT INTO ferramentas (nome, descricao, img, status) VALUES ('Gedore 1/4X4 6X100', 'Conjunto de chaves soquete, de alta qualidade usadas em montagem e manutenção de máquinas.', 'https://i.imgur.com/5k1r1i5.jpg', true);
+INSERT INTO ferramentas (nome, descricao, img, status) VALUES ('Gedore 1/4X4 6X100-2', 'Conjunto de chaves soquete, de alta qualidade usadas em montagem e manutenção de máquinas.', 'https://i.imgur.com/25H2hMp.jpg', true);
+INSERT INTO ferramentas (nome, descricao, img, status) VALUES ('Gedore 1/8X4 3X100', 'Outro conjunto de chaves soquete com medidas específicas para acessibilidade em espações reduzidos.', 'https://i.imgur.com/huZ5xwh.jpg', true);
+INSERT INTO ferramentas (nome, descricao, img, status) VALUES ('Gedore 1/8X4 3X100-2', 'Outro conjunto de chaves soquete com medidas específicas para acessibilidade em espações reduzidos.', 'https://i.imgur.com/ee9UeUL.jpg', true);
+INSERT INTO ferramentas (nome, descricao, img, status) VALUES ('Gedore 1/8X6 3X150', 'Chaves soquetes de diferentes tamanhos, apropriadas para tarefas em áreas mais apertadas.', 'https://i.imgur.com/e32CLgX.jpg', true);
+INSERT INTO ferramentas (nome, descricao, img, status) VALUES ('Gedore 1/8X6 3X150-2', 'Chaves soquetes de diferentes tamanhos, apropriadas para tarefas em áreas mais apertadas.', 'https://i.imgur.com/5Zy4lOg.jpg', true);
+INSERT INTO ferramentas (nome, descricao, img, status) VALUES ('Gedore 1/8X6 3X150-3', 'Chaves soquetes de diferentes tamanhos, apropriadas para tarefas em áreas mais apertadas.', 'https://i.imgur.com/SQlyeu7.jpg', true);
+INSERT INTO ferramentas (nome, descricao, img, status) VALUES ('Gedore 1/8X6 3X150-4', 'Chaves soquetes de diferentes tamanhos, apropriadas para tarefas em áreas mais apertadas.', 'https://i.imgur.com/wLaNsn4.jpg', true);
+INSERT INTO ferramentas (nome, descricao, img, status) VALUES ('Gedore 3/14X4 4X100', 'Conjunto que fornece versatilidade em manutenção e reparos mecânicos.', 'https://i.imgur.com/2vF49vf.jpg', true);
+INSERT INTO ferramentas (nome, descricao, img, status) VALUES ('Gedore 3/16X4 4X100', 'Ferramenta projetada para proporcionar um encaixe seguro e eficaz em porcas e parafusos.', 'https://i.imgur.com/2vF49vf.jpg', true);
