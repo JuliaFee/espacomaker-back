@@ -1,3 +1,4 @@
+/*tabela adm*/
 CREATE TABLE adm (
   id SERIAL PRIMARY KEY,
   nome VARCHAR(100) NOT NULL,
@@ -5,40 +6,47 @@ CREATE TABLE adm (
   senha VARCHAR(50) NOT NULL
 );
 
+/*tabela ferramentas*/
 CREATE TABLE ferramentas (
   id SERIAL PRIMARY KEY,
   nome VARCHAR(100) NOT NULL,
   descricao VARCHAR(255) NOT NULL,
-  img VARCHAR(255) NOT NULL,
-  status BOOLEAN NOT NULL
-)
+  img VARCHAR(255),
+  status BOOLEAN NOT NULL 
+);
 
+/*tabela impressora*/
 CREATE TABLE impressora (
   id SERIAL PRIMARY KEY,
   nome VARCHAR(100) NOT NULL,
   descricao VARCHAR(255) NOT NULL,
-  img VARCHAR(255) NOT NULL,
-  status BOOLEAN NOT NULL, 
-  valor FLOAT NOT NULL
-)
+  img VARCHAR(255),
+  status BOOLEAN NOT NULL,
+  valor FLOAT NOT NULL 
+);
 
-CREATE TABLE reserva (
-  id SERIAL PRIMARY KEY,
-  id_user VARCHAR(36) NOT NULL,
-  id_item VARCHAR(36) NOT NULL,
-  tipo_item VARCHAR(36) NOT NULL,
-  data_reserva DATE NOT NULL,
-  hora_inicio TIME NOT NULL,
-  hora_fim TIME NOT NULL,
-  status_reserva BOOLEAN NOT NULL
-)
-
+/*tabela usuario*/
 CREATE TABLE users (
   id SERIAL PRIMARY KEY,
   nome VARCHAR(255) NOT NULL,
   email VARCHAR(255) NOT NULL UNIQUE,
   turma VARCHAR(255) NOT NULL,
   senha VARCHAR(255) NOT NULL
+);
+
+/*tabela reserva*/
+CREATE TABLE reserva (
+  id SERIAL PRIMARY KEY,
+  id_user INT NOT NULL,
+  id_ferramenta INT, 
+  id_impressora INT, 
+  data_reserva DATE NOT NULL,
+  hora_inicio TIME NOT NULL,
+  hora_fim TIME NOT NULL,
+  status_reserva BOOLEAN NOT NULL,
+  FOREIGN KEY (id_user) REFERENCES users (id),
+  FOREIGN KEY (id_ferramenta) REFERENCES ferramentas (id),
+  FOREIGN KEY (id_impressora) REFERENCES impressora (id)
 );
 
 INSERT INTO ferramentas (nome, descricao, img, status) VALUES ('Alicate 6', 'Alicate de pequeno porte, ideal para cortes e apertos em trabalhos manuais ou elétricos.', 'https://i.imgur.com/IZTi37d.jpg', true);
