@@ -1,74 +1,89 @@
-import db from "../../db/index.js";
+import FerramentaList from "../models/ferramentas/FerramentasRepository.js"; 
+const ferramentaRepository = new FerramentaList();
 
-class FerramentaList {
-  constructor() {
-    this.db = db;
-  }
-
-  async getFerramentas() {
+export const getFerramentas = async (req, res) => {
     try {
-      const allFerramentas = await this.db.manyOrNone("SELECT * FROM ferramentas");
-      return allFerramentas;
+        const ferramentas = await ferramentaRepository.getFerramentas();
+        if (!ferramentas || ferramentas.length === 0) {
+            return res.status(404).send({ message: "Não há ferramentas" });
+        }
+        return res.status(200).send({ totalFerramentas: ferramentas.length, ferramentas });
     } catch (error) {
-      console.error("Failed to get ferramentas:", error);
-      throw error; 
+        return res
+            .status(500)
+            .send({ message: "Erro ao buscar ferramentas", error: error.message });
     }
-  }
-
-  async getFerramentaById(id) {
-    try {
-      const ferramenta = await this.db.oneOrNone(
-        "SELECT * FROM ferramentas WHERE id = $1",
-        id
-      );
-      return ferramenta;
-    } catch (error) {
-      console.error(`Failed to get ferramenta by id ${id}:`, error);
-      throw error;
-    }
-  }
-
-  async registerFerramenta(ferramenta) {
-    try {
-      await this.db.none(
-        "INSERT INTO ferramentas (nome, descricao, img, status) VALUES ($1, $2, $3, $4)",
-        [ferramenta.nome, ferramenta.descricao, ferramenta.img, ferramenta.status]
-      );
-      return ferramenta;
-    } catch (error) {
-      console.error("Failed to register ferramenta:", error);
-      throw error; 
-    }
-  }
-
-  async updateFerramenta(id, nome, descricao, img, status) {
-    try {
-      const ferramenta = await this.getFerramentaById(id);
-
-      if (!ferramenta) {
-        return null;
-      }
-
-      const updatedFerramenta = await this.db.one(
-        "UPDATE ferramentas SET nome = $1, descricao = $2, img = $3, status = $4 WHERE id = $5 RETURNING *",
-        [nome, descricao, img, status, id]
-      );
-
-      return updatedFerramenta;
-    } catch (error) {
-      console.error(`Failed to update ferramenta ${id}:`, error);
-      throw error; 
-    }
-  }
-
-  async deleteFerramenta(id) {
-    try {
-      await this.db.none("DELETE FROM ferramentas WHERE id = $1", id);
-    } catch (error) {
-      console.error(`Failed to delete ferramenta ${id}:`, error);
-      throw error; 
-    }
-  }
 }
 
-export default FerramentaList;
+export const getFerramentaById = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const ferramenta = await ferramentaRepository.getFerramentaById(id);
+        if (!ferramenta) {
+            return res.status(404).send({ message: "Ferramenta não encontrada" });
+        }
+        return res.status(200).send({ message: "Ferramenta encontrada", ferramenta });
+    } catch (error) {
+        return res
+            .status(500)
+            .send({ message: "Erro ao buscar ferramenta", error: error.message });
+    }
+}
+
+export const addFerramenta = async (req, res) => {
+    try {
+        const { nome, descricao, img, status } = req.body;
+        const newFerramenta = { nome, descricao, img, status };
+        const ferramenta = await ferramentaRepository.registerFerramenta(newFerramenta);
+        return res
+            .status(201)
+            .send({ message: "Ferramenta criada com sucesso", ferramenta });
+    
+    } catch (error) {
+        return res
+            .status(500)
+            .send({ message: "Erro ao criar ferramenta", error: error.message });
+    }
+}
+
+export const updateFerramenta = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const { nome, descricao, img, status } = req.body;
+        const ferramentaById = await ferramentaRepository.getFerramentaById(id);
+        if (!ferramentaById) {
+            return res.status(404).send({ message: "Ferramenta não encontrada" });
+        }
+
+        const updatedFerramenta = await ferramentaRepository.updateFerramenta(
+            id,
+            nome, 
+            descricao, 
+            img, 
+            status
+        );
+        return res
+            .status(200)
+            .send({ message: "Ferramenta atualizada com sucesso", updatedFerramenta });
+    } catch (error) {
+        return res
+            .status(500)
+            .send({ message: "Erro ao atualizar ferramenta", error: error.message });
+    }
+}
+
+export const deleteFerramenta = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const ferramenta = await ferramentaRepository.getFerramentaById(id);
+        if (!ferramenta) {
+            return res.status(404).send({ message: "Ferramenta não encontrada" });
+        }
+        await ferramentaRepository.deleteFerramenta(id);
+        return res.status(200).send({ message: "Ferramenta deletada com sucesso" });
+    } catch (error) {
+        return res
+            .status(500)
+            .send({ message: "Erro ao deletar ferramenta", error: error.message });
+    }
+}

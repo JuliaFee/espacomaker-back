@@ -1,4 +1,4 @@
-import db from "../../db/index.js";
+import db from "../../database/index.js";
 
 class FerramentaList {
   constructor() {

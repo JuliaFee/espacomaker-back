@@ -1,5 +1,5 @@
 import Impressora from "../models/impressora/Impressora.js";
-import ImpressoraList from "../models/impressora/ImpressoraList.js";
+import ImpressoraList from "../models/impressora/Impressora.js";
 
 const impressoraRepository = new ImpressoraList();
 

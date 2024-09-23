@@ -1,5 +1,4 @@
-import AdmList from "../models/adm/AdmList.js";
-
+import AdmList from "../models/adm/AdmRepository.js";
 const admRepository = new AdmList();
 
 export const getAdm = async (req, res) => {
