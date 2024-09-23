@@ -156,3 +156,10 @@ INSERT INTO ferramentas (nome, descricao, img, statusF) VALUES ('Pica Fio', 'Fer
 INSERT INTO ferramentas (nome, descricao, img, statusF) VALUES ('Serra', 'Ferramenta cortante utilizada em diversos materiais, com madeira e metal.', 'https://i.imgur.com/DNdlDmL.jpg', true);
 
 INSERT INTO ferramentas (nome, descricao, img, statusF) VALUES ('Stanley Esquadro Combinado', 'Ferramenta de medição e marcação que combina esquadro e uma régua, essencial para carpintaria.', 'https://i.imgur.com/KK0nj0u.jpg', true);
+
+
+
+
+
+
+
