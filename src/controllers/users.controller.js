@@ -1,6 +1,6 @@
 import { hash } from "bcrypt";
 import User from "../models/users/User.js";
-import UsersRepository from "../models/users/UsersRepository.js";
+import UsersRepository from "../models/user/UsersRepository.js";
 
 const usersRepository = new UsersRepository();
 
