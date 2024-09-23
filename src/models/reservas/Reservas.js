@@ -1,5 +1,5 @@
 
-export class Reservas {
+export default class Reservas {
     constructor(id, id_user, id_ferramenta, id_impressora, data_reserva, hora_inicio, hora_fim, status_reserva) {
         this.id = id;
         this.id_user = id_user;

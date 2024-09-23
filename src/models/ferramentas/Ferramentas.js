@@ -1,5 +1,5 @@
 
-export class Ferramentas {
+export default class Ferramentas {
     constructor(id, nome, descricao, img, status) {
         this.id = id;
         this.nome = nome;

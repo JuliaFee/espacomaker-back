@@ -1,5 +1,5 @@
 
-export class Impressora {
+export default class Impressora {
     constructor(id, nome, descricao, img, status, valor) {
         this.id = id;
         this.nome = nome;
