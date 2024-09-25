@@ -34,8 +34,8 @@ export const getImpressoraById = async (req, res) => {
 
 export const addImpressora = async (req, res) => {
     try {
-        const { nome, descricao, img, status, valor } = req.body;
-        const newImpressora = new Impressora(null, nome, descricao, img, status, valor);
+        const { nome, descricao, img, statusI, valor } = req.body;
+        const newImpressora = new Impressora( nome, descricao, img, statusI, valor);
         const impressora = await impressoraRepository.addImpressora(newImpressora);
         return res
             .status(201)
@@ -52,7 +52,7 @@ export const addImpressora = async (req, res) => {
 export const updateImpressora = async (req, res) => {
     try {
         const { id } = req.params;
-        const { nome, descricao, img, status, valor } = req.body;
+        const { nome, descricao, img, statusI, valor } = req.body;
         const impressoraById = await impressoraRepository.getImpressoraById(id);
         if (!impressoraById) {
             return res.status(404).send({ message: "Impressora não encontrada" });
@@ -63,7 +63,7 @@ export const updateImpressora = async (req, res) => {
             nome, 
             descricao, 
             img, 
-            status, 
+            statusI, 
             valor);
         return res
             .status(200)
