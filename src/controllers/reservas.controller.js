@@ -1,5 +1,5 @@
 import Reservas from "../models/reservas/Reservas.js";
-import ReservasRepository from "../models/reservas/ReservasRepository.js";
+import ReservasRepository from "../models/reservas/ReservasList.js";
 
 const reservasRepository = new ReservasRepository();
 

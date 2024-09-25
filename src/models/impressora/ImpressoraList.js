@@ -1,4 +1,4 @@
-import db from "../../db/index.js";
+import db from "../../database/index.js";
 
 class ImpressoraList {
   constructor() {
@@ -28,10 +28,10 @@ class ImpressoraList {
     }
   }
 
-  async registerImpressora(impressora) {
+  async addImpressora(impressora) {
     try {
       await this.db.none(
-        "INSERT INTO impressora (nome, descricao, img, status, valor) VALUES ($1, $2, $3, $4, $5)",
+        "INSERT INTO impressora (nome, descricao, img, statusI, valor) VALUES ($1, $2, $3, $4, $5)",
         [impressora.nome, impressora.descricao, impressora.img, impressora.status, impressora.valor]
       );
       return impressora;
@@ -50,7 +50,7 @@ class ImpressoraList {
       }
 
       const updatedImpressora = await this.db.one(
-        "UPDATE impressora SET nome = $1, descricao = $2, img = $3, status = $4, valor = $5 WHERE id = $6 RETURNING *",
+        "UPDATE impressora SET nome = $1, descricao = $2, img = $3, statusI = $4, valor = $5 WHERE id = $6 RETURNING *",
         [nome, descricao, img, status, valor, id]
       );
 

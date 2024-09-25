@@ -1,4 +1,4 @@
-import FerramentaList from "../models/ferramentas/FerramentasRepository.js"; 
+import FerramentaList from "../models/ferramentas/FerramentasList.js"; 
 const ferramentaRepository = new FerramentaList();
 
 export const getFerramentas = async (req, res) => {

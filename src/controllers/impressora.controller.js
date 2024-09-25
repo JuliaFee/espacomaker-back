@@ -1,5 +1,5 @@
 import Impressora from "../models/impressora/Impressora.js";
-import ImpressoraList from "../models/impressora/Impressora.js";
+import ImpressoraList from "../models/impressora/ImpressoraList.js";
 
 const impressoraRepository = new ImpressoraList();
 
@@ -36,7 +36,7 @@ export const addImpressora = async (req, res) => {
     try {
         const { nome, descricao, img, status, valor } = req.body;
         const newImpressora = new Impressora(null, nome, descricao, img, status, valor);
-        const impressora = await impressoraRepository.registerImpressora(newImpressora);
+        const impressora = await impressoraRepository.addImpressora(newImpressora);
         return res
             .status(201)
             .send({ message: "Impressora criada com sucesso", impressora });
