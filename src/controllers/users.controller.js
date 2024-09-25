@@ -1,12 +1,12 @@
 import User from "../models/user/Users.js";
-import UsersRepository from "../models/user/UsersRepository.js";
+import UserList from "../models/user/UsersList.js";
 
-const usersRepository = new UsersRepository();
+const UserList_A = new UserList();
 
 // Função para listar todos os usuários (GET)
 export const getUsers = async (req, res) => {
   try {
-    const users = await usersRepository.getUsers();
+    const users = await UserList_A.getUsers();
     if (!users || users.length === 0) {
       return res.status(404).send({ message: "Não há usuários cadastrados" });
     }
@@ -20,7 +20,7 @@ export const getUsers = async (req, res) => {
 export const getUserById = async (req, res) => {
   try {
     const { id } = req.params;
-    const user = await usersRepository.getUserById(id);
+    const user = await UserList_A.getUserById(id);
     if (!user) {
       return res.status(404).send({ message: "Usuário não encontrado" });
     }
@@ -34,7 +34,7 @@ export const getUserById = async (req, res) => {
 export const getUserByEmail = async (req, res) => {
   try {
     const { email } = req.params;
-    const user = await usersRepository.getUserByEmail(email);
+    const user = await UserList_A.getUserByEmail(email);
     if (!user) {
       return res.status(404).send({ message: "Usuário não encontrado" });
     }
@@ -49,15 +49,13 @@ export const addUser = async (req, res) => {
   try {
     const { nome, email, turma, senha } = req.body;
 
-    // Verifica se o usuário já existe pelo email
-    const userAlreadyExists = await usersRepository.getUserByEmail(email);
+    const userAlreadyExists = await UserList_A.getUserByEmail(email);
     if (userAlreadyExists) {
       return res.status(409).send({ message: "Usuário já cadastrado" });
     }
 
-    // Cria um novo usuário
     const user = new User(nome, email, turma, senha);
-    await usersRepository.addUser(user);
+    await UserList_A.addUser(user);
 
     return res.status(201).send({ message: "Usuário criado com sucesso", user });
   } catch (error) {
@@ -72,19 +70,13 @@ export const updateUser = async (req, res) => {
     const { nome, email, turma, senha } = req.body;
 
     // Verifica se o usuário existe
-    const userById = await usersRepository.getUserById(id);
+    const userById = await UserList_A.getUserById(id);
     if (!userById) {
       return res.status(404).send({ message: "Usuário não encontrado" });
     }
 
-    // Verifica se o email já está sendo usado por outro usuário
-    const userByEmail = await usersRepository.getUserByEmail(email);
-    if (userByEmail && userByEmail.id !== id) {
-      return res.status(409).send({ message: "Email já cadastrado" });
-    }
-
     // Atualiza os dados do usuário
-    const updatedUser = await usersRepository.updateUser(
+    const updatedUser = await UserList_A.updateUser(
       id,
       nome,
       email,
@@ -104,13 +96,13 @@ export const deleteUser = async (req, res) => {
     const { id } = req.params;
 
     // Verifica se o usuário existe
-    const user = await usersRepository.getUserById(id);
+    const user = await UserList_A.getUserById(id);
     if (!user) {
       return res.status(404).send({ message: "Usuário não encontrado" });
     }
 
     // Deleta o usuário
-    await usersRepository.deleteUser(id);
+    await UserList_A.deleteUser(id);
 
     return res.status(200).send({ message: "Usuário deletado com sucesso" });
   } catch (error) {

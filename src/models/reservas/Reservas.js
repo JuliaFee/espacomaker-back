@@ -1,7 +1,6 @@
 
 export default class Reservas {
-    constructor(id, id_user, id_ferramenta, id_impressora, data_reserva, hora_inicio, hora_fim, status_reserva) {
-        this.id = id;
+    constructor( id_user, id_ferramenta, id_impressora, data_reserva, hora_inicio, hora_fim, status_reserva) {
         this.id_user = id_user;
         this.id_ferramenta = id_ferramenta;
         this.id_impressora = id_impressora;

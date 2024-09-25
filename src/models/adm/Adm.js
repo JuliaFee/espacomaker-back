@@ -1,7 +1,6 @@
 
 export default class Adm {
-    constructor(id, nome, email, senha) {
-        this.id = id;
+    constructor( nome, email, senha) {
         this.nome = nome;
         this.email = email;
         this.senha = senha;

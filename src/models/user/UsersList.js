@@ -1,6 +1,6 @@
 import db from "../../database/index.js";
 
-export default class UsersRepository {
+export default class UserList {
   constructor() {
     this.db = db;
   }
@@ -11,7 +11,7 @@ export default class UsersRepository {
       const allUsers = await this.db.manyOrNone("SELECT * FROM users");
       return allUsers;
     } catch (error) {
-      console.error("Falha ao obter usuários", error);
+      console.error("Falha ao obter usuários:", error.message);
       throw error;
     }
   }
@@ -22,7 +22,7 @@ export default class UsersRepository {
       const user = await this.db.oneOrNone("SELECT * FROM users WHERE id = $1", [id]);
       return user;
     } catch (error) {
-      console.error(`Falha ao obter usuário por ID ${id}:`, error);
+      console.error(`Falha ao obter usuário por ID ${id}:`, error.message);
       throw error;
     }
   }
@@ -33,25 +33,30 @@ export default class UsersRepository {
       const user = await this.db.oneOrNone("SELECT * FROM users WHERE email = $1", [email]);
       return user;
     } catch (error) {
-      console.error(`Falha ao obter usuário por email ${email}:`, error);
+      console.error(`Falha ao obter usuário por email ${email}:`, error.message);
       throw error;
     }
   }
 
-  // Método para adicionar um novo usuário
-  async addUser(user) {
+  
+  async addUser (user){
     try {
-      // Verifique a ordem correta dos parâmetros
       await this.db.none(
         "INSERT INTO users (nome, email, turma, senha) VALUES ($1, $2, $3, $4)",
-        [user.nome, user.email, user.turma, user.senha]
+        [ user.nome, user.email, user.turma, user.senha]
+    
       );
+      console.log(user);
       return user;
-    } catch (error) {
-      console.error("Falha ao criar usuário", error);
+    }
+    catch (error){
+      console.error("falha ao adicionar usuario", error);
       throw error;
+      
     }
   }
+
+
 
   // Método para atualizar um usuário existente
   async updateUser(id, nome, email, turma, senha) {
@@ -59,6 +64,7 @@ export default class UsersRepository {
       const user = await this.getUserById(id);
 
       if (!user) {
+        console.error(`Usuário com ID ${id} não encontrado.`);
         return null;
       }
 
@@ -69,7 +75,7 @@ export default class UsersRepository {
 
       return updatedUser;
     } catch (error) {
-      console.error(`Falha ao atualizar usuário ${id}:`, error);
+      console.error(`Falha ao atualizar usuário com ID ${id}:`, error.message);
       throw error;
     }
   }
@@ -77,9 +83,17 @@ export default class UsersRepository {
   // Método para deletar um usuário
   async deleteUser(id) {
     try {
+      const user = await this.getUserById(id);
+
+      if (!user) {
+        console.error(`Usuário com ID ${id} não encontrado.`);
+        return null;
+      }
+
       await this.db.none("DELETE FROM users WHERE id = $1", [id]);
+      return { message: `Usuário com ID ${id} foi deletado com sucesso.` };
     } catch (error) {
-      console.error(`Falha ao deletar usuário ${id}:`, error);
+      console.error(`Falha ao deletar usuário com ID ${id}:`, error.message);
       throw error;
     }
   }
