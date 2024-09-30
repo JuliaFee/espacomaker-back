@@ -125,12 +125,6 @@ INSERT INTO ferramentas (nome, descricao, img, statusF) VALUES ('Grampo Sargento
 
 INSERT INTO ferramentas (nome, descricao, img, statusF) VALUES ('Gravador Cortador Laser', 'Máquina que utiliza laser para cortar e gravar materiais com alta precisão.', 'https://i.imgur.com/zPsBlXe.jpg', true);
 
-INSERT INTO ferramentas (nome, descricao, img, statusF) VALUES ('3D Print Quick Ender-3 V2', 'Impressora 3D de fácil uso, ideal para modelagem e prototipagem rápida.', 'https://i.imgur.com/QWRDQrD.jpg', true);
-
-INSERT INTO ferramentas (nome, descricao, img, statusF) VALUES ('Shenzhen Creality 3D', 'Conhecida por suas impressoras 3D de qualidade e acessíveis.', 'https://i.imgur.com/3F0yg1q.jpg', true);
-
-INSERT INTO ferramentas (nome, descricao, img, statusF) VALUES ('3D Printer Use Manual', 'Impressora 3D com uma ótima qualidade de modelagem e prototipagem.', 'https://i.imgur.com/5LYLhTW.jpg', true);
-
 INSERT INTO ferramentas (nome, descricao, img, statusF) VALUES ('Jogo de Chave Hexagonal', 'Conjunto de chaves com pontas hexagonais, utilizadas para apertar ou afrouxar parafusos com cabeças hexagonais.', 'https://i.imgur.com/bDRDUT6.jpg', true);
 
 INSERT INTO ferramentas (nome, descricao, img, statusF) VALUES ('Jogo de Chave Hexagonal Milimétricas', 'Conjunto de chaves hexagoais em meididas milimétricas, ideal para aplicação técnicas.', 'https://i.imgur.com/nXMKtTd.jpg', true);
@@ -164,3 +158,8 @@ INSERT INTO ferramentas (nome, descricao, img, statusF) VALUES ('Stanley Esquadr
 
 
 
+INSERT INTO impressora (nome, descricao, img, statusI, valor) VALUES ('3D Print Quick Ender-3 V2', 'Impressora 3D de fácil uso, ideal para modelagem e prototipagem rápida.', 'https://i.imgur.com/QWRDQrD.jpg', true, 0);
+
+INSERT INTO impressora (nome, descricao, img, statusI, valor) VALUES ('Shenzhen Creality 3D', 'Conhecida por suas impressoras 3D de qualidade e acessíveis.', 'https://i.imgur.com/3F0yg1q.jpg', true, 0);
+
+INSERT INTO impressora (nome, descricao, img, statusI, valor) VALUES ('3D Printer Use Manual', 'Impressora 3D com uma ótima qualidade de modelagem e prototipagem.', 'https://i.imgur.com/5LYLhTW.jpg', true, 0);
