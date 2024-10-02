@@ -105,15 +105,9 @@ Desenvolvido por
 
   ## Integrantes
 <h4> Nos contate! </h4>
-<br>
+
     - Amanda dos Santos Silva - amandasilva@aluno.senai.br
-    <br>
     - Isadora Ribeiro Mendes - isadoramendes@aluno.senai.br
-    <br>
     - Júlia Ferreira da Silva - julia.silva133@aluno.senai.br
-    <br>
     - Letícia Cardoso Bizaglio - leticia.bizaglio@aluno.senai.br
-    <br>
     - Maria Eduarda Valonga - maria.valonga@aluno.senai.br
-    <br>
-<br>
