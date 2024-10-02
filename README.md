@@ -1,240 +1,119 @@
-# Projeto Inicial NodeJS
+# ESPAÇO MAKER - BACKEND
+
+![ESPAÇO MAKER](https://www.google.com/url?sa=i&url=https%3A%2F%2Fplataforma.gpinovacao.senai.br%2Fplataforma%2Fdesafio%2F1165&psig=AOvVaw1c4WP6tmJdAO_VAkaQUraL&ust=1727954035512000&source=images&cd=vfe&opi=89978449&ved=0CBQQjRxqFwoTCOiwrsbI74gDFQAAAAAdAAAAABAE)
 
 ## Descrição
+O **EspacoMaker-Back** é um sistema back-end desenvolvido em Node.js que oferece suporte ao gerenciamento de um espaço maker. Ele fornece funcionalidades para controle de ferramentas, impressoras, reservas, gerenciamento de usuários e um sistema de administração. O sistema visa facilitar o uso e a organização de recursos dentro de um ambiente colaborativo, permitindo a reserva de equipamentos e a supervisão das atividades por administradores.
 
-Ponto de partida para desenvolvimento em NodeJS, integrando Express, Nodemon e dotenv para otimizar a produtividade e permitir que desenvolvedores foquem na lógica do aplicativo.
+## Funcionalidades Principais
+- **Gerenciamento de Ferramentas**: Controle de ferramentas disponíveis no espaço maker, incluindo adição, remoção e atualização de dados.
+- **Gerenciamento de Impressoras**: Suporte para adicionar, remover e gerenciar impressoras disponíveis para uso.
+- **Sistema de Reservas**: Permite que os usuários reservem equipamentos, visualizem e cancelem reservas.
+- **Gerenciamento de Usuários**: Registro e controle de usuários, permitindo a atualização de dados e a exclusão de contas.
+- **Administração**: Controle exclusivo para administradores, possibilitando a gestão dos recursos e usuários do sistema.
 
-## Objetivo
+## Estrutura do Projeto
 
-Encorajar boas práticas e fornecer uma base que promova a escalabilidade e manutenção, inspirando a criação de funcionalidades inovadoras e soluções para desafios complexos no ecossistema NodeJS.
+A estrutura do projeto é organizada da seguinte forma:
 
-## Tecnologias
+### **Controllers**
+Os controladores são responsáveis pela lógica de negócios do sistema, manipulando as requisições e interações com o banco de dados:
+- `adm.controller.js`: Controlador das funções administrativas.
+- `ferramentas.controller.js`: Manipula o gerenciamento das ferramentas.
+- `impressora.controller.js`: Controla as operações relacionadas às impressoras.
+- `reservas.controller.js`: Lida com as reservas de equipamentos.
+- `users.controller.js`: Responsável pelo controle de usuários.
 
-- NodeJS
-- PostgreSQL
-- NPM
-- Express
-- Nodemon
-- Git
+### **Models**
+Os modelos representam as entidades do banco de dados. Aqui estão os principais modelos:
+- `Adm.js`: Modelo para administrar dados dos administradores.
+- `Ferramentas.js`: Modelo que define as ferramentas disponíveis.
+- `Impressora.js`: Modelo das impressoras cadastradas no sistema.
+- `Reservas.js`: Modelo das reservas feitas pelos usuários.
+- `Users.js`: Modelo para usuários comuns cadastrados no sistema.
+
+### **Routes**
+As rotas definem os endpoints do sistema, permitindo interações com os controladores:
+- `adm.routes.js`: Rotas para as funções administrativas.
+- `ferramentas.routes.js`: Rotas para operações com ferramentas.
+- `impressora.routes.js`: Rotas para operações de impressoras.
+- `reservas.routes.js`: Rotas para reservas de equipamentos.
+- `users.routes.js`: Rotas para controle de usuários.
+
+### **Database**
+A pasta de banco de dados contém os scripts e configurações para interação com o PostgreSQL:
+- `index.js`: Arquivo de configuração do banco de dados.
+- `script.sql`: Script para criação das tabelas e inicialização do banco de dados.
 
 ## Pré-requisitos
+Antes de executar o projeto, você precisará ter instalado:
+- **Node.js** versão 14 ou superior
+- **PostgreSQL** versão 12 ou superior
 
-Para executar este projeto é necessário ter instalado:
+## Instalação e Execução
+Siga os passos abaixo para configurar e rodar o projeto localmente:
 
-- NodeJS
-- PostgreSQL
-- NPM
+1. **Clone o repositório**:
+   ```bash
+   git clone https://github.com/JuliaFee/espacomaker-back.git
+   cd espacomaker-back
+   ```
 
-## Instalação
+2. **Instale as dependências**:
+   Execute o comando a seguir para instalar todas as dependências do projeto:
+   ```bash
+   npm install
+   ```
 
-Para instalar o projeto, siga os passos abaixo:
+3. **Configuração do banco de dados**:
+   Crie um banco de dados PostgreSQL e importe o script `script.sql` disponível na pasta `database`.
 
-1. Clone o projeto para sua máquina
-2. Execute o comando `npm install` para instalar as dependências do projeto
-3. Execute o comando `npm run dev` para iniciar o projeto
+4. **Inicie o servidor**:
+   Após configurar o banco de dados, inicie o servidor com o comando:
+   ```bash
+   npm start
+   ```
 
-## Etapas de integração com o banco de dados PostgreSQL
+5. O servidor estará rodando localmente na porta padrão (ex: `http://localhost:3000`).
 
-1. Criação da base de dados
+## API Endpoints
+Aqui estão alguns dos principais endpoints disponíveis no projeto:
 
-```bash
-sudo su - postgres
-psql
-```
+- **/adm**: Rotas relacionadas às funcionalidades administrativas.
+- **/ferramentas**: Rotas para gestão de ferramentas.
+- **/impressora**: Rotas para o controle das impressoras.
+- **/reservas**: Rotas para gerenciamento das reservas.
+- **/users**: Rotas para controle de usuários.
 
-```sql
-CREATE DATABASE users_pg_dev;
-```
+## Tecnologias Utilizadas
+- **Node.js**: Plataforma de desenvolvimento back-end.
+- **Express**: Framework para Node.js utilizado para criação das APIs RESTful.
+- **PostgreSQL**: Banco de dados relacional para armazenamento de informações.
 
-2. Criar um arquivo `.env` na raiz do projeto para armazenar as variáveis de ambiente
-
-```env
-DB_USER=user
-DB_PASSWORD=password
-DB_HOST=localhost
-DB_PORT=5432
-DB_NAME=database
-```
-
-3. Instalar a biblioteca `pg-promise` para integração com o banco de dados PostgreSQL
-
-```bash
-npm install pg-promise
-```
-
-4. Criar um arquivo `database/index.js` na raiz do projeto para configurar a conexão com o banco de dados
-
-```javascript
-import pgp from "pg-promise";
-import { config } from "dotenv";
-
-config();
-
-const user = process.env.DB_USER;
-const password = process.env.DB_PASSWORD;
-const host = process.env.DB_HOST;
-const port = process.env.DB_PORT;
-const database = process.env.DB_NAME;
-
-const dbURL =
-  "postgres://" +
-  user +
-  ":" +
-  password +
-  "@" +
-  host +
-  ":" +
-  port +
-  "/" +
-  database;
-
-export default function createConnection() {
-  const db = pgp()(dbURL);
-
-  db.query("SELECT 1 + 1 AS result").then((result) => {
-    console.log(result);
-  });
-}
-```
-
-5. Importar a função `createConnection` no arquivo `server.js` e chamar a função para testar a conexão com o banco de dados
-
-```javascript
-import createConnection from "./database/index.js";
-
-createConnection();
-```
-
-6. Criação da tabela `users` no arquivo `database/create-tables.sql`
-
-```sql
-CREATE TABLE IF NOT EXISTS users (
-  id VARCHAR(36) PRIMARY KEY,
-  name VARCHAR(255) NOT NULL,
-  email VARCHAR(255) NOT NULL UNIQUE,
-  password VARCHAR(255) NOT NULL
-);
-```
-
-7. Atualizar configurações de conexão com o banco de dados no arquivo `database/index.js`
-
-```javascript
-import pgp from "pg-promise";
-import { config } from "dotenv";
-import path, { join } from "path";
-import { fileURLToPath } from "url";
-
-config();
-
-const user = process.env.DB_USER;
-const password = process.env.DB_PASSWORD;
-const host = process.env.DB_HOST;
-const port = process.env.DB_PORT;
-const database = process.env.DB_NAME;
-
-const dbURL =
-  "postgres://" +
-  user +
-  ":" +
-  password +
-  "@" +
-  host +
-  ":" +
-  port +
-  "/" +
-  database;
-
-const db = pgp()(dbURL);
-
-export function createConnection() {
-  db.query("SELECT 1 + 1 AS result").then((result) => {
-    console.log(result);
-  });
-}
-
-// Captura o caminho do arquivo atual
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-
-const filePath = join(__dirname, "create-tables.sql");
-const query = new pgp.QueryFile(filePath);
-
-db.query(query);
-
-export default db;
-```
-
-8. Implementação dos métodos CRUD para a tabela `users` no arquivo `UsersRepository.js`
-
-```javascript
-import db from "../../database/index.js";
-
-export default class UsersRepository {
-  constructor() {
-    this.db = db;
-  }
-
-  async getUsers() {
-    const allUsers = await this.db.manyOrNone("SELECT * FROM users");
-    // console.log(allUsers);
-    return allUsers;
-  }
-
-  async getUserById(id) {
-    const user = await this.db.oneOrNone(
-      "SELECT * FROM users WHERE id = $1",
-      id
-    );
-    return user;
-  }
-
-  async getUserByEmail(email) {
-    const user = await this.db.oneOrNone(
-      "SELECT * FROM users WHERE email = $1",
-      email
-    );
-    return user;
-  }
-
-  async createUser(user) {
-    await this.db.none(
-      "INSERT INTO users (id, name, email, password) VALUES ($1, $2, $3, $4)",
-      [user.id, user.name, user.email, user.password]
-    );
-    return user;
-  }
-
-  async updateUser(id, name, email, password) {
-    const user = await this.getUserById(id);
-
-    if (!user) {
-      return null;
-    }
-
-    const updatedUser = await this.db.one(
-      "UPDATE users SET name = $1, email = $2, password = $3 WHERE id = $4 RETURNING *",
-      [name, email, password, id]
-    );
-
-    return updatedUser;
-  }
-
-  async deleteUser(id) {
-    await this.db.none("DELETE FROM users WHERE id = $1", id);
-  }
-}
-```
-
-9. Implementação de métodos assíncronos no arquivo `users.controller.js`
+## Contribuições
+Contribuições são bem-vindas! Para contribuir:
+1. Faça um fork do projeto.
+2. Crie uma branch para a sua feature 
+3. Commit suas mudanças 
+4. Dê um push para a branch 
+5. Abra um Pull Request.
 
 ## Autor
+Desenvolvido por
+  - Letícia Cardoso Bizaglio
+  - Júlia Ferreira da Silva
 
-[Felipe Santos](https://github.com/FelipeSantos92Dev)
-
-## Links Úteis
-
-- [NodeJS](https://nodejs.org/en/)
-- [NPM](https://www.npmjs.com/)
-- [Express](https://expressjs.com/)
-- [Nodemon](https://nodemon.io/)
-- [Git](https://git-scm.com/)
+  ## Integrantes
+<h4> Nos contate! </h4>
+<br>
+    - Amanda dos Santos Silva - amandasilva@aluno.senai.br
+    <br>
+    - Isadora Ribeiro Mendes - isadoramendes@aluno.senai.br
+    <br>
+    - Júlia Ferreira da Silva - julia.silva133@aluno.senai.br
+    <br>
+    - Letícia Cardoso Bizaglio - leticia.bizaglio@aluno.senai.br
+    <br>
+    - Maria Eduarda Valonga - maria.valonga@aluno.senai.br
+    <br>
+<br>
