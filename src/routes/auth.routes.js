@@ -6,5 +6,3 @@ const app = express();
 app.use(express.json());
 
 app.post('/login', auth.login);
-
-// Add other routes here
