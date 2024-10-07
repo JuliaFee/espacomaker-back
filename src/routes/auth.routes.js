@@ -1,8 +1,16 @@
-import express from 'express';
-import auth from './auth.js';
+import {Router} from 'express';
+import { login, generateToken } from '../controllers/auth.js';
 
-const app = express();
+const authRouter = Router();
 
-app.use(express.json());
+authRouter.post('/login', generateToken);
 
-app.post('/login', auth.login);
+export default authRouter;
+ 
+ 
+ 
+
+ 
+ 
+ 
+ 

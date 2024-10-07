@@ -1,7 +1,7 @@
 import jwt from 'jsonwebtoken';
 import UserList from '../models/user/UsersList.js';
 
-const generateToken = (user) => {
+export const generateToken = (user) => {
   const payload = {
     id: user.id,
     email: user.email,
@@ -33,3 +33,4 @@ export const login = async (req, res) => {
     return res.status(500).send({ message: "Erro ao fazer login", error: error.message });
   }
 };
+
