@@ -12,11 +12,13 @@ router.get("/", (req, res) => {
   res.status(200).send({ message: "Servidor rodando perfeitamente!" });
 });
 
+
 router.use("/adm", admRouter);
 router.use("/ferramentas", ferramentaRouter);
 router.use("/impressora", impressoraRouter);
 router.use("/reservas", reservasRouter);
 router.use("/users", usersRouter);
-router.use("/login", authRouter)
+router.use("/", authRouter); 
+
 
 export { router };

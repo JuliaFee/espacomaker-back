@@ -15,10 +15,12 @@ export const generateToken = (user) => {
 };
 
 export const login = async (req, res) => {
+  const listaUser = new UserList;
+  console.log('Login function called'); 
   try {
     const { email, senha } = req.body;
 
-    const user = await UserList.getUserByEmail(email);
+    const user = await listaUser.getUserByEmail(email);
     if (!user) {
       return res.status(404).send({ message: "Usuário não encontrado" });
     }
@@ -33,4 +35,3 @@ export const login = async (req, res) => {
     return res.status(500).send({ message: "Erro ao fazer login", error: error.message });
   }
 };
-

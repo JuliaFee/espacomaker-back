@@ -4,7 +4,7 @@ DROP TABLE IF EXISTS ferramentas;
 DROP TABLE IF EXISTS users;
 DROP TABLE IF EXISTS adm;
 
-/*tabela adm*/
+-- Tabela adm
 CREATE TABLE adm (
   id SERIAL PRIMARY KEY,
   nome VARCHAR(100) NOT NULL,
@@ -12,7 +12,7 @@ CREATE TABLE adm (
   senha VARCHAR(50) NOT NULL
 );
 
-/*tabela ferramentas*/
+-- Tabela ferramentas
 CREATE TABLE ferramentas (
   id SERIAL PRIMARY KEY,
   nome VARCHAR(100) NOT NULL,
@@ -21,7 +21,7 @@ CREATE TABLE ferramentas (
   statusF BOOLEAN NOT NULL 
 );
 
-/*tabela impressora*/
+-- Tabela impressora
 CREATE TABLE impressora (
   id SERIAL PRIMARY KEY,
   nome VARCHAR(100) NOT NULL,
@@ -31,7 +31,7 @@ CREATE TABLE impressora (
   valor FLOAT NOT NULL 
 );
 
-/*tabela usuario*/
+-- Tabela usuario
 CREATE TABLE users (
   id SERIAL PRIMARY KEY,
   nome VARCHAR(255),
@@ -40,7 +40,7 @@ CREATE TABLE users (
   senha VARCHAR(255) 
 );
 
-/*tabela reserva*/
+-- Tabela reserva
 CREATE TABLE reserva (
   id SERIAL PRIMARY KEY,
   id_user INT NOT NULL,
@@ -55,6 +55,8 @@ CREATE TABLE reserva (
   FOREIGN KEY (id_impressora) REFERENCES impressora (id)
 );
 
+
+-- Ferramentas
 INSERT INTO ferramentas (nome, descricao, img, statusF) VALUES ('Alicate 6', 'Alicate de pequeno porte, ideal para cortes e apertos em trabalhos manuais ou elétricos.', 'https://i.imgur.com/IZTi37d.jpg', true);
 INSERT INTO ferramentas (nome, descricao, img, statusF) VALUES ('Alicate 6-2', 'Alicate de pequeno porte, ideal para cortes e apertos em trabalhos manuais ou elétricos.', 'https://i.imgur.com/ylB6Tdi.jpg', true);
 INSERT INTO ferramentas (nome, descricao, img, statusF) VALUES ('Alicate 8', 'Versão maior do licate oferencendo maior avalancagem para tarefas que requerem mais força.', 'https://i.imgur.com/V5kHVNA.jpg', true);
@@ -94,72 +96,37 @@ INSERT INTO ferramentas (nome, descricao, img, statusF) VALUES ('Gedore 1/8X6 3X
 INSERT INTO ferramentas (nome, descricao, img, statusF) VALUES ('Gedore 1/8X6 3X150-4', 'Chaves soquetes de diferentes tamanhos, apropriadas para tarefas em áreas mais apertadas.', 'https://i.imgur.com/wLaNsn4.jpg', true);
 INSERT INTO ferramentas (nome, descricao, img, statusF) VALUES ('Gedore 3/14X4 4X100', 'Conjunto que fornece versatilidade em manutenção e reparos mecânicos.', 'https://i.imgur.com/2vF49vf.jpg', true);
 INSERT INTO ferramentas (nome, descricao, img, statusF) VALUES ('Gedore 3/16X4 4X100', 'Ferramenta projetada para proporcionar um encaixe seguro e eficaz em porcas e parafusos.', 'https://i.imgur.com/5WhvJsX.jpg', true);
-
 INSERT INTO ferramentas (nome, descricao, img, statusF) VALUES ('Gedore 3/16X6 4,5X150', 'Chave soquete ideal para trabalhos que requerem força e precisão.', 'https://i.imgur.com/xvgHMJ6.jpg', true);
-
 INSERT INTO ferramentas (nome, descricao, img, statusF) VALUES ('Gedore 3/16X6 4,5X150-2', 'Chave soquete ideal para trabalhos que requerem força e precisão.', 'https://i.imgur.com/r1x4e4E.jpg', true);
-
 INSERT INTO ferramentas (nome, descricao, img, statusF) VALUES ('Gedore 137 10', 'Ferramenta específica para aplicação profissionais, durabilidade e resistência.', 'https://i.imgur.com/1dlol1p.jpg', true);
-
 INSERT INTO ferramentas (nome, descricao, img, statusF) VALUES ('Gedore NO1B 6', 'Chave de boca com design ergonômico, facilitando o uso em ambientes de trabalho exigentes.', 'https://i.imgur.com/c4rkwCf.jpg', true);
-
 INSERT INTO ferramentas (nome, descricao, img, statusF) VALUES ('Gedore NO1B 11', 'Versão maior da chave anterior, adequada para diferentes tamanhos de porcas.', 'https://i.imgur.com/jx2530r.jpg', true);
-
 INSERT INTO ferramentas (nome, descricao, img, statusF) VALUES ('Gedore NO1B 12', 'Ferramenta versátil para uso em mecânica e manutenção.', 'https://i.imgur.com/4le4kh8.jpg', true);
-
 INSERT INTO ferramentas (nome, descricao, img, statusF) VALUES ('Gedore NO1B 13', 'Chave de boca que oferece facilidade de uso em áreas de difícil acesso.', 'https://i.imgur.com/z3Z0fEb.jpg', true);
-
 INSERT INTO ferramentas (nome, descricao, img, statusF) VALUES ('Gedore NO1B 14', 'Ferramenta robusta, ideal para trabalhos que exigem resistência e força.', 'https://i.imgur.com/4AsMJFp.jpg', true);
-
 INSERT INTO ferramentas (nome, descricao, img, statusF) VALUES ('Gedore NO1B 17', 'Chave que combina leveza e eficiência, adequada para manutenção gerais.', 'https://i.imgur.com/m1ewQbe.jpg', true);
-
 INSERT INTO ferramentas (nome, descricao, img, statusF) VALUES ('Gedore NO1B 19', 'Ferramenta projetada para proporcionar o encaixe firme e seguro em porcas.', 'https://i.imgur.com/iktm4bs.jpg', true);
-
 INSERT INTO ferramentas (nome, descricao, img, statusF) VALUES ('Gedore NO1B 22', 'Ideal para aplicação em mecânica, oferencendo durabilidade em uso contínuo.', 'https://i.imgur.com/452Cl4T.jpg', true);
-
 INSERT INTO ferramentas (nome, descricao, img, statusF) VALUES ('Grampo Sargento Tipo 1', 'Utilizado parafixar peças juntas durante a colagem ou montagem, garantindo precisão.', 'https://i.imgur.com/pXIzEbz.jpg', true);
-
 INSERT INTO ferramentas (nome, descricao, img, statusF) VALUES ('Grampo Sargento Tipo 2', 'Similar ao anterior com design para maior precisão e estabilidade.', 'https://i.imgur.com/gSShN7P.jpg', true);
-
 INSERT INTO ferramentas (nome, descricao, img, statusF) VALUES ('Grampo Sargento Tipo 3', 'Similar ao anterior com design para maior precisão e estabilidade.', 'https://i.imgur.com/gSShN7P.jpg', true);
-
 INSERT INTO ferramentas (nome, descricao, img, statusF) VALUES ('Gravador Cortador Laser', 'Máquina que utiliza laser para cortar e gravar materiais com alta precisão.', 'https://i.imgur.com/zPsBlXe.jpg', true);
-
 INSERT INTO ferramentas (nome, descricao, img, statusF) VALUES ('Jogo de Chave Hexagonal', 'Conjunto de chaves com pontas hexagonais, utilizadas para apertar ou afrouxar parafusos com cabeças hexagonais.', 'https://i.imgur.com/bDRDUT6.jpg', true);
-
 INSERT INTO ferramentas (nome, descricao, img, statusF) VALUES ('Jogo de Chave Hexagonal Milimétricas', 'Conjunto de chaves hexagoais em meididas milimétricas, ideal para aplicação técnicas.', 'https://i.imgur.com/nXMKtTd.jpg', true);
-
 INSERT INTO ferramentas (nome, descricao, img, statusF) VALUES ('Martelo de Nilon Gedore', 'Martelo com cabeça de nilon, ideal para trabalhos que requerem impactos suaves.', 'https://i.imgur.com/utAF7x3.jpg', true);
-
 INSERT INTO ferramentas (nome, descricao, img, statusF) VALUES ('Martelo Modelo 33', 'Martelo de uso geral, adquado para diversas tarefas de carpintaria e montagem.', 'https://i.imgur.com/KFWjo68.jpg', true);
-
 INSERT INTO ferramentas (nome, descricao, img, statusF) VALUES ('Multímetro Digital FLUKE', 'Instrumento de Medição elétrica de alta precisão, utilizado em diagnósticos e reparos.', 'https://i.imgur.com/2oKaU4x.jpg', true);
-
 INSERT INTO ferramentas (nome, descricao, img, statusF) VALUES ('Nível de Alumínio', 'Ferramenta utilizada para verificar a horizontalidade e verticalidade de superfíces.', 'https://i.imgur.com/X5BhFQr.jpg', true);
-
 INSERT INTO ferramentas (nome, descricao, img, statusF) VALUES ('Óculos de Segurança', 'Equipamento de proteção individual (EPI) que protege os olhos contra impactos e partículas.', 'https://i.imgur.com/ZTmabQn.jpg', true);
-
 INSERT INTO ferramentas (nome, descricao, img, statusF) VALUES ('Óculos de Segurança-2', 'Equipamento de proteção individual (EPI) que protege os olhos contra impactos e partículas.', 'https://i.imgur.com/XAGJV3b.jpg', true);
-
 INSERT INTO ferramentas (nome, descricao, img, statusF) VALUES ('Óculos de Segurança-3', 'Equipamento de proteção individual (EPI) que protege os olhos contra impactos e partículas.', 'https://i.imgur.com/12IBcu3.jpg', true);
-
 INSERT INTO ferramentas (nome, descricao, img, statusF) VALUES ('Paquímetro Digital', 'Ferramenta de medição precisa, utilizada para verificar dimensões internas e externas de objetos.', 'https://i.imgur.com/rVtAjwZ.jpg', true);
-
 INSERT INTO ferramentas (nome, descricao, img, statusF) VALUES ('Pica Fio', 'Ferramenta usada para picar e preparar fios para conexões elétricas.', 'https://i.imgur.com/WXD1UJv.jpg', true);
-
 INSERT INTO ferramentas (nome, descricao, img, statusF) VALUES ('Serra', 'Ferramenta cortante utilizada em diversos materiais, com madeira e metal.', 'https://i.imgur.com/DNdlDmL.jpg', true);
-
 INSERT INTO ferramentas (nome, descricao, img, statusF) VALUES ('Stanley Esquadro Combinado', 'Ferramenta de medição e marcação que combina esquadro e uma régua, essencial para carpintaria.', 'https://i.imgur.com/KK0nj0u.jpg', true);
 
 
-
-
-
-
-
-
+-- Impressoras
 INSERT INTO impressora (nome, descricao, img, statusI, valor) VALUES ('3D Print Quick Ender-3 V2', 'Impressora 3D de fácil uso, ideal para modelagem e prototipagem rápida.', 'https://i.imgur.com/QWRDQrD.jpg', true, 0);
-
 INSERT INTO impressora (nome, descricao, img, statusI, valor) VALUES ('Shenzhen Creality 3D', 'Conhecida por suas impressoras 3D de qualidade e acessíveis.', 'https://i.imgur.com/3F0yg1q.jpg', true, 0);
-
 INSERT INTO impressora (nome, descricao, img, statusI, valor) VALUES ('3D Printer Use Manual', 'Impressora 3D com uma ótima qualidade de modelagem e prototipagem.', 'https://i.imgur.com/5LYLhTW.jpg', true, 0);

@@ -1,16 +1,8 @@
-import {Router} from 'express';
-import { login, generateToken } from '../controllers/auth.js';
+import { Router } from 'express';
+import { login } from '../controllers/auth.controller.js';
 
 const authRouter = Router();
 
-authRouter.post('/login', generateToken);
+authRouter.post('/login', login);
 
 export default authRouter;
- 
- 
- 
-
- 
- 
- 
- 
