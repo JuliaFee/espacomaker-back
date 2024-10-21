@@ -1,7 +1,7 @@
 import FerramentaList from "../models/ferramenta/FerramentaList.js"; 
 const ferramentaRepository = new FerramentaList();
 
-// Get all Ferramentas
+/*get*/ 
 export const getFerramentas = async (req, res) => {
     try {
         const ferramentas = await ferramentaRepository.getFerramentas();
@@ -14,7 +14,7 @@ export const getFerramentas = async (req, res) => {
     }
 }
 
-// Get Ferramenta by ID
+/*get id*/ 
 export const getFerramentaById = async (req, res) => {
     try {
         const { id } = req.params;
@@ -28,7 +28,7 @@ export const getFerramentaById = async (req, res) => {
     }
 }
 
-// Add Ferramenta
+/*post*/ 
 export const addFerramenta = async (req, res) => {
     try {
         const { nome, descricao, img } = req.body;
@@ -39,8 +39,7 @@ export const addFerramenta = async (req, res) => {
         return res.status(500).send({ message: "Erro ao criar ferramenta", error: error.message });
     }
 }
-
-// Update Ferramenta
+/*put*/ 
 export const updateFerramenta = async (req, res) => {
     try {
         const { id } = req.params;
@@ -57,7 +56,7 @@ export const updateFerramenta = async (req, res) => {
     }
 }
 
-// Delete Ferramenta
+/*delete*/ 
 export const deleteFerramenta = async (req, res) => {
     try {
         const { id } = req.params;

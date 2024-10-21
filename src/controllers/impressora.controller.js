@@ -3,6 +3,7 @@ import ImpressoraList from "../models/impressora/ImpressoraList.js";
 
 const impressoraRepository = new ImpressoraList();
 
+/*get*/ 
 export const getImpressora = async (req, res) => {
     try {
         const impressoras = await impressoraRepository.getImpressoras();
@@ -11,12 +12,11 @@ export const getImpressora = async (req, res) => {
         }
         return res.status(200).send({ totalImpressoras: impressoras.length, impressoras });
     } catch (error) {
-        return res
-            .status(500)
-            .send({ message: "Erro ao buscar impressoras", error: error.message });
+        return res.status(500).send({ message: "Erro ao buscar impressoras", error: error.message });
     }
 }
 
+/*get id*/ 
 export const getImpressoraById = async (req, res) => {
     try {
         const { id } = req.params;
@@ -26,55 +26,47 @@ export const getImpressoraById = async (req, res) => {
         }
         return res.status(200).send({ message: "Impressora encontrada", impressora });
     } catch (error) {
-        return res
-            .status(500)
-            .send({ message: "Erro ao buscar impressora", error: error.message });
+        return res.status(500).send({ message: "Erro ao buscar impressora", error: error.message });
     }
 }
 
+/*post*/ 
 export const addImpressora = async (req, res) => {
     try {
-        const { nome, descricao, img, statusI, valor } = req.body;
-        const newImpressora = new Impressora( nome, descricao, img, statusI, valor);
+        const { nome, descricao, img, status, valor_filamento } = req.body;
+        const newImpressora = new Impressora(nome, descricao, img, status, valor_filamento);
         const impressora = await impressoraRepository.addImpressora(newImpressora);
-        return res
-            .status(201)
-            .send({ message: "Impressora criada com sucesso", impressora });
-    
+        return res.status(201).send({ message: "Impressora criada com sucesso", impressora });
     } catch (error) {
-        return res
-            .status(500)
-            .send({ message: "Erro ao criar impressora", error: error.message });
+        return res.status(500).send({ message: "Erro ao criar impressora", error: error.message });
     }
 }
 
-
+/*put*/ 
 export const updateImpressora = async (req, res) => {
     try {
         const { id } = req.params;
-        const { nome, descricao, img, statusI, valor } = req.body;
+        const { nome, descricao, img, status, valor_filamento } = req.body;
         const impressoraById = await impressoraRepository.getImpressoraById(id);
         if (!impressoraById) {
             return res.status(404).send({ message: "Impressora não encontrada" });
         }
 
-        const updateImpressora = await impressoraRepository.updateImpressora(
+        const updatedImpressora = await impressoraRepository.updateImpressora(
             id,
             nome, 
             descricao, 
             img, 
-            statusI, 
-            valor);
-        return res
-            .status(200)
-            .send({ message: "Impressora atualizada com sucesso", updateImpressora });
+            status, 
+            valor_filamento
+        );
+        return res.status(200).send({ message: "Impressora atualizada com sucesso", updatedImpressora });
     } catch (error) {
-        return res
-            .status(500)
-            .send({ message: "Erro ao atualizar impressora", error: error.message });
+        return res.status(500).send({ message: "Erro ao atualizar impressora", error: error.message });
     }
 }
 
+/*delete*/ 
 export const deleteImpressora = async (req, res) => {
     try {
         const { id } = req.params;
@@ -85,8 +77,6 @@ export const deleteImpressora = async (req, res) => {
         await impressoraRepository.deleteImpressora(id);
         return res.status(200).send({ message: "Impressora deletada com sucesso" });
     } catch (error) {
-        return res
-            .status(500)
-            .send({ message: "Erro ao deletar impressora", error: error.message });
+        return res.status(500).send({ message: "Erro ao deletar impressora", error: error.message });
     }
 }
