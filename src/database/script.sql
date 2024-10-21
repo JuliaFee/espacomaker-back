@@ -47,13 +47,21 @@ CREATE TABLE reserva (
   id_ferramenta INT, 
   id_impressora INT, 
   data_reserva DATE NOT NULL,
-  hora_inicio TIME NOT NULL,
-  hora_fim TIME NOT NULL,
   status_reserva BOOLEAN NOT NULL,
   FOREIGN KEY (id_user) REFERENCES users (id),
   FOREIGN KEY (id_ferramenta) REFERENCES ferramentas (id),
   FOREIGN KEY (id_impressora) REFERENCES impressora (id)
 );
+
+CREATE TABLE horario (
+  id SERIAL PRIMARY KEY,
+  id_impressora INT NOT NULL,
+  id_ferramenta INT NOT NULL,
+  hora_inicio TIME NOT NULL,
+  hora_fim TIME NOT NULL,
+  FOREIGN KEY (id_impressora) REFERENCES impressora (id),
+  FOREIGN KEY (id_ferramenta) REFERENCES ferramentas (id)
+)
 
 -- Tabela de filamento
 CREATE TABLE filamento (
