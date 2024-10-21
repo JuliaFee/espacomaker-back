@@ -1,15 +1,16 @@
-DROP TABLE IF EXISTS reserva;
-DROP TABLE IF EXISTS impressora;
+DROP TABLE IF EXISTS reservas ;
+DROP TABLE IF EXISTS impressoras;
 DROP TABLE IF EXISTS ferramentas;
 DROP TABLE IF EXISTS users;
-DROP TABLE IF EXISTS adm;
+DROP TABLE IF EXISTS filamentos;
+DROP TABLE IF EXISTS horarios;
 
 CREATE TABLE users (
   id SERIAL PRIMARY KEY,
   nome VARCHAR(255) NOT NULL,
   email VARCHAR(255) NOT NULL UNIQUE,
   senha VARCHAR(255) NOT NULL,
-  tipo VARCHAR(50) NOT NULL CHECK (tipo IN ('user', 'adm')) -- Define o tipo de usuário
+  tipo VARCHAR(50) NOT NULL CHECK (tipo IN ('user', 'adm'))
 );
 
 CREATE TABLE ferramentas (
@@ -17,7 +18,7 @@ CREATE TABLE ferramentas (
   nome VARCHAR(100) NOT NULL,
   descricao VARCHAR(255) NOT NULL,
   img VARCHAR(255),
-  status BOOLEAN NOT NULL DEFAULT TRUE -- Ativo/Disponível por padrão
+  statusF BOOLEAN NOT NULL DEFAULT TRUE 
 );
 
 CREATE TABLE impressoras (
@@ -25,9 +26,17 @@ CREATE TABLE impressoras (
   nome VARCHAR(100) NOT NULL,
   descricao VARCHAR(255) NOT NULL,
   img VARCHAR(255),
-  status BOOLEAN NOT NULL DEFAULT TRUE,
-  valor_filamento FLOAT NOT NULL,
-  FOREIGN KEY (valor_filamento) REFERENCES filamentos (valor_por_kg)
+  statusI BOOLEAN NOT NULL DEFAULT TRUE,
+  filamento FLOAT NOT NULL 
+);
+
+CREATE TABLE filamentos (
+  id SERIAL PRIMARY KEY,
+  id_impressora INT NOT NULL,
+  tipo VARCHAR(100) NOT NULL,
+  cor VARCHAR(50) NOT NULL,
+  quantidade FLOAT NOT NULL,
+  valor_por_kg FLOAT NOT NULL UNIQUE
 );
 
 CREATE TABLE reservas (
