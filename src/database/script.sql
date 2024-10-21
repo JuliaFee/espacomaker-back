@@ -5,8 +5,6 @@ DROP TABLE IF EXISTS users  CASCADE;
 DROP TABLE IF EXISTS filamentos  CASCADE;
 DROP TABLE IF EXISTS horarios  CASCADE;
 
-
--- Tabela users
 CREATE TABLE users (
   id SERIAL PRIMARY KEY,
   nome VARCHAR(255) NOT NULL,
@@ -15,7 +13,6 @@ CREATE TABLE users (
   tipo VARCHAR(50) NOT NULL CHECK (tipo IN ('user', 'adm'))
 );
 
--- Tabela ferramentas
 CREATE TABLE ferramentas (
   id SERIAL PRIMARY KEY,
   nome VARCHAR(100) NOT NULL,
@@ -24,7 +21,6 @@ CREATE TABLE ferramentas (
   statusF BOOLEAN NOT NULL DEFAULT TRUE 
 );
 
--- Tabela impressoras
 CREATE TABLE impressoras (
   id SERIAL PRIMARY KEY,
   nome VARCHAR(100) NOT NULL,
@@ -34,7 +30,6 @@ CREATE TABLE impressoras (
   filamento FLOAT NOT NULL 
 );
 
--- Tabela filamentos
 CREATE TABLE filamentos (
   id SERIAL PRIMARY KEY,
   id_impressora INT NOT NULL,
@@ -45,7 +40,6 @@ CREATE TABLE filamentos (
   FOREIGN KEY (id_impressora) REFERENCES impressoras (id)
 );
 
--- Tabela reservas
 CREATE TABLE reservas (
   id SERIAL PRIMARY KEY,
   id_user INT NOT NULL,
@@ -68,6 +62,8 @@ CREATE TABLE horarios (
   FOREIGN KEY (id_impressora) REFERENCES impressoras (id),
   FOREIGN KEY (id_ferramenta) REFERENCES ferramentas (id)
 );
+
+
 
 -- Ferramentas
 INSERT INTO ferramentas (nome, descricao, img, statusF) VALUES ('Alicate 6', 'Alicate de pequeno porte, ideal para cortes e apertos em trabalhos manuais ou elétricos.', 'https://i.imgur.com/IZTi37d.jpg', true);
@@ -138,11 +134,15 @@ INSERT INTO ferramentas (nome, descricao, img, statusF) VALUES ('Pica Fio', 'Fer
 INSERT INTO ferramentas (nome, descricao, img, statusF) VALUES ('Serra', 'Ferramenta cortante utilizada em diversos materiais, com madeira e metal.', 'https://i.imgur.com/DNdlDmL.jpg', true);
 INSERT INTO ferramentas (nome, descricao, img, statusF) VALUES ('Stanley Esquadro Combinado', 'Ferramenta de medição e marcação que combina esquadro e uma régua, essencial para carpintaria.', 'https://i.imgur.com/KK0nj0u.jpg', true);
 
+
 -- Impressoras
-INSERT INTO impressoras (nome, descricao, img, statusI, filamento) VALUES 
-('Impressora 1', 'Impressora 3D de alto desempenho para projetos complexos.', 'https://i.imgur.com/abcdefg.jpg', true, 1.0),
-('Impressora 2', 'Impressora 3D de baixo custo, ideal para iniciantes.', 'https://i.imgur.com/hijklmn.jpg', true, 1.5),
-('Impressora 3', 'Impressora 3D profissional, adequada para uso industrial.', 'https://i.imgur.com/opqrst.jpg', true, 2.0);
+INSERT INTO impressora (nome, descricao, img, statusI, valor) VALUES ('3D Print Quick Ender-3 V2', 'Impressora 3D de fácil uso, ideal para modelagem e prototipagem rápida.', 'https://i.imgur.com/QWRDQrD.jpg', true, 0);
+INSERT INTO impressora (nome, descricao, img, statusI, valor) VALUES ('Shenzhen Creality 3D', 'Conhecida por suas impressoras 3D de qualidade e acessíveis.', 'https://i.imgur.com/3F0yg1q.jpg', true, 0);
+INSERT INTO impressora (nome, descricao, img, statusI, valor) VALUES ('3D Printer Use Manual', 'Impressora 3D com uma ótima qualidade de modelagem e prototipagem.', 'https://i.imgur.com/5LYLhTW.jpg', true, 0);
+
+-- Usuarios
+INSERT INTO users (nome, email, senha, tipo) VALUES ('Administrador', 'adm@example.com', 'Senha123', 'adm');
+INSERT INTO users (nome, email, senha, tipo) VALUES ('Aluno', 'aluno@example.com', 'Senha456', 'user');
 
 -- Filamentos
 INSERT INTO filamentos (id_impressora, tipo, cor, quantidade, valor_por_kg) VALUES (1, 'PLA', 'Branco', 10.0, 40.0);
