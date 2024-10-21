@@ -1,7 +1,7 @@
 import { Router } from "express";
 
 import{
-    getReserva,
+    getReservas,
     getReservaById,
     addReserva,
     updateReserva,
@@ -10,7 +10,7 @@ import{
 
 const reservasRouter = Router();
 
-reservasRouter.get("/", getReserva);
+reservasRouter.get("/", getReservas);
 reservasRouter.get("/:id", getReservaById);
 reservasRouter.post("/", addReserva);
 reservasRouter.put("/:id", updateReserva);

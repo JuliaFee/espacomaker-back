@@ -1,4 +1,4 @@
-import FerramentaList from "../models/ferramenta/FerramentaList.js"; 
+import FerramentaList from "../models/ferramentas/FerramentasList.js"; 
 const ferramentaRepository = new FerramentaList();
 
 /*get*/ 

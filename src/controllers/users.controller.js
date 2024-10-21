@@ -1,4 +1,4 @@
-import UserList from "../models/user/UserList.js"; 
+import UserList from "../models/user/UsersList.js"; 
 import jwt from 'jsonwebtoken'; // Import JWT library
 const userRepository = new UserList();
 const JWT_SECRET = '123'; // Replace with your actual secret
@@ -35,7 +35,7 @@ export const loginUser  = async (req, res) => {
 }
 
 /*get*/ 
-export const getUser = async (req, res) => {
+export const getUsers = async (req, res) => {
     try {
         const { id } = req.params;
         const user = await userRepository.getUserById(id); // Corrected function name
@@ -47,6 +47,21 @@ export const getUser = async (req, res) => {
         return res.status(500).send({ message: "Erro ao buscar usuário", error: error.message });
     }
 }
+
+/*get user by id*/ 
+export const getUserById = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const user = await userRepository.getUserById(id);
+        if (!user) {
+            return res.status(404).send({ message: "Usuário não encontrado" });
+        }
+        return res.status(200).send({ message: "Usuário encontrado", user });
+    } catch (error) {
+        return res.status(500).send({ message: "Erro ao buscar usuário", error: error.message });
+    }
+}
+
 /*put*/ 
 export const updateUser  = async (req, res) => {
     try {

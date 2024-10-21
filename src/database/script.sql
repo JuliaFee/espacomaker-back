@@ -62,6 +62,8 @@ CREATE TABLE filamentos (
   valor_por_kg FLOAT NOT NULL,
   FOREIGN KEY (id_impressora) REFERENCES impressoras (id)
 );
+
+
 -- Ferramentas
 INSERT INTO ferramentas (nome, descricao, img, statusF) VALUES ('Alicate 6', 'Alicate de pequeno porte, ideal para cortes e apertos em trabalhos manuais ou elétricos.', 'https://i.imgur.com/IZTi37d.jpg', true);
 INSERT INTO ferramentas (nome, descricao, img, statusF) VALUES ('Alicate 6-2', 'Alicate de pequeno porte, ideal para cortes e apertos em trabalhos manuais ou elétricos.', 'https://i.imgur.com/ylB6Tdi.jpg', true);
