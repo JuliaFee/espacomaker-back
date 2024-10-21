@@ -30,6 +30,19 @@ class ReservaList {
 
     async addReserva(reserva) {
         try {
+            // Verificar se já existe uma reserva para a mesma impressora e horário na mesma data
+            const existingReserva = await this.db.oneOrNone(
+                `SELECT * FROM reservas 
+                 WHERE id_impressora = $1 
+                 AND id_horario = $2 
+                 AND data_reserva = $3`,
+                [reserva.id_impressora, reserva.id_horario, reserva.data_reserva]
+            );
+
+            if (existingReserva) {
+                throw new Error("Já existe uma reserva para este horário.");
+            }
+
             await this.db.none(
                 "INSERT INTO reservas (id_user, id_ferramenta, id_impressora, id_horario, data_reserva, status_reserva) VALUES ($1, $2, $3, $4, $5, $6)",
                 [reserva.id_user, reserva.id_ferramenta, reserva.id_impressora, reserva.id_horario, reserva.data_reserva, reserva.status_reserva]
@@ -49,6 +62,20 @@ class ReservaList {
                 return null;
             }
 
+            // Verificar se já existe uma reserva para a mesma impressora e horário na mesma data
+            const existingReserva = await this.db.oneOrNone(
+                `SELECT * FROM reservas 
+                 WHERE id_impressora = $1 
+                 AND id_horario = $2 
+                 AND data_reserva = $3 
+                 AND id != $4`,
+                [id_impressora, id_horario, data_reserva, id]
+            );
+
+            if (existingReserva) {
+                throw new Error("Já existe uma reserva para este horário.");
+            }
+
             const updatedReserva = await this.db.one(
                 "UPDATE reservas SET id_user = $1, id_ferramenta = $2, id_impressora = $3, id_horario = $4, data_reserva = $5, status_reserva = $6 WHERE id = $7 RETURNING *",
                 [id_user, id_ferramenta, id_impressora, id_horario, data_reserva, status_reserva, id]
@@ -66,25 +93,6 @@ class ReservaList {
             await this.db.none("DELETE FROM reservas WHERE id = $1", id);
         } catch (error) {
             console.error(`Failed to delete reserva ${id}:`, error);
-            throw error; 
-        }
-    }
-
-    async getHorariosDisponiveis(id_impressora, data_reserva) {
-        try {
-            const horarios = await this.db.manyOrNone(
-                `SELECT * FROM horarios 
-                 WHERE id_impressora = $1 
-                 AND NOT EXISTS (
-                     SELECT 1 FROM reservas 
-                     WHERE reservas.id_horario = horarios.id 
-                     AND reservas.data_reserva = $2
-                 )`,
-                [id_impressora, data_reserva]
-            );
-            return horarios;
-        } catch (error) {
-            console.error("Failed to get available horarios:", error);
             throw error; 
         }
     }
