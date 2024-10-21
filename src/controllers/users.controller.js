@@ -1,54 +1,50 @@
-import UserList from "../models/user/UsersList.js"; 
+import UserList from "./../models/user/UsersList.js"; 
 import jwt from 'jsonwebtoken'; // Import JWT library
 const userRepository = new UserList();
-const JWT_SECRET = '123'; // Replace with your actual secret
+const JWT_SECRET = '123'; // Substitua pelo seu segredo real
 
-/*post*/ 
-export const registerUser  = async (req, res) => {
+/* Register User */ 
+export const registerUser = async (req, res) => {
     try {
         const { nome, email, senha, tipo } = req.body;
-        const newUser  = { nome, email, senha, tipo };
-        const user = await userRepository.registerUser (newUser );
+        const newUser = { nome, email, senha, tipo };
+        const user = await userRepository.addUser(newUser);
         return res.status(201).send({ message: "Usuário criado com sucesso", user });
     } catch (error) {
         return res.status(500).send({ message: "Erro ao criar usuário", error: error.message });
     }
 }
 
-/*login*/ 
-export const loginUser  = async (req, res) => {
+/* Login User */ 
+export const loginUser = async (req, res) => {
     try {
         const { email, senha } = req.body;
-        const user = await userRepository.getUserByEmail(email); // Corrected function name
+        const user = await userRepository.getUserByEmail(email); // Nome da função corrigido
 
-        if (!user || user.senha !== senha) { // Direct comparison without hashing
+        if (!user || user.senha !== senha) { // Comparação direta sem hashing
             return res.status(401).send({ message: "Credenciais inválidas" });
         }
 
-        // Generate token
-        const token = jwt.sign({ id: user.id, email: user.email }, JWT_SECRET, { expiresIn: '1h' }); // Token expires in 1 hour
+        // Gerar token
+        const token = jwt.sign({ id: user.id, email: user.email }, JWT_SECRET, { expiresIn: '1h' }); // O token expira em 1 hora
 
-        return res.status(200).send({ message: "Login bem-sucedido", user, token }); // Include token in response
+        return res.status(200).send({ message: "Login bem-sucedido", user, token }); // Incluir o token na resposta
     } catch (error) {
         return res.status(500).send({ message: "Erro ao fazer login", error: error.message });
     }
 }
 
-/*get*/ 
+/* Get Users */ 
 export const getUsers = async (req, res) => {
     try {
-        const { id } = req.params;
-        const user = await userRepository.getUserById(id); // Corrected function name
-        if (!user) {
-            return res.status(404).send({ message: "Usuário não encontrado" });
-        }
-        return res.status(200).send({ message: "Usuário encontrado", user });
+        const users = await userRepository.getUsers();
+        return res.status(200).send({ message: "Usuários encontrados", users });
     } catch (error) {
-        return res.status(500).send({ message: "Erro ao buscar usuário", error: error.message });
+        return res.status(500).send({ message: "Erro ao buscar usuários", error: error.message });
     }
-}
+};
 
-/*get user by id*/ 
+/* Get User by ID */ 
 export const getUserById = async (req, res) => {
     try {
         const { id } = req.params;
@@ -62,33 +58,34 @@ export const getUserById = async (req, res) => {
     }
 }
 
-/*put*/ 
-export const updateUser  = async (req, res) => {
+/* Update User */ 
+export const updateUser = async (req, res) => {
     try {
         const { id } = req.params;
         const { nome, email, senha, tipo } = req.body;
 
-        const userById = await userRepository.getUserById(id); // Corrected function name
+        const userById = await userRepository.getUserById(id); // Nome da função corrigido
         if (!userById) {
             return res.status(404).send({ message: "Usuário não encontrado" });
         }
 
-        const updatedUser  = await userRepository.updateUser (id, { nome, email, senha, tipo });
-        return res.status(200).send({ message: "Usuário atualizado com sucesso", updatedUser  });
+        // Corrigido para passar parâmetros separados
+        const updatedUser = await userRepository.updateUser(id, nome, email, senha, tipo);
+        return res.status(200).send({ message: "Usuário atualizado com sucesso", updatedUser });
     } catch (error) {
         return res.status(500).send({ message: "Erro ao atualizar usuário", error: error.message });
     }
 }
 
-/*delete*/ 
-export const deleteUser  = async (req, res) => {
+/* Delete User */ 
+export const deleteUser = async (req, res) => {
     try {
         const { id } = req.params;
-        const user = await userRepository.getUserById(id); // Corrected function name
+        const user = await userRepository.getUserById(id); // Nome da função corrigido
         if (!user) {
             return res.status(404).send({ message: "Usuário não encontrado" });
         }
-        await userRepository.deleteUser (id);
+        await userRepository.deleteUser(id);
         return res.status(200).send({ message: "Usuário deletado com sucesso" });
     } catch (error) {
         return res.status(500).send({ message: "Erro ao deletar usuário", error: error.message });
