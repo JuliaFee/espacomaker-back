@@ -3,7 +3,7 @@ import jwt from 'jsonwebtoken'; // Import JWT library
 const userRepository = new UserList();
 const JWT_SECRET = '123'; // Replace with your actual secret
 
-// Register User
+/*post*/ 
 export const registerUser  = async (req, res) => {
     try {
         const { nome, email, senha, tipo } = req.body;
@@ -15,7 +15,7 @@ export const registerUser  = async (req, res) => {
     }
 }
 
-// User Login
+/*login*/ 
 export const loginUser  = async (req, res) => {
     try {
         const { email, senha } = req.body;
@@ -34,7 +34,7 @@ export const loginUser  = async (req, res) => {
     }
 }
 
-// Get User Details
+/*get*/ 
 export const getUser = async (req, res) => {
     try {
         const { id } = req.params;
@@ -47,8 +47,7 @@ export const getUser = async (req, res) => {
         return res.status(500).send({ message: "Erro ao buscar usuário", error: error.message });
     }
 }
-
-// Update User
+/*put*/ 
 export const updateUser  = async (req, res) => {
     try {
         const { id } = req.params;
@@ -66,7 +65,7 @@ export const updateUser  = async (req, res) => {
     }
 }
 
-// Delete User
+/*delete*/ 
 export const deleteUser  = async (req, res) => {
     try {
         const { id } = req.params;
