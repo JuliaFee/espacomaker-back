@@ -35,6 +35,7 @@ CREATE TABLE reservas (
   id_user INT NOT NULL,
   id_ferramenta INT,
   id_impressora INT,
+  id_horario INT,
   data_reserva DATE NOT NULL,
   status_reserva BOOLEAN NOT NULL DEFAULT FALSE, 
   FOREIGN KEY (id_user) REFERENCES users (id),
