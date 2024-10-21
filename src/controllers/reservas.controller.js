@@ -3,9 +3,9 @@ import ReservasRepository from "../models/reservas/ReservasList.js";
 
 const reservasRepository = new ReservasRepository();
 
-export const getReserva = async (req, res) => {
+export const getReservas = async (req, res) => {
     try {
-        const reservas = await reservasRepository.getReserva();
+        const reservas = await reservasRepository.getReservas();
         if (!reservas || reservas.length === 0) {
             return res.status(404).send({ message: "Não há reservas" });
         }
@@ -34,12 +34,12 @@ export const getReservaById = async (req, res) => {
 
 export const addReserva = async (req, res) => {
     try {
-        const { id_user, id_item, id_equipamento, tipo_item, data_reserva, hora_inicio, hora_fim, status_reserva } = req.body;
-        const reserva = await reservasRepository.getReservaById(id_user, id_item, id_equipamento, tipo_item, data_reserva, hora_inicio, hora_fim, status_reserva);
-        if (reserva) {
+        const { id_user, id_ferramenta, id_impressora, data_reserva, status_reserva } = req.body;
+        const existingReserva = await reservasRepository.getReservaById(id_user, id_ferramenta, id_impressora, data_reserva);
+        if (existingReserva) {
             return res.status(409).send({ message: "Essa reserva já existe" });
         }
-        const newReserva = new Reservas(id_user, id_item, id_equipamento, tipo_item, data_reserva, hora_inicio, hora_fim, status_reserva);
+        const newReserva = new Reservas(id_user, id_ferramenta, id_impressora, data_reserva, status_reserva);
         await reservasRepository.addReserva(newReserva);
         return res
             .status(201)
@@ -52,29 +52,25 @@ export const addReserva = async (req, res) => {
     }
 }
 
-
 export const updateReserva = async (req, res) => {
     try {
         const { id } = req.params;
-        const { id_user, id_item, id_equipamento, tipo_item, data_reserva, hora_inicio, hora_fim, status_reserva } = req.body;
+        const { id_user, id_ferramenta, id_impressora, data_reserva, status_reserva } = req.body;
         const reservaById = await reservasRepository.getReservaById(id);
         if (!reservaById) {
             return res.status(404).send({ message: "Reserva não encontrada" });
         }
 
-        const updateReserva = await reservasRepository.updateReserva(
+        const updatedReserva = await reservasRepository.updateReserva(
             id,
             id_user, 
-            id_item, 
-            id_equipamento, 
-            tipo_item, 
+            id_ferramenta, 
+            id_impressora, 
             data_reserva, 
-            hora_inicio, 
-            hora_fim, 
             status_reserva);
         return res
             .status(200)
-            .send({ message: "Reserva atualizada com sucesso", updateReserva });
+            .send({ message: "Reserva atualizada com sucesso", updatedReserva });
     } catch (error) {
         return res
             .status(500)
@@ -97,4 +93,3 @@ export const deleteReserva = async (req, res) => {
             .send({ message: "Erro ao deletar reserva", error: error.message });
     }
 }
-
