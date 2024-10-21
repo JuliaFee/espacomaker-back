@@ -1,6 +1,7 @@
-import FerramentaList from "../models/ferramentas/FerramentasList.js"; 
+import FerramentaList from "../models/ferramenta/FerramentaList.js"; 
 const ferramentaRepository = new FerramentaList();
 
+// Get all Ferramentas
 export const getFerramentas = async (req, res) => {
     try {
         const ferramentas = await ferramentaRepository.getFerramentas();
@@ -9,12 +10,11 @@ export const getFerramentas = async (req, res) => {
         }
         return res.status(200).send({ totalFerramentas: ferramentas.length, ferramentas });
     } catch (error) {
-        return res
-            .status(500)
-            .send({ message: "Erro ao buscar ferramentas", error: error.message });
+        return res.status(500).send({ message: "Erro ao buscar ferramentas", error: error.message });
     }
 }
 
+// Get Ferramenta by ID
 export const getFerramentaById = async (req, res) => {
     try {
         const { id } = req.params;
@@ -24,54 +24,40 @@ export const getFerramentaById = async (req, res) => {
         }
         return res.status(200).send({ message: "Ferramenta encontrada", ferramenta });
     } catch (error) {
-        return res
-            .status(500)
-            .send({ message: "Erro ao buscar ferramenta", error: error.message });
+        return res.status(500).send({ message: "Erro ao buscar ferramenta", error: error.message });
     }
 }
 
+// Add Ferramenta
 export const addFerramenta = async (req, res) => {
     try {
-        const { nome, descricao, img, status } = req.body;
-        const newFerramenta = { nome, descricao, img, status };
+        const { nome, descricao, img } = req.body;
+        const newFerramenta = { nome, descricao, img };
         const ferramenta = await ferramentaRepository.registerFerramenta(newFerramenta);
-        return res
-            .status(201)
-            .send({ message: "Ferramenta criada com sucesso", ferramenta });
-    
+        return res.status(201).send({ message: "Ferramenta criada com sucesso", ferramenta });
     } catch (error) {
-        return res
-            .status(500)
-            .send({ message: "Erro ao criar ferramenta", error: error.message });
+        return res.status(500).send({ message: "Erro ao criar ferramenta", error: error.message });
     }
 }
 
+// Update Ferramenta
 export const updateFerramenta = async (req, res) => {
     try {
         const { id } = req.params;
-        const { nome, descricao, img, status } = req.body;
+        const { nome, descricao, img } = req.body;
         const ferramentaById = await ferramentaRepository.getFerramentaById(id);
         if (!ferramentaById) {
             return res.status(404).send({ message: "Ferramenta não encontrada" });
         }
 
-        const updatedFerramenta = await ferramentaRepository.updateFerramenta(
-            id,
-            nome, 
-            descricao, 
-            img, 
-            status
-        );
-        return res
-            .status(200)
-            .send({ message: "Ferramenta atualizada com sucesso", updatedFerramenta });
+        const updatedFerramenta = await ferramentaRepository.updateFerramenta(id, nome, descricao, img);
+        return res.status(200).send({ message: "Ferramenta atualizada com sucesso", updatedFerramenta });
     } catch (error) {
-        return res
-            .status(500)
-            .send({ message: "Erro ao atualizar ferramenta", error: error.message });
+        return res.status(500).send({ message: "Erro ao atualizar ferramenta", error: error.message });
     }
 }
 
+// Delete Ferramenta
 export const deleteFerramenta = async (req, res) => {
     try {
         const { id } = req.params;
@@ -82,8 +68,6 @@ export const deleteFerramenta = async (req, res) => {
         await ferramentaRepository.deleteFerramenta(id);
         return res.status(200).send({ message: "Ferramenta deletada com sucesso" });
     } catch (error) {
-        return res
-            .status(500)
-            .send({ message: "Erro ao deletar ferramenta", error: error.message });
+        return res.status(500).send({ message: "Erro ao deletar ferramenta", error: error.message });
     }
 }

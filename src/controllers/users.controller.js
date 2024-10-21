@@ -1,112 +1,82 @@
-import User from "../models/user/Users.js";
-import UserList from "../models/user/UsersList.js";
+import UserList from "../models/user/UserList.js"; 
+import jwt from 'jsonwebtoken'; // Import JWT library
+const userRepository = new UserList();
+const JWT_SECRET = '123'; // Replace with your actual secret
 
-const UserList_A = new UserList();
-
-// Função para listar todos os usuários (GET)
-export const getUsers = async (req, res) => {
-  try {
-    const users = await UserList_A.getUsers();
-    if (!users || users.length === 0) {
-      return res.status(404).send({ message: "Não há usuários cadastrados" });
+// Register User
+export const registerUser  = async (req, res) => {
+    try {
+        const { nome, email, senha, tipo } = req.body;
+        const newUser  = { nome, email, senha, tipo };
+        const user = await userRepository.registerUser (newUser );
+        return res.status(201).send({ message: "Usuário criado com sucesso", user });
+    } catch (error) {
+        return res.status(500).send({ message: "Erro ao criar usuário", error: error.message });
     }
-    return res.status(200).send({ totalUsers: users.length, users });
-  } catch (error) {
-    return res.status(500).send({ message: "Erro ao buscar usuários", error: error.message });
-  }
-};
+}
 
-// Função para buscar um usuário por ID (GET)
-export const getUserById = async (req, res) => {
-  try {
-    const { id } = req.params;
-    const user = await UserList_A.getUserById(id);
-    if (!user) {
-      return res.status(404).send({ message: "Usuário não encontrado" });
+// User Login
+export const loginUser  = async (req, res) => {
+    try {
+        const { email, senha } = req.body;
+        const user = await userRepository.getUserByEmail(email); // Corrected function name
+
+        if (!user || user.senha !== senha) { // Direct comparison without hashing
+            return res.status(401).send({ message: "Credenciais inválidas" });
+        }
+
+        // Generate token
+        const token = jwt.sign({ id: user.id, email: user.email }, JWT_SECRET, { expiresIn: '1h' }); // Token expires in 1 hour
+
+        return res.status(200).send({ message: "Login bem-sucedido", user, token }); // Include token in response
+    } catch (error) {
+        return res.status(500).send({ message: "Erro ao fazer login", error: error.message });
     }
-    return res.status(200).send({ message: "Usuário encontrado", user });
-  } catch (error) {
-    return res.status(500).send({ message: "Erro ao buscar usuário", error: error.message });
-  }
-};
+}
 
-// Função para buscar um usuário por email (GET)
-export const getUserByEmail = async (req, res) => {
-  try {
-    const { email } = req.params;
-    const user = await UserList_A.getUserByEmail(email);
-    if (!user) {
-      return res.status(404).send({ message: "Usuário não encontrado" });
+// Get User Details
+export const getUser = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const user = await userRepository.getUserById(id); // Corrected function name
+        if (!user) {
+            return res.status(404).send({ message: "Usuário não encontrado" });
+        }
+        return res.status(200).send({ message: "Usuário encontrado", user });
+    } catch (error) {
+        return res.status(500).send({ message: "Erro ao buscar usuário", error: error.message });
     }
-    return res.status(200).send({ message: "Usuário encontrado", user });
-  } catch (error) {
-    return res.status(500).send({ message: "Erro ao buscar usuário", error: error.message });
-  }
-};
+}
 
-// Função para criar um novo usuário (POST)
-export const addUser = async (req, res) => {
-  try {
-    const { nome, email, turma, senha, tipo } = req.body;
+// Update User
+export const updateUser  = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const { nome, email, senha, tipo } = req.body;
 
-    const userAlreadyExists = await UserList_A.getUserByEmail(email);
-    if (userAlreadyExists) {
-      return res.status(409).send({ message: "Usuário já cadastrado" });
+        const userById = await userRepository.getUserById(id); // Corrected function name
+        if (!userById) {
+            return res.status(404).send({ message: "Usuário não encontrado" });
+        }
+
+        const updatedUser  = await userRepository.updateUser (id, { nome, email, senha, tipo });
+        return res.status(200).send({ message: "Usuário atualizado com sucesso", updatedUser  });
+    } catch (error) {
+        return res.status(500).send({ message: "Erro ao atualizar usuário", error: error.message });
     }
+}
 
-    const user = new User(nome, email, turma, senha, tipo);
-    await UserList_A.addUser(user);
-
-    return res.status(201).send({ message: "Usuário criado com sucesso", user });
-  } catch (error) {
-    return res.status(500).send({ message: "Erro ao criar usuário", error: error.message });
-  }
-};
-
-// Função para atualizar um usuário existente (PUT)
-export const updateUser = async (req, res) => {
-  try {
-    const { id } = req.params;
-    const { nome, email, turma, senha, tipo } = req.body;
-
-    // Verifica se o usuário existe
-    const userById = await UserList_A.getUserById(id);
-    if (!userById) {
-      return res.status(404).send({ message: "Usuário não encontrado" });
+// Delete User
+export const deleteUser  = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const user = await userRepository.getUserById(id); // Corrected function name
+        if (!user) {
+            return res.status(404).send({ message: "Usuário não encontrado" });
+        }
+        await userRepository.deleteUser (id);
+        return res.status(200).send({ message: "Usuário deletado com sucesso" });
+    } catch (error) {
+        return res.status(500).send({ message: "Erro ao deletar usuário", error: error.message });
     }
-
-    // Atualiza os dados do usuário
-    const updatedUser = await UserList_A.updateUser(
-      id,
-      nome,
-      email,
-      turma,
-      senha,
-      tipo
-    );
-
-    return res.status(200).send({ message: "Usuário atualizado com sucesso", updatedUser });
-  } catch (error) {
-    return res.status(500).send({ message: "Erro ao atualizar usuário", error: error.message });
-  }
-};
-
-// Função para deletar um usuário (DELETE)
-export const deleteUser = async (req, res) => {
-  try {
-    const { id } = req.params;
-
-    // Verifica se o usuário existe
-    const user = await UserList_A.getUserById(id);
-    if (!user) {
-      return res.status(404).send({ message: "Usuário não encontrado" });
-    }
-
-    // Deleta o usuário
-    await UserList_A.deleteUser(id);
-
-    return res.status(200).send({ message: "Usuário deletado com sucesso" });
-  } catch (error) {
-    return res.status(500).send({ message: "Erro ao deletar usuário", error: error.message });
-  }
-};
+}
