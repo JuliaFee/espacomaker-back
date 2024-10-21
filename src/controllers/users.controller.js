@@ -47,14 +47,14 @@ export const getUserByEmail = async (req, res) => {
 // Função para criar um novo usuário (POST)
 export const addUser = async (req, res) => {
   try {
-    const { nome, email, turma, senha } = req.body;
+    const { nome, email, turma, senha, tipo } = req.body;
 
     const userAlreadyExists = await UserList_A.getUserByEmail(email);
     if (userAlreadyExists) {
       return res.status(409).send({ message: "Usuário já cadastrado" });
     }
 
-    const user = new User(nome, email, turma, senha);
+    const user = new User(nome, email, turma, senha, tipo);
     await UserList_A.addUser(user);
 
     return res.status(201).send({ message: "Usuário criado com sucesso", user });
@@ -67,7 +67,7 @@ export const addUser = async (req, res) => {
 export const updateUser = async (req, res) => {
   try {
     const { id } = req.params;
-    const { nome, email, turma, senha } = req.body;
+    const { nome, email, turma, senha, tipo } = req.body;
 
     // Verifica se o usuário existe
     const userById = await UserList_A.getUserById(id);
@@ -81,7 +81,8 @@ export const updateUser = async (req, res) => {
       nome,
       email,
       turma,
-      senha
+      senha,
+      tipo
     );
 
     return res.status(200).send({ message: "Usuário atualizado com sucesso", updatedUser });
