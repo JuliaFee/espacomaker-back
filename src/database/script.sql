@@ -9,7 +9,7 @@ CREATE TABLE users (
   nome VARCHAR(255) NOT NULL,
   email VARCHAR(255) NOT NULL UNIQUE,
   senha VARCHAR(255) NOT NULL,
-  tipo VARCHAR(50) NOT NULL CHECK (tipo IN ('usuario', 'admin')) -- Define o tipo de usuário
+  tipo VARCHAR(50) NOT NULL CHECK (tipo IN ('user', 'adm')) -- Define o tipo de usuário
 );
 
 CREATE TABLE ferramentas (
@@ -26,7 +26,8 @@ CREATE TABLE impressoras (
   descricao VARCHAR(255) NOT NULL,
   img VARCHAR(255),
   status BOOLEAN NOT NULL DEFAULT TRUE,
-  valor FLOAT NOT NULL
+  valor_filamento FLOAT NOT NULL,
+  FOREIGN KEY (valor_filamento) REFERENCES filamentos (valor_por_kg)
 );
 
 CREATE TABLE reservas (
@@ -134,3 +135,7 @@ INSERT INTO ferramentas (nome, descricao, img, statusF) VALUES ('Stanley Esquadr
 INSERT INTO impressora (nome, descricao, img, statusI, valor) VALUES ('3D Print Quick Ender-3 V2', 'Impressora 3D de fácil uso, ideal para modelagem e prototipagem rápida.', 'https://i.imgur.com/QWRDQrD.jpg', true, 0);
 INSERT INTO impressora (nome, descricao, img, statusI, valor) VALUES ('Shenzhen Creality 3D', 'Conhecida por suas impressoras 3D de qualidade e acessíveis.', 'https://i.imgur.com/3F0yg1q.jpg', true, 0);
 INSERT INTO impressora (nome, descricao, img, statusI, valor) VALUES ('3D Printer Use Manual', 'Impressora 3D com uma ótima qualidade de modelagem e prototipagem.', 'https://i.imgur.com/5LYLhTW.jpg', true, 0);
+
+-- Usuarios
+INSERT INTO users (nome, email, senha, tipo) VALUES ('Administrador', 'adm@example.com', 'Senha123', 'adm');
+INSERT INTO users (nome, email, senha, tipo) VALUES ('Aluno', 'aluno@example.com', 'Senha456', 'user');
