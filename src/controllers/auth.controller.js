@@ -5,17 +5,18 @@ export const generateToken = (user) => {
   const payload = {
     id: user.id,
     email: user.email,
+    tipo: user.tipo, 
   };
 
   const token = jwt.sign(payload, process.env.SECRET_KEY, {
-    expiresIn: '1h', 
+    expiresIn: '1h',
   });
 
   return token;
 };
 
 export const login = async (req, res) => {
-  const listaUser = new UserList;
+  const listaUser = new UserList();
   console.log('Login function called'); 
   try {
     const { email, senha } = req.body;
@@ -30,7 +31,7 @@ export const login = async (req, res) => {
     }
 
     const token = generateToken(user);
-    return res.status(200).send({ message: "Login realizado com sucesso", token });
+    return res.status(200).send({ message: "Login realizado com sucesso", token, tipo: user.tipo });
   } catch (error) {
     return res.status(500).send({ message: "Erro ao fazer login", error: error.message });
   }
