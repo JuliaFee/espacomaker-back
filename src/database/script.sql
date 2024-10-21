@@ -134,11 +134,10 @@ INSERT INTO ferramentas (nome, descricao, img, statusF) VALUES ('Pica Fio', 'Fer
 INSERT INTO ferramentas (nome, descricao, img, statusF) VALUES ('Serra', 'Ferramenta cortante utilizada em diversos materiais, com madeira e metal.', 'https://i.imgur.com/DNdlDmL.jpg', true);
 INSERT INTO ferramentas (nome, descricao, img, statusF) VALUES ('Stanley Esquadro Combinado', 'Ferramenta de medição e marcação que combina esquadro e uma régua, essencial para carpintaria.', 'https://i.imgur.com/KK0nj0u.jpg', true);
 
-
 -- Impressoras
-INSERT INTO impressora (nome, descricao, img, statusI, valor) VALUES ('3D Print Quick Ender-3 V2', 'Impressora 3D de fácil uso, ideal para modelagem e prototipagem rápida.', 'https://i.imgur.com/QWRDQrD.jpg', true, 0);
-INSERT INTO impressora (nome, descricao, img, statusI, valor) VALUES ('Shenzhen Creality 3D', 'Conhecida por suas impressoras 3D de qualidade e acessíveis.', 'https://i.imgur.com/3F0yg1q.jpg', true, 0);
-INSERT INTO impressora (nome, descricao, img, statusI, valor) VALUES ('3D Printer Use Manual', 'Impressora 3D com uma ótima qualidade de modelagem e prototipagem.', 'https://i.imgur.com/5LYLhTW.jpg', true, 0);
+INSERT INTO impressoras (nome, descricao, img, statusI, filamento) VALUES ('3D Print Quick Ender-3 V2', 'Impressora 3D de fácil uso, ideal para modelagem e prototipagem rápida.', 'https://i.imgur.com/QWRDQrD.jpg', true, 0);
+INSERT INTO impressoras (nome, descricao, img, statusI, filamento) VALUES ('Shenzhen Creality 3D', 'Conhecida por suas impressoras 3D de qualidade e acessíveis.', 'https://i.imgur.com/3F0yg1q.jpg', true, 0);
+INSERT INTO impressoras (nome, descricao, img, statusI, filamento) VALUES ('3D Printer Use Manual', 'Impressora 3D com uma ótima qualidade de modelagem e prototipagem.', 'https://i.imgur.com/5LYLhTW.jpg', true, 0);
 
 -- Usuarios
 INSERT INTO users (nome, email, senha, tipo) VALUES ('Administrador', 'adm@example.com', 'Senha123', 'adm');
