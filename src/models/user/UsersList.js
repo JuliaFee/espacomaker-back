@@ -38,28 +38,22 @@ export default class UserList {
     }
   }
 
-  
-  async addUser (user){
+  // Método para adicionar um novo usuário
+  async addUser(user) {
     try {
       await this.db.none(
-        "INSERT INTO users (nome, email, turma, senha) VALUES ($1, $2, $3, $4)",
-        [ user.nome, user.email, user.turma, user.senha]
-    
+        "INSERT INTO users (nome, email, turma, senha, tipo) VALUES ($1, $2, $3, $4, $5)",
+        [user.nome, user.email, user.turma, user.senha, user.tipo] // Adiciona o tipo aqui
       );
-      console.log(user);
       return user;
-    }
-    catch (error){
-      console.error("falha ao adicionar usuario", error);
+    } catch (error) {
+      console.error("Falha ao adicionar usuário:", error.message);
       throw error;
-      
     }
   }
 
-
-
   // Método para atualizar um usuário existente
-  async updateUser(id, nome, email, turma, senha) {
+  async updateUser(id, nome, email, turma, senha, tipo) {
     try {
       const user = await this.getUserById(id);
 
@@ -69,8 +63,8 @@ export default class UserList {
       }
 
       const updatedUser = await this.db.one(
-        "UPDATE users SET nome = $1, email = $2, turma = $3, senha = $4 WHERE id = $5 RETURNING *",
-        [nome, email, turma, senha, id]
+        "UPDATE users SET nome = $1, email = $2, turma = $3, senha = $4, tipo = $5 WHERE id = $6 RETURNING *",
+        [nome, email, turma, senha, tipo, id] // Atualiza o tipo aqui
       );
 
       return updatedUser;
