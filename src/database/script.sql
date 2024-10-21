@@ -4,77 +4,62 @@ DROP TABLE IF EXISTS ferramentas;
 DROP TABLE IF EXISTS users;
 DROP TABLE IF EXISTS adm;
 
--- Tabela adm
-CREATE TABLE adm (
+CREATE TABLE users (
   id SERIAL PRIMARY KEY,
-  nome VARCHAR(100) NOT NULL,
-  email VARCHAR(100) NOT NULL,
-  senha VARCHAR(50) NOT NULL
+  nome VARCHAR(255) NOT NULL,
+  email VARCHAR(255) NOT NULL UNIQUE,
+  senha VARCHAR(255) NOT NULL,
+  tipo VARCHAR(50) NOT NULL CHECK (tipo IN ('usuario', 'admin')) -- Define o tipo de usuário
 );
 
--- Tabela ferramentas
 CREATE TABLE ferramentas (
   id SERIAL PRIMARY KEY,
   nome VARCHAR(100) NOT NULL,
   descricao VARCHAR(255) NOT NULL,
   img VARCHAR(255),
-  statusF BOOLEAN NOT NULL 
+  status BOOLEAN NOT NULL DEFAULT TRUE -- Ativo/Disponível por padrão
 );
 
--- Tabela impressora
-CREATE TABLE impressora (
+CREATE TABLE impressoras (
   id SERIAL PRIMARY KEY,
   nome VARCHAR(100) NOT NULL,
   descricao VARCHAR(255) NOT NULL,
   img VARCHAR(255),
-  statusI BOOLEAN NOT NULL,
-  valor FLOAT NOT NULL 
+  status BOOLEAN NOT NULL DEFAULT TRUE,
+  valor FLOAT NOT NULL
 );
 
--- Tabela usuario
-CREATE TABLE users (
-  id SERIAL PRIMARY KEY,
-  nome VARCHAR(255),
-  email VARCHAR(255),
-  turma VARCHAR(255),
-  senha VARCHAR(255) 
-);
-
--- Tabela reserva
-CREATE TABLE reserva (
+CREATE TABLE reservas (
   id SERIAL PRIMARY KEY,
   id_user INT NOT NULL,
-  id_ferramenta INT, 
-  id_impressora INT, 
+  id_ferramenta INT,
+  id_impressora INT,
   data_reserva DATE NOT NULL,
-  status_reserva BOOLEAN NOT NULL,
+  status_reserva BOOLEAN NOT NULL DEFAULT FALSE, 
   FOREIGN KEY (id_user) REFERENCES users (id),
   FOREIGN KEY (id_ferramenta) REFERENCES ferramentas (id),
-  FOREIGN KEY (id_impressora) REFERENCES impressora (id)
+  FOREIGN KEY (id_impressora) REFERENCES impressoras (id)
 );
 
-CREATE TABLE horario (
+CREATE TABLE horarios (
   id SERIAL PRIMARY KEY,
   id_impressora INT NOT NULL,
-  id_ferramenta INT NOT NULL,
+  id_ferramenta INT,
   hora_inicio TIME NOT NULL,
   hora_fim TIME NOT NULL,
-  FOREIGN KEY (id_impressora) REFERENCES impressora (id),
+  FOREIGN KEY (id_impressora) REFERENCES impressoras (id),
   FOREIGN KEY (id_ferramenta) REFERENCES ferramentas (id)
-)
-
--- Tabela de filamento
-CREATE TABLE filamento (
-    id SERIAL PRIMARY KEY,
-    id_impressora INT NOT NULL,
-    tipo VARCHAR(100) NOT NULL, 
-    cor VARCHAR(50) NOT NULL,
-    quantidade FLOAT NOT NULL, 
-    valor_por_kg FLOAT NOT NULL,
-    FOREIGN KEY (id_impressora) REFERENCES impressora (id)
 );
 
-
+CREATE TABLE filamentos (
+  id SERIAL PRIMARY KEY,
+  id_impressora INT NOT NULL,
+  tipo VARCHAR(100) NOT NULL,
+  cor VARCHAR(50) NOT NULL,
+  quantidade FLOAT NOT NULL,
+  valor_por_kg FLOAT NOT NULL,
+  FOREIGN KEY (id_impressora) REFERENCES impressoras (id)
+);
 -- Ferramentas
 INSERT INTO ferramentas (nome, descricao, img, statusF) VALUES ('Alicate 6', 'Alicate de pequeno porte, ideal para cortes e apertos em trabalhos manuais ou elétricos.', 'https://i.imgur.com/IZTi37d.jpg', true);
 INSERT INTO ferramentas (nome, descricao, img, statusF) VALUES ('Alicate 6-2', 'Alicate de pequeno porte, ideal para cortes e apertos em trabalhos manuais ou elétricos.', 'https://i.imgur.com/ylB6Tdi.jpg', true);
