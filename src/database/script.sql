@@ -55,6 +55,17 @@ CREATE TABLE reserva (
   FOREIGN KEY (id_impressora) REFERENCES impressora (id)
 );
 
+-- Tabela de filamento
+CREATE TABLE filamento (
+    id SERIAL PRIMARY KEY,
+    id_impressora INT NOT NULL,
+    tipo VARCHAR(100) NOT NULL, 
+    cor VARCHAR(50) NOT NULL,
+    quantidade FLOAT NOT NULL, 
+    valor_por_kg FLOAT NOT NULL,
+    FOREIGN KEY (id_impressora) REFERENCES impressora (id)
+);
+
 
 -- Ferramentas
 INSERT INTO ferramentas (nome, descricao, img, statusF) VALUES ('Alicate 6', 'Alicate de pequeno porte, ideal para cortes e apertos em trabalhos manuais ou elétricos.', 'https://i.imgur.com/IZTi37d.jpg', true);
