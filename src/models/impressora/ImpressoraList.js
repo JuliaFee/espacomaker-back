@@ -27,19 +27,18 @@ class ImpressoraList {
   
   async addImpressora(impressora) {
     try {
-        await this.db.none(
-            "INSERT INTO impressoras (nome, descricao, img, statusI, filamento) VALUES ($1, $2, $3, $4, $5)",
-            [impressora.nome, impressora.descricao, impressora.img, impressora.statusI, impressora.valor]
-        );
-        return impressora;
+      await this.db.none(
+        "INSERT INTO impressoras (nome, descricao, img, statusI, filamento) VALUES ($1, $2, $3, $4, $5)",
+        [impressora.nome, impressora.descricao, impressora.img, impressora.statusI, impressora.filamento]
+      );
+      return impressora;
     } catch (error) {
-        console.error("Failed to register impressora:", error);
-        throw error; 
+      console.error("Failed to register impressora:", error);
+      throw error; 
     }
-}
+  }
 
-  
-  async updateImpressora(id, nome, descricao, img, statusI, valor) {
+  async updateImpressora(id, nome, descricao, img, statusI, filamento) {
     try {
       const impressora = await this.getImpressoraById(id);
   
@@ -49,7 +48,7 @@ class ImpressoraList {
   
       const updatedImpressora = await this.db.one(
         "UPDATE impressoras SET nome = $1, descricao = $2, img = $3, statusI = $4, filamento = $5 WHERE id = $6 RETURNING *",
-        [nome, descricao, img, statusI, valor, id]
+        [nome, descricao, img, statusI, filamento, id]
       );
   
       return updatedImpressora;
@@ -67,7 +66,6 @@ class ImpressoraList {
       throw error;
     }
   }
-  
 }
 
 export default ImpressoraList;
