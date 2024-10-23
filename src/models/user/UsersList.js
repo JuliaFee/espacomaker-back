@@ -18,14 +18,12 @@ export default class UserList {
 
   // Método para obter um usuário pelo ID
   async getUserById(id) {
-    try {
-      const user = await this.db.oneOrNone("SELECT * FROM users WHERE id = $1", [id]);
-      return user;
-    } catch (error) {
-      console.error(`Falha ao obter usuário por ID ${id}:`, error.message);
-      throw error;
-    }
-  }
+    // Check if `id` is a number and log it
+    console.log(`Fetching user with ID: ${id}`);
+    const user = await this.db.oneOrNone("SELECT * FROM users WHERE id = $1", [id]);
+    return user;
+}
+
 
   // Método para obter um usuário pelo email
   async getUserByEmail(email) {
