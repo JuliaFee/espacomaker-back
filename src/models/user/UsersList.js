@@ -18,7 +18,6 @@ export default class UserList {
 
   // Método para obter um usuário pelo ID
   async getUserById(id) {
-    // Check if `id` is a number and log it
     console.log(`Fetching user with ID: ${id}`);
     const user = await this.db.oneOrNone("SELECT * FROM users WHERE id = $1", [id]);
     return user;

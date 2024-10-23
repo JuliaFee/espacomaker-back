@@ -81,12 +81,11 @@ export const updateUser = async (req, res) => {
         const { id } = req.params;
         const { nome, email, senha, tipo } = req.body;
 
-        const userById = await userRepository.getUserById(id); // Nome da função corrigido
+        const userById = await userRepository.getUserById(id); 
         if (!userById) {
             return res.status(404).send({ message: "Usuário não encontrado" });
         }
 
-        // Corrigido para passar parâmetros separados
         const updatedUser = await userRepository.updateUser(id, nome, email, senha, tipo);
         return res.status(200).send({ message: "Usuário atualizado com sucesso", updatedUser });
     } catch (error) {
@@ -98,7 +97,7 @@ export const updateUser = async (req, res) => {
 export const deleteUser = async (req, res) => {
     try {
         const { id } = req.params;
-        const user = await userRepository.getUserById(id); // Nome da função corrigido
+        const user = await userRepository.getUserById(id); 
         if (!user) {
             return res.status(404).send({ message: "Usuário não encontrado" });
         }

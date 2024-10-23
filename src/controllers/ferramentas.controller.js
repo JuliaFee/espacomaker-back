@@ -29,10 +29,9 @@ export const getFerramentaById = async (req, res) => {
 }
 
 /*post*/ 
-/*post*/ 
 export const addFerramenta = async (req, res) => {
     try {
-        const { nome, descricao, img, statusF = true } = req.body; // Define valor padrão para statusF
+        const { nome, descricao, img, statusF = true } = req.body; 
         const newFerramenta = { nome, descricao, img, statusF };
         const ferramenta = await ferramentaRepository.registerFerramenta(newFerramenta);
         return res.status(201).send({ message: "Ferramenta criada com sucesso", ferramenta });
@@ -45,7 +44,7 @@ export const addFerramenta = async (req, res) => {
 export const updateFerramenta = async (req, res) => {
     try {
         const { id } = req.params;
-        const { nome, descricao, img, statusF = true } = req.body; // Define statusF com valor padrão
+        const { nome, descricao, img, statusF = true } = req.body; 
 
         const ferramentaById = await ferramentaRepository.getFerramentaById(id);
         if (!ferramentaById) {

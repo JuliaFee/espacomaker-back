@@ -30,7 +30,6 @@ class ReservaList {
 
     async addReserva(reserva) {
         try {
-            // Verificar se já existe uma reserva para a mesma impressora e horário na mesma data
             const existingReserva = await this.db.oneOrNone(
                 `SELECT * FROM reservas 
                  WHERE id_impressora = $1 
@@ -62,7 +61,6 @@ class ReservaList {
                 return null;
             }
 
-            // Verificar se já existe uma reserva para a mesma impressora e horário na mesma data
             const existingReserva = await this.db.oneOrNone(
                 `SELECT * FROM reservas 
                  WHERE id_impressora = $1 

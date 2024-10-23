@@ -36,7 +36,6 @@ export const addImpressora = async (req, res) => {
         console.log("Dados recebidos:", req.body);
         const { nome, descricao, img, statusI, filamento } = req.body;
 
-        // Adicionar uma verificação para garantir que 'statusI' é um booleano
         if (statusI === undefined) {
             return res.status(400).send({ message: "statusI é um campo obrigatório." });
         }
@@ -65,12 +64,10 @@ export const updateImpressora = async (req, res) => {
             return res.status(404).send({ message: "Impressora não encontrada" });
         }
 
-        // Verificar se statusI é booleano
         if (typeof statusI !== 'boolean') {
             return res.status(400).send({ message: "statusI é obrigatório e deve ser true ou false." });
         }
 
-        // Verificar se filamento é válido, caso esteja indefinido ou nulo, atribuir um valor padrão (exemplo: 0)
         if (filamento === undefined || filamento === null) {
             return res.status(400).send({ message: "filamento é obrigatório e não pode ser nulo." });
         }
@@ -81,7 +78,7 @@ export const updateImpressora = async (req, res) => {
             descricao,
             img,
             statusI,
-            filamento // Aqui garantimos que filamento tenha um valor válido
+            filamento 
         );
 
         return res.status(200).send({ message: "Impressora atualizada com sucesso", updatedImpressora });
