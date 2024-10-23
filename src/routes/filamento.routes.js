@@ -1,25 +1,18 @@
-import { Router } from "express";
+import express from 'express';
+const router = express.Router();
 
 import {
-    getFilamentos,
-    getFilamentoById,
-    addFilamento,
-    updateFilamento,
-    deleteFilamento
- } from "../controllers/filamento.controller.js";
- 
- const filamentoRouter = Router();
- 
- filamentoRouter.get("/", getFilamentos);
- filamentoRouter.get("/:id", getFilamentoById);
- filamentoRouter.post("/", addFilamento);
- filamentoRouter.put("/:id", updateFilamento);
- filamentoRouter.delete("/:id", deleteFilamento);
+  getFilamentos,
+  getFilamentoById,
+  registerFilamento,
+  updateFilamento,
+  deleteFilamento,
+} from '../models/filamento/FilamentoList';
 
- 
- export default filamentoRouter;
+router.get('/filamentos', getFilamentos);
+router.get('/filamentos/:id', getFilamentoById);
+router.post('/filamentos', registerFilamento,);
+router.put('/filamentos/:id', updateFilamento);
+router.delete('/filamentos/:id', deleteFilamento);
 
- 
- 
- 
- 
+export default router;

@@ -2,6 +2,7 @@ import FilamentoList from "../models/filamento/FilamentoList.js";
 const filamentoRepository = new FilamentoList();
 
 export const getFilamentos = async (req, res) => {
+    console.log('getFilamentos');
     try {
         const filamentos = await filamentoRepository.getFilamentos();
         if (!filamentos || filamentos.length === 0) {

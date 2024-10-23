@@ -7,7 +7,7 @@ class FilamentoList {
 
   async getFilamentos() {
     try {
-      const allFilamentos = await this.db.manyOrNone("SELECT * FROM filamento");
+      const allFilamentos = await this.db.manyOrNone("SELECT * FROM filamentos");
       return allFilamentos;
     } catch (error) {
       console.error("Failed to get filamentos:", error);
@@ -18,7 +18,7 @@ class FilamentoList {
   async getFilamentoById(id) {
     try {
       const filamento = await this.db.oneOrNone(
-        "SELECT * FROM filamento WHERE id = $1",
+        "SELECT * FROM filamentos WHERE id = $1",
         id
       );
       return filamento;
@@ -31,7 +31,7 @@ class FilamentoList {
   async registerFilamento(filamento) {
     try {
       await this.db.none(
-        "INSERT INTO filamento (id_impressora, tipo, cor, quantidade, valor_por_kg) VALUES ($1, $2, $3, $4, $5)",
+        "INSERT INTO filamentos (id_impressora, tipo, cor, quantidade, valor_por_kg) VALUES ($1, $2, $3, $4, $5)",
         [filamento.id_impressora, filamento.tipo, filamento.cor, filamento.quantidade, filamento.valor_por_kg]
       );
       return filamento;
@@ -50,7 +50,7 @@ class FilamentoList {
       }
 
       const updatedFilamento = await this.db.one(
-        "UPDATE filamento SET id_impressora = $1, tipo = $2, cor = $3, quantidade = $4, valor_por_kg = $5 WHERE id = $6 RETURNING *",
+        "UPDATE filamentos SET id_impressora = $1, tipo = $2, cor = $3, quantidade = $4, valor_por_kg = $5 WHERE id = $6 RETURNING *",
         [id_impressora, tipo, cor, quantidade, valor_por_kg, id]
       );
 
@@ -63,7 +63,7 @@ class FilamentoList {
 
   async deleteFilamento(id) {
     try {
-      await this.db.none("DELETE FROM filamento WHERE id = $1", id);
+      await this.db.none("DELETE FROM filamentos WHERE id = $1", id);
     } catch (error) {
       console.error(`Failed to delete filamento ${id}:`, error);
       throw error; 
