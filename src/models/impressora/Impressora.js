@@ -1,10 +1,10 @@
 
 export default class Impressora {
-    constructor(nome, descricao, img, status, valor) {
+    constructor(nome, descricao, img, statusI, valor) {
         this.nome = nome;
         this.descricao = descricao;
         this.img = img;
-        this.status = status;
+        this.statusI = statusI;
         this.valor = valor;
     }
   

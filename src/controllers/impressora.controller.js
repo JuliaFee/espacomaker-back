@@ -33,38 +33,63 @@ export const getImpressoraById = async (req, res) => {
 /*post*/ 
 export const addImpressora = async (req, res) => {
     try {
-        const { nome, descricao, img, status, valor_filamento } = req.body;
-        const newImpressora = new Impressora(nome, descricao, img, status, valor_filamento);
+        console.log("Dados recebidos:", req.body);
+        const { nome, descricao, img, statusI, filamento } = req.body;
+
+        // Adicionar uma verificação para garantir que 'statusI' é um booleano
+        if (statusI === undefined) {
+            return res.status(400).send({ message: "statusI é um campo obrigatório." });
+        }
+
+        const newImpressora = new Impressora(nome, descricao, img, statusI, filamento);
         const impressora = await impressoraRepository.addImpressora(newImpressora);
         return res.status(201).send({ message: "Impressora criada com sucesso", impressora });
     } catch (error) {
+        console.error("Erro ao criar impressora:", error);
         return res.status(500).send({ message: "Erro ao criar impressora", error: error.message });
     }
-}
+};
+
+
+
+  
 
 /*put*/ 
 export const updateImpressora = async (req, res) => {
     try {
         const { id } = req.params;
-        const { nome, descricao, img, status, valor_filamento } = req.body;
+        const { nome, descricao, img, statusI, filamento } = req.body;
+
         const impressoraById = await impressoraRepository.getImpressoraById(id);
         if (!impressoraById) {
             return res.status(404).send({ message: "Impressora não encontrada" });
         }
 
+        // Verificar se statusI é booleano
+        if (typeof statusI !== 'boolean') {
+            return res.status(400).send({ message: "statusI é obrigatório e deve ser true ou false." });
+        }
+
+        // Verificar se filamento é válido, caso esteja indefinido ou nulo, atribuir um valor padrão (exemplo: 0)
+        if (filamento === undefined || filamento === null) {
+            return res.status(400).send({ message: "filamento é obrigatório e não pode ser nulo." });
+        }
+
         const updatedImpressora = await impressoraRepository.updateImpressora(
             id,
-            nome, 
-            descricao, 
-            img, 
-            status, 
-            valor_filamento
+            nome,
+            descricao,
+            img,
+            statusI,
+            filamento // Aqui garantimos que filamento tenha um valor válido
         );
+
         return res.status(200).send({ message: "Impressora atualizada com sucesso", updatedImpressora });
     } catch (error) {
         return res.status(500).send({ message: "Erro ao atualizar impressora", error: error.message });
     }
-}
+};
+
 
 /*delete*/ 
 export const deleteImpressora = async (req, res) => {
