@@ -17,22 +17,41 @@ export const registerUser = async (req, res) => {
 
 /* Login User */ 
 export const loginUser = async (req, res) => {
-    try {
-        const { email, senha } = req.body;
-        const user = await userRepository.getUserByEmail(email); // Nome da função corrigido
+    const { nome, email, senha } = req.query; // Espera que nome, email e senha sejam passados como parâmetros na requisição GET
 
-        if (!user || user.senha !== senha) { // Comparação direta sem hashing
-            return res.status(401).send({ message: "Credenciais inválidas" });
+    try {
+        // Encontra o usuário pelo nome e email
+        const usuario = await User.findOne({ nome, email }); // Mongoose usa findOne para encontrar um usuário por múltiplos critérios
+
+        // Verifica se o usuário foi encontrado
+        if (!usuario) {
+            return res.json({ success: false, message: 'Usuário não encontrado' });
         }
 
-        // Gerar token
-        const token = jwt.sign({ id: user.id, email: user.email }, JWT_SECRET, { expiresIn: '1h' }); // O token expira em 1 hora
+        // Verifica se a senha está correta
+        const senhaCorreta = await usuario.comparePassword(senha); // Exemplo usando bcrypt
 
-        return res.status(200).send({ message: "Login bem-sucedido", user, token }); // Incluir o token na resposta
+        // Se a senha não estiver correta
+        if (!senhaCorreta) {
+            return res.json({ success: false, message: 'Senha incorreta' });
+        }
+
+        // Se todas as verificações passarem
+        return res.json({
+            success: true,
+            message: 'Login bem-sucedido',
+            usuario: {
+                id: usuario._id,
+                nome: usuario.nome,
+                email: usuario.email,
+                tipo: usuario.tipo // Retorna o tipo (user ou adm)
+            }
+        });
     } catch (error) {
-        return res.status(500).send({ message: "Erro ao fazer login", error: error.message });
+        console.error('Erro ao fazer login:', error);
+        return res.status(500).json({ success: false, message: 'Erro no servidor' });
     }
-}
+};
 
 /* Get Users */ 
 export const getUsers = async (req, res) => {
