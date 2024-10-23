@@ -31,8 +31,8 @@ class FerramentaList {
   async registerFerramenta(ferramenta) {
     try {
       await this.db.none(
-        "INSERT INTO ferramentas (nome, descricao, img, status) VALUES ($1, $2, $3, $4)",
-        [ferramenta.nome, ferramenta.descricao, ferramenta.img, ferramenta.status]
+        "INSERT INTO ferramentas (nome, descricao, img, statusF) VALUES ($1, $2, $3, $4)",
+        [ferramenta.nome, ferramenta.descricao, ferramenta.img, ferramenta.statusF]
       );
       return ferramenta;
     } catch (error) {
@@ -41,25 +41,26 @@ class FerramentaList {
     }
   }
 
-  async updateFerramenta(id, nome, descricao, img, status) {
+  async updateFerramenta(id, nome, descricao, img, statusF) {
     try {
-      const ferramenta = await this.getFerramentaById(id);
+        const ferramenta = await this.getFerramentaById(id);
 
-      if (!ferramenta) {
-        return null;
-      }
+        if (!ferramenta) {
+            return null;
+        }
 
-      const updatedFerramenta = await this.db.one(
-        "UPDATE ferramentas SET nome = $1, descricao = $2, img = $3, status = $4 WHERE id = $5 RETURNING *",
-        [nome, descricao, img, status, id]
-      );
+        const updatedFerramenta = await this.db.one(
+            "UPDATE ferramentas SET nome = $1, descricao = $2, img = $3, statusF = $4 WHERE id = $5 RETURNING *",
+            [nome, descricao, img, statusF, id]
+        );
 
-      return updatedFerramenta;
+        return updatedFerramenta;
     } catch (error) {
-      console.error(`Failed to update ferramenta ${id}:`, error);
-      throw error; 
+        console.error(`Failed to update ferramenta ${id}:`, error);
+        throw error; 
     }
-  }
+}
+
 
   async deleteFerramenta(id) {
     try {

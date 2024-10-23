@@ -29,32 +29,36 @@ export const getFerramentaById = async (req, res) => {
 }
 
 /*post*/ 
+/*post*/ 
 export const addFerramenta = async (req, res) => {
     try {
-        const { nome, descricao, img } = req.body;
-        const newFerramenta = { nome, descricao, img };
+        const { nome, descricao, img, statusF = true } = req.body; // Define valor padrão para statusF
+        const newFerramenta = { nome, descricao, img, statusF };
         const ferramenta = await ferramentaRepository.registerFerramenta(newFerramenta);
         return res.status(201).send({ message: "Ferramenta criada com sucesso", ferramenta });
     } catch (error) {
         return res.status(500).send({ message: "Erro ao criar ferramenta", error: error.message });
     }
 }
+
 /*put*/ 
 export const updateFerramenta = async (req, res) => {
     try {
         const { id } = req.params;
-        const { nome, descricao, img } = req.body;
+        const { nome, descricao, img, statusF = true } = req.body; // Define statusF com valor padrão
+
         const ferramentaById = await ferramentaRepository.getFerramentaById(id);
         if (!ferramentaById) {
             return res.status(404).send({ message: "Ferramenta não encontrada" });
         }
 
-        const updatedFerramenta = await ferramentaRepository.updateFerramenta(id, nome, descricao, img);
+        const updatedFerramenta = await ferramentaRepository.updateFerramenta(id, nome, descricao, img, statusF);
         return res.status(200).send({ message: "Ferramenta atualizada com sucesso", updatedFerramenta });
     } catch (error) {
         return res.status(500).send({ message: "Erro ao atualizar ferramenta", error: error.message });
     }
 }
+
 
 /*delete*/ 
 export const deleteFerramenta = async (req, res) => {

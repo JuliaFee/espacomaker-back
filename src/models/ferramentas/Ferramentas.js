@@ -1,10 +1,10 @@
 
 export default class Ferramentas {
-    constructor(nome, descricao, img, status) {
+    constructor(nome, descricao, img, statusF) {
         this.nome = nome;
         this.descricao = descricao;
         this.img = img;
-        this.status = status;
+        this.statusF = statusF;
     }
 
     

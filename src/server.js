@@ -5,7 +5,7 @@ import cors from "cors";
 
 config();
 
-const port = process.env.PORT || 5001;
+const port = process.env.PORT || 5000;
 
 const app = express();
 
