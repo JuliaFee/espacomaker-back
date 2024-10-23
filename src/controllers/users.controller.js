@@ -17,26 +17,24 @@ export const registerUser = async (req, res) => {
 
 /* Login User */ 
 export const loginUser = async (req, res) => {
-    const { nome, email, senha } = req.query; // Espera que nome, email e senha sejam passados como parâmetros na requisição GET
+    const { nome, email, senha } = req.body; // Expecting POST request with JSON body
 
     try {
-        // Encontra o usuário pelo nome e email
-        const usuario = await User.findOne({ nome, email }); // Mongoose usa findOne para encontrar um usuário por múltiplos critérios
+        // Check if user exists
+        const usuario = await userRepository.getUserByEmail(email); // Assuming you have this method
 
-        // Verifica se o usuário foi encontrado
         if (!usuario) {
             return res.json({ success: false, message: 'Usuário não encontrado' });
         }
 
-        // Verifica se a senha está correta
-        const senhaCorreta = await usuario.comparePassword(senha); // Exemplo usando bcrypt
+        // Check password
+        const senhaCorreta = await usuario.comparePassword(senha); // Ensure comparePassword is correctly defined
 
-        // Se a senha não estiver correta
         if (!senhaCorreta) {
             return res.json({ success: false, message: 'Senha incorreta' });
         }
 
-        // Se todas as verificações passarem
+        // Successful login
         return res.json({
             success: true,
             message: 'Login bem-sucedido',
@@ -44,8 +42,8 @@ export const loginUser = async (req, res) => {
                 id: usuario._id,
                 nome: usuario.nome,
                 email: usuario.email,
-                tipo: usuario.tipo // Retorna o tipo (user ou adm)
-            }
+                tipo: usuario.tipo,
+            },
         });
     } catch (error) {
         console.error('Erro ao fazer login:', error);
