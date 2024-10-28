@@ -3,14 +3,13 @@ import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt'; 
 
 const userRepository = new UserList();
-const JWT_SECRET = '123'; // Use um segredo mais seguro em produção
+const JWT_SECRET = '123'; 
 
 /* Register User */ 
 export const registerUser = async (req, res) => {
     try {
         const { nome, email, senha, tipo } = req.body;
 
-        // Não hash a senha
         const newUser = { nome, email, senha, tipo };
 
         const user = await userRepository.addUser(newUser);
@@ -32,12 +31,10 @@ export const loginUser = async (req, res) => {
             return res.status(404).json({ success: false, message: 'Usuário não encontrado' });
         }
 
-        // Compare diretamente a senha
         if (senha !== usuario.senha) {
             return res.status(401).json({ success: false, message: 'Senha incorreta' });
         }
 
-        // Gerar token JWT se necessário
         const token = jwt.sign({ id: usuario._id }, JWT_SECRET, { expiresIn: '1h' });
 
         return res.json({
@@ -94,7 +91,6 @@ export const updateUser = async (req, res) => {
             return res.status(404).send({ message: "Usuário não encontrado" });
         }
 
-        // Hash the new password if provided
         const hashedPassword = senha ? await bcrypt.hash(senha, 10) : userById.senha;
         
         const updatedUser = await userRepository.updateUser(id, nome, email, hashedPassword, tipo);

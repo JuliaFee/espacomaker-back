@@ -20,7 +20,6 @@ export const getReservas = async (req, res) => {
             return res.status(404).send({ message: "Não há reservas" });
         }
 
-        // Format the dates in the Brazilian standard (DD/MM/YYYY)
         const formatDateToBrazilian = (date) => {
             const day = String(date.getDate()).padStart(2, '0');
             const month = String(date.getMonth() + 1).padStart(2, '0');
@@ -30,7 +29,7 @@ export const getReservas = async (req, res) => {
 
         const formattedReservas = reservas.map(reserva => ({
             ...reserva,
-            data_reserva: formatDateToBrazilian(new Date(reserva.data_reserva)), // Format the date
+            data_reserva: formatDateToBrazilian(new Date(reserva.data_reserva)), 
         }));
 
         return res.status(200).send({ totalReservas: reservas.length, reservas: formattedReservas });
