@@ -50,8 +50,7 @@ CREATE TABLE reservas (
   status_reserva BOOLEAN NOT NULL DEFAULT FALSE, 
   FOREIGN KEY (id_user) REFERENCES users (id),
   FOREIGN KEY (id_ferramenta) REFERENCES ferramentas (id),
-  FOREIGN KEY (id_impressora) REFERENCES impressoras (id),
-  FOREIGN KEY (id_horario) REFERENCES horarios (id)
+  FOREIGN KEY (id_impressora) REFERENCES impressoras (id)
 );
 
 CREATE TABLE horarios (
