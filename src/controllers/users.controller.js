@@ -1,13 +1,17 @@
 import UserList from "./../models/user/UsersList.js"; 
-import jwt from 'jsonwebtoken'; // Import JWT library
+import jwt from 'jsonwebtoken'; 
+import bcrypt from 'bcrypt'; 
+
 const userRepository = new UserList();
-const JWT_SECRET = '123'; // Substitua pelo seu segredo real
+const JWT_SECRET = '123'; 
 
 /* Register User */ 
 export const registerUser = async (req, res) => {
     try {
         const { nome, email, senha, tipo } = req.body;
+
         const newUser = { nome, email, senha, tipo };
+
         const user = await userRepository.addUser(newUser);
         return res.status(201).send({ message: "Usuário criado com sucesso", user });
     } catch (error) {
@@ -15,29 +19,28 @@ export const registerUser = async (req, res) => {
     }
 }
 
+
 /* Login User */ 
 export const loginUser = async (req, res) => {
-    const { nome, email, senha } = req.body; // Expecting POST request with JSON body
+    const { email, senha } = req.body; 
 
     try {
-        // Check if user exists
-        const usuario = await userRepository.getUserByEmail(email); // Assuming you have this method
+        const usuario = await userRepository.getUserByEmail(email);
 
         if (!usuario) {
-            return res.json({ success: false, message: 'Usuário não encontrado' });
+            return res.status(404).json({ success: false, message: 'Usuário não encontrado' });
         }
 
-        // Check password
-        const senhaCorreta = await usuario.comparePassword(senha); // Ensure comparePassword is correctly defined
-
-        if (!senhaCorreta) {
-            return res.json({ success: false, message: 'Senha incorreta' });
+        if (senha !== usuario.senha) {
+            return res.status(401).json({ success: false, message: 'Senha incorreta' });
         }
 
-        // Successful login
+        const token = jwt.sign({ id: usuario._id }, JWT_SECRET, { expiresIn: '1h' });
+
         return res.json({
             success: true,
             message: 'Login bem-sucedido',
+            token,
             usuario: {
                 id: usuario._id,
                 nome: usuario.nome,
@@ -50,6 +53,8 @@ export const loginUser = async (req, res) => {
         return res.status(500).json({ success: false, message: 'Erro no servidor' });
     }
 };
+
+
 
 /* Get Users */ 
 export const getUsers = async (req, res) => {
@@ -86,7 +91,9 @@ export const updateUser = async (req, res) => {
             return res.status(404).send({ message: "Usuário não encontrado" });
         }
 
-        const updatedUser = await userRepository.updateUser(id, nome, email, senha, tipo);
+        const hashedPassword = senha ? await bcrypt.hash(senha, 10) : userById.senha;
+        
+        const updatedUser = await userRepository.updateUser(id, nome, email, hashedPassword, tipo);
         return res.status(200).send({ message: "Usuário atualizado com sucesso", updatedUser });
     } catch (error) {
         return res.status(500).send({ message: "Erro ao atualizar usuário", error: error.message });
