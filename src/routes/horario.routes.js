@@ -7,7 +7,7 @@ import {
   addHorario,
   updateHorario,
   deleteHorario,
-} from '../models/horarios/horarioList';
+} from '../controllers/horario.controller.js';
 
 router.get('/horarios', getHorarios);
 router.get('/horarios/:id', getHorarioById);
