@@ -55,7 +55,7 @@ CREATE TABLE reservas (
 
 CREATE TABLE horarios (
   id SERIAL PRIMARY KEY,
-  id_impressora INT NOT NULL,
+  id_impressora INT,
   id_ferramenta INT,
   hora_inicio TIME NOT NULL,
   hora_fim TIME NOT NULL,

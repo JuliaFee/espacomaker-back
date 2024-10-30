@@ -3,6 +3,7 @@ import ferramentaRouter from "./ferramentas.routes.js";
 import impressoraRouter from "./impressora.routes.js";
 import reservasRouter from "./reservas.routes.js";
 import usersRouter from "./users.routes.js";
+import horarioRouter from "./horario.routes.js";
 import authRouter from "./auth.routes.js";
 
 const router = Router();
@@ -13,6 +14,7 @@ router.get("/", (req, res) => {
 
 
 router.use("/ferramentas", ferramentaRouter);
+router.use("/horarios", horarioRouter);
 router.use("/impressora", impressoraRouter);
 router.use("/reservas", reservasRouter);
 router.use("/users", usersRouter);
