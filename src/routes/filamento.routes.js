@@ -1,18 +1,18 @@
 import express from 'express';
-const router = express.Router();
-
 import {
   getFilamentos,
   getFilamentoById,
-  registerFilamento,
+  addFilamento,  
   updateFilamento,
   deleteFilamento,
-} from '../models/filamento/FilamentoList';
+} from '../controllers/filamento.controller.js';
 
-router.get('/filamentos', getFilamentos);
-router.get('/filamentos/:id', getFilamentoById);
-router.post('/filamentos', registerFilamento,);
-router.put('/filamentos/:id', updateFilamento);
-router.delete('/filamentos/:id', deleteFilamento);
+const router = express.Router();
+
+router.get('/', getFilamentos);
+router.get('/:id', getFilamentoById);
+router.post('/', addFilamento);
+router.put('/:id', updateFilamento);
+router.delete('/:id', deleteFilamento);
 
 export default router;

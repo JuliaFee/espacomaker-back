@@ -11,7 +11,7 @@ class FilamentoList {
       return allFilamentos;
     } catch (error) {
       console.error("Failed to get filamentos:", error);
-      throw error; 
+      throw error;
     }
   }
 
@@ -37,14 +37,13 @@ class FilamentoList {
       return filamento;
     } catch (error) {
       console.error("Failed to register filamento:", error);
-      throw error; 
+      throw error;
     }
   }
 
   async updateFilamento(id, id_impressora, tipo, cor, quantidade, valor_por_kg) {
     try {
       const filamento = await this.getFilamentoById(id);
-
       if (!filamento) {
         return null;
       }
@@ -57,7 +56,7 @@ class FilamentoList {
       return updatedFilamento;
     } catch (error) {
       console.error(`Failed to update filamento ${id}:`, error);
-      throw error; 
+      throw error;
     }
   }
 
@@ -66,7 +65,7 @@ class FilamentoList {
       await this.db.none("DELETE FROM filamentos WHERE id = $1", id);
     } catch (error) {
       console.error(`Failed to delete filamento ${id}:`, error);
-      throw error; 
+      throw error;
     }
   }
 }
