@@ -58,33 +58,16 @@ export const updateImpressora = async (req, res) => {
     try {
         const { id } = req.params;
         const { nome, descricao, img, statusI, filamento } = req.body;
-
         const impressoraById = await impressoraRepository.getImpressoraById(id);
         if (!impressoraById) {
             return res.status(404).send({ message: "Impressora não encontrada" });
         }
-
-        if (typeof statusI !== 'boolean') {
-            return res.status(400).send({ message: "statusI é obrigatório e deve ser true ou false." });
-        }
-
-        if (filamento === undefined || filamento === null) {
-            return res.status(400).send({ message: "filamento é obrigatório e não pode ser nulo." });
-        }
-
-        const updatedImpressora = await impressoraRepository.updateImpressora(
-            id,
-            nome,
-            descricao,
-            img,
-            statusI,
-            filamento 
-        );
-
+        const updatedImpressora = await impressoraRepository.updateImpressora(id, nome, descricao, img, statusI, filamento);
         return res.status(200).send({ message: "Impressora atualizada com sucesso", updatedImpressora });
     } catch (error) {
         return res.status(500).send({ message: "Erro ao atualizar impressora", error: error.message });
     }
+        
 };
 
 
