@@ -11,7 +11,7 @@ import {
 
 router.get('/horarios', getHorarios);
 router.get('/horarios/:id', getHorarioById);
-router.post('/horarios', addHorario);
+router.post('/', addHorario);
 router.put('/horarios/:id', updateHorario);
 router.delete('/horarios/:id', deleteHorario);
 
