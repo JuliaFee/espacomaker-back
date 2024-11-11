@@ -67,8 +67,13 @@ export const getReservaById = async (req, res) => {
 
 export const addReserva = async (req, res) => {
     try {
-        const { id_user, id_ferramenta, id_impressora, id_horario, data_reserva, status_reserva } = req.body;
+        // Validando o corpo da requisição com Joi
+        const { error } = reservaSchema.validate(req.body);
+        if (error) {
+            return res.status(400).send({ message: "Dados inválidos", details: error.details });
+        }
 
+        const { id_user, id_ferramenta, id_impressora, id_horario, data_reserva, status_reserva } = req.body;
 
         const newReserva = new Reservas(
             parseInt(id_user),
@@ -106,6 +111,7 @@ export const addReserva = async (req, res) => {
         return res.status(500).send({ message: "Erro ao criar reserva", error: error.message });
     }
 };
+
 
 
 
