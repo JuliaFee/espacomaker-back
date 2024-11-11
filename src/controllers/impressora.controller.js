@@ -1,4 +1,3 @@
-
 import Impressora from "../models/impressora/Impressora.js";
 import ImpressoraList from "../models/impressora/ImpressoraList.js";
 
@@ -32,7 +31,6 @@ export const getImpressoraById = async (req, res) => {
 };
 
 /* post */
-// Controller
 export const addImpressora = async (req, res) => {
     try {
         const { nome, descricao, img, statusI, filamento } = req.body;
@@ -69,6 +67,7 @@ export const addImpressora = async (req, res) => {
     }
 };
 
+
 /* put */
 export const updateImpressora = async (req, res) => {
     try {
@@ -96,9 +95,8 @@ export const updateImpressora = async (req, res) => {
     }
 };
 
+
 /* delete */
-
-
 export const deleteImpressora = async (req, res) => {
     try {
         const { id } = req.params;

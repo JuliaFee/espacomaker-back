@@ -1,10 +1,9 @@
 import db from "../../database/index.js";
 
-// models/impressora/ImpressoraList.js
 
 class ImpressoraList {
   constructor() {
-    this.db = db; // Supondo que você esteja usando o `pg-promise` ou outra biblioteca para o banco de dados
+    this.db = db; 
   }
 
   // Método para pegar todas as impressoras
@@ -36,7 +35,7 @@ class ImpressoraList {
         "INSERT INTO impressoras (nome, descricao, img, statusI) VALUES ($1, $2, $3, $4) RETURNING id",
         [impressora.nome, impressora.descricao, impressora.img, impressora.statusI]
       );
-      return { ...impressora, id: result.id }; // Retorna a impressora com o ID gerado
+      return { ...impressora, id: result.id }; 
     } catch (error) {
       console.error("Failed to register impressora:", error);
       throw error;
@@ -50,7 +49,7 @@ class ImpressoraList {
         "INSERT INTO filamentos (id_impressora, tipo, cor, quantidade, valor_por_kg) VALUES ($1, $2, $3, $4, $5) RETURNING *",
         [filamento.id_impressora, filamento.tipo, filamento.cor, filamento.quantidade, filamento.valor_por_kg]
       );
-      return result; // Retorna o filamento inserido
+      return result; 
     } catch (error) {
       console.error("Failed to add filamento:", error);
       throw error;
@@ -78,7 +77,7 @@ class ImpressoraList {
     }
   }
 
-   // Função para excluir filamentos associados à impressora
+   // Metódo para excluir filamentos associados à impressora
   async deleteFilamentosByImpressora(idImpressora) {
     try {
       await this.db.none("DELETE FROM filamentos WHERE id_impressora = $1", idImpressora);
@@ -88,7 +87,7 @@ class ImpressoraList {
     }
   }
 
-  // Função para excluir a impressora
+  // Metódo para excluir a impressora
   async deleteImpressora(id) {
     try {
       await this.db.none("DELETE FROM impressoras WHERE id = $1", id);

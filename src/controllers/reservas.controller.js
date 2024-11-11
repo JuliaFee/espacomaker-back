@@ -13,6 +13,8 @@ const reservaSchema = Joi.object({
 
 const reservasRepository = new ReservasRepository();
 
+
+// Get Reservas
 export const getReservas = async (req, res) => {
     try {
         const reservas = await reservasRepository.getReservas();
@@ -40,7 +42,7 @@ export const getReservas = async (req, res) => {
     }
 }
 
-
+// Get Reserva by ID
 export const getReservaById = async (req, res) => {
     console.log("passou aqui")
     try {
@@ -65,9 +67,10 @@ export const getReservaById = async (req, res) => {
     }
 }
 
+
+// Adicionar reserva
 export const addReserva = async (req, res) => {
     try {
-        // Validando o corpo da requisição com Joi
         const { error } = reservaSchema.validate(req.body);
         if (error) {
             return res.status(400).send({ message: "Dados inválidos", details: error.details });
@@ -84,13 +87,11 @@ export const addReserva = async (req, res) => {
             status_reserva
         );
 
-        // Verificação de reserva já existente
         const existingReserva = await reservasRepository.getReservaById(newReserva.id_impressora, newReserva.id_horario, newReserva.data_reserva);
         if (existingReserva) {
             return res.status(409).send({ message: "Essa reserva já existe" });
         }
 
-        // Adiciona nova reserva ao repositório
         await reservasRepository.addReserva(newReserva);
 
         // Função para formatar data no padrão brasileiro
@@ -103,7 +104,6 @@ export const addReserva = async (req, res) => {
 
         const formattedDate = formatDateToBrazilian(newReserva.data_reserva);
 
-        // Retorno de sucesso
         return res.status(201).send({ message: "Reserva criada com sucesso", newReserva: { ...newReserva, data_reserva: formattedDate } });
 
     } catch (error) {
@@ -114,9 +114,7 @@ export const addReserva = async (req, res) => {
 
 
 
-
-
-
+// Atualizar reserva
 export const updateReserva = async (req, res) => {
     try {
         const { id } = req.params;
@@ -149,7 +147,7 @@ export const updateReserva = async (req, res) => {
 }
 
 
-
+// Deletar reserva
 export const deleteReserva = async (req, res) => {
     try {
         const { id } = req.params;
