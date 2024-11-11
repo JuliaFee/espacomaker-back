@@ -1,9 +1,9 @@
 DROP TABLE IF EXISTS reservas CASCADE;
-DROP TABLE IF EXISTS impressoras  CASCADE;
-DROP TABLE IF EXISTS ferramentas  CASCADE;
-DROP TABLE IF EXISTS users  CASCADE;
-DROP TABLE IF EXISTS filamentos  CASCADE;
-DROP TABLE IF EXISTS horarios  CASCADE;
+DROP TABLE IF EXISTS impressoras CASCADE;
+DROP TABLE IF EXISTS ferramentas CASCADE;
+DROP TABLE IF EXISTS users CASCADE;
+DROP TABLE IF EXISTS filamentos CASCADE;
+DROP TABLE IF EXISTS horarios CASCADE;
 
 CREATE TABLE users (
   id SERIAL PRIMARY KEY,
@@ -13,22 +13,14 @@ CREATE TABLE users (
   tipo VARCHAR(50) NOT NULL CHECK (tipo IN ('user', 'adm'))
 );
 
-CREATE TABLE ferramentas (
-  id SERIAL PRIMARY KEY,
-  nome VARCHAR(100) NOT NULL,
-  descricao VARCHAR(255) NOT NULL,
-  img VARCHAR(255),
-  statusF BOOLEAN NOT NULL DEFAULT TRUE 
-);
-
 CREATE TABLE impressoras (
   id SERIAL PRIMARY KEY,
   nome VARCHAR(100) NOT NULL,
   descricao VARCHAR(255) NOT NULL,
   img VARCHAR(255),
-  statusI BOOLEAN NOT NULL DEFAULT TRUE,
-  filamento FLOAT NOT NULL 
+  statusI BOOLEAN NOT NULL DEFAULT TRUE
 );
+
 
 CREATE TABLE filamentos (
   id SERIAL PRIMARY KEY,
@@ -38,6 +30,24 @@ CREATE TABLE filamentos (
   quantidade FLOAT NOT NULL,
   valor_por_kg FLOAT NOT NULL,
   FOREIGN KEY (id_impressora) REFERENCES impressoras (id)
+);
+
+CREATE TABLE ferramentas (
+  id SERIAL PRIMARY KEY,
+  nome VARCHAR(100) NOT NULL,
+  descricao VARCHAR(255) NOT NULL,
+  img VARCHAR(255),
+  statusF BOOLEAN NOT NULL DEFAULT TRUE
+);
+
+CREATE TABLE horarios (
+  id SERIAL PRIMARY KEY,
+  id_impressora INT,
+  id_ferramenta INT,
+  hora_inicio TIME NOT NULL,
+  hora_fim TIME NOT NULL,
+  FOREIGN KEY (id_impressora) REFERENCES impressoras (id),
+  FOREIGN KEY (id_ferramenta) REFERENCES ferramentas (id)
 );
 
 CREATE TABLE reservas (
@@ -50,17 +60,8 @@ CREATE TABLE reservas (
   status_reserva BOOLEAN NOT NULL DEFAULT FALSE, 
   FOREIGN KEY (id_user) REFERENCES users (id),
   FOREIGN KEY (id_ferramenta) REFERENCES ferramentas (id),
-  FOREIGN KEY (id_impressora) REFERENCES impressoras (id)
-);
-
-CREATE TABLE horarios (
-  id SERIAL PRIMARY KEY,
-  id_impressora INT,
-  id_ferramenta INT,
-  hora_inicio TIME NOT NULL,
-  hora_fim TIME NOT NULL,
   FOREIGN KEY (id_impressora) REFERENCES impressoras (id),
-  FOREIGN KEY (id_ferramenta) REFERENCES ferramentas (id)
+  FOREIGN KEY (id_horario) REFERENCES horarios (id)
 );
 
 
@@ -137,9 +138,9 @@ INSERT INTO ferramentas (nome, descricao, img, statusF) VALUES ('Stanley Esquadr
 
 
 -- Impressoras
-INSERT INTO impressoras (nome, descricao, img, statusI, filamento) VALUES ('3D Print Quick Ender-3 V2', 'Impressora 3D de fácil uso, ideal para modelagem e prototipagem rápida.', 'https://i.imgur.com/QWRDQrD.jpg', true, 0);
-INSERT INTO impressoras (nome, descricao, img, statusI, filamento) VALUES ('Shenzhen Creality 3D', 'Conhecida por suas impressoras 3D de qualidade e acessíveis.', 'https://i.imgur.com/3F0yg1q.jpg', true, 0);
-INSERT INTO impressoras (nome, descricao, img, statusI, filamento) VALUES ('3D Printer Use Manual', 'Impressora 3D com uma ótima qualidade de modelagem e prototipagem.', 'https://i.imgur.com/5LYLhTW.jpg', true, 0);
+INSERT INTO impressoras (nome, descricao, img, statusI) VALUES ('3D Print Quick Ender-3 V2', 'Impressora 3D de fácil uso, ideal para modelagem e prototipagem rápida.', 'https://i.imgur.com/QWRDQrD.jpg', true);
+INSERT INTO impressoras (nome, descricao, img, statusI) VALUES ('Shenzhen Creality 3D', 'Conhecida por suas impressoras 3D de qualidade e acessíveis.', 'https://i.imgur.com/3F0yg1q.jpg', true);
+INSERT INTO impressoras (nome, descricao, img, statusI) VALUES ('3D Printer Use Manual', 'Impressora 3D com uma ótima qualidade de modelagem e prototipagem.', 'https://i.imgur.com/5LYLhTW.jpg', true);
 
 -- Usuarios
 INSERT INTO users (nome, email, senha, tipo) VALUES ('Administrador', 'adm@example.com', 'Senha123', 'adm');
