@@ -15,4 +15,5 @@ router.post('/', addHorario);
 router.put('/horarios/:id', updateHorario);
 router.delete('/horarios/:id', deleteHorario);
 
+
 export default router;

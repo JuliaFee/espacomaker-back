@@ -72,35 +72,41 @@ export const addReserva = async (req, res) => {
 
         const newReserva = new Reservas(
             parseInt(id_user),
-            parseInt(id_ferramenta),
-            parseInt(id_impressora),
-            parseInt(id_horario),
+            id_ferramenta ? parseInt(id_ferramenta) : null,
+            id_impressora ? parseInt(id_impressora) : null,
+            id_horario ? parseInt(id_horario) : null,
             new Date(data_reserva),
             status_reserva
         );
 
+        // Verificação de reserva já existente
         const existingReserva = await reservasRepository.getReservaById(newReserva.id_impressora, newReserva.id_horario, newReserva.data_reserva);
         if (existingReserva) {
             return res.status(409).send({ message: "Essa reserva já existe" });
         }
 
+        // Adiciona nova reserva ao repositório
         await reservasRepository.addReserva(newReserva);
-        
+
+        // Função para formatar data no padrão brasileiro
         const formatDateToBrazilian = (date) => {
-            const day = String(date.getDate()).padStart(2, '0'); 
-            const month = String(date.getMonth() + 1).padStart(2, '0'); 
-            const year = date.getFullYear(); 
-            return `${day}/${month}/${year}`; Y
+            const day = String(date.getDate()).padStart(2, '0');
+            const month = String(date.getMonth() + 1).padStart(2, '0');
+            const year = date.getFullYear();
+            return `${day}/${month}/${year}`;
         };
 
         const formattedDate = formatDateToBrazilian(newReserva.data_reserva);
 
+        // Retorno de sucesso
         return res.status(201).send({ message: "Reserva criada com sucesso", newReserva: { ...newReserva, data_reserva: formattedDate } });
 
     } catch (error) {
+        console.error("Erro ao criar reserva:", error);
         return res.status(500).send({ message: "Erro ao criar reserva", error: error.message });
     }
-}
+};
+
 
 
 
