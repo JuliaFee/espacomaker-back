@@ -29,6 +29,7 @@ class ReservaList {
     }
 
     async addReserva(reserva) {
+        console.log(addReserva)
         try {
             const existingReserva = await this.db.oneOrNone(
                 `SELECT * FROM reservas 
@@ -36,9 +37,9 @@ class ReservaList {
                  AND id_horario = $2 
                  AND data_reserva = $3`,
                 [reserva.id_impressora, reserva.id_horario, reserva.data_reserva]
-            );
+            )
 
-            if (existingReserva) {
+            if (!existingReserva) {
                 throw new Error("Já existe uma reserva para este horário.");
             }
 

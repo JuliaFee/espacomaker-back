@@ -42,6 +42,7 @@ export const getReservas = async (req, res) => {
 
 
 export const getReservaById = async (req, res) => {
+    console.log("passou aqui")
     try {
         const { id } = req.params; 
         const reserva = await reservasRepository.getReservaById(id); 
@@ -67,6 +68,7 @@ export const getReservaById = async (req, res) => {
 export const addReserva = async (req, res) => {
     try {
         const { id_user, id_ferramenta, id_impressora, id_horario, data_reserva, status_reserva } = req.body;
+
 
         const newReserva = new Reservas(
             parseInt(id_user),
