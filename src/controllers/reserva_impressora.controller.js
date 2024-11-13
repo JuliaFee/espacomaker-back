@@ -1,4 +1,4 @@
-import ReservasRepository from "../models/reserva-impressora/reserva_impressoraList.js";
+import ReservaImpressoraList from "../models/reserva-impressora/reserva_impressoraList.js";
 import Joi from 'joi';
 
 const reservaImpressoraSchema = Joi.object({
@@ -8,7 +8,7 @@ const reservaImpressoraSchema = Joi.object({
     status_reserva: Joi.boolean().required()
 });
 
-const reservasRepository = new ReservasRepository();
+const reservasRepository = new ReservaImpressoraList();
 
 // Função auxiliar para formatar a data no padrão brasileiro
 const formatDateToBrazilian = (date) => {
