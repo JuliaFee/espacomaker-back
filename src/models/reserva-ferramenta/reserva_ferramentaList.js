@@ -1,6 +1,6 @@
 import db from "../../database/index.js";
 
-class ReservaList {
+class ReservaFerramentaList {
     constructor() {
         this.db = db;
     }
@@ -34,7 +34,7 @@ class ReservaList {
     async getReservaById_Ferramenta(id) {
         try {
             const reserva = await this.db.oneOrNone(
-                "SELECT * FROM reservas WHERE id = $1", 
+                "SELECT * FROM reserva_ferramenta WHERE id = $1", 
                 [id]
             );
             return reserva;
@@ -45,7 +45,7 @@ class ReservaList {
     }
 
     // Adicionar uma nova reserva
-    async addReserva_Ferramenta(reserva) {
+    async addReserva_Ferramenta(reserva_ferramenta) {
         try {
             // Verifique se o id_horario existe na tabela horarios
             console.log("Verificando se o horário existe...");
@@ -61,11 +61,11 @@ class ReservaList {
             // Verifica se já existe uma reserva para o mesmo horário
             console.log("Verificando se já existe uma reserva para esse horário...");
             const existingReserva = await this.db.oneOrNone(
-                `SELECT * FROM reservas 
-                 WHERE id_impressora = $1 
+                `SELECT * FROM reserva_ferramenta 
+                 WHERE id_ferramenta = $1 
                  AND id_horario = $2 
                  AND data_reserva = $3`,
-                [reserva.id_impressora, reserva.id_horario, reserva.data_reserva]
+                [reserva_ferramenta.id_ferramenta, reserva_ferramenta.id_horario, reserva_ferramenta.data_reserva]
             );
             
             if (existingReserva) {
@@ -75,11 +75,11 @@ class ReservaList {
             // Inserir a nova reserva
             console.log("Criando nova reserva...");
             await this.db.none(
-                "INSERT INTO reservas (id_user, id_ferramenta, id_impressora, id_horario, data_reserva, status_reserva) VALUES ($1, $2, $3, $4, $5, $6)",
-                [reserva.id_user, reserva.id_ferramenta, reserva.id_impressora, reserva.id_horario, reserva.data_reserva, reserva.status_reserva]
+                "INSERT INTO reserva_ferramenta (id_user, id_ferramenta, id_horario, data_reserva, status_reserva) VALUES ($1, $2, $3, $4, $5, $6)",
+                [reserva.id_user, reserva.id_ferramenta, reserva.id_horario, reserva.data_reserva, reserva.status_reserva]
             );
             
-            return reserva;
+            return reserva_ferramenta;
         } catch (error) {
             console.error("Erro ao criar reserva:", error);
             throw error;
@@ -87,20 +87,20 @@ class ReservaList {
     }
 
     // Atualizar uma reserva existente
-    async updateReserva_Ferramenta(id, id_user, id_ferramenta, id_impressora, id_horario, data_reserva, status_reserva) {
+    async updateReserva_Ferramenta(id, id_user, id_ferramenta, id_horario, data_reserva, status_reserva) {
         try {
-            const reserva = await this.getReservaById(id);
+            const reserva = await this.getReservaById_Ferramenta(id);
             if (!reserva) {
                 return null;
             }
 
             const existingReserva = await this.db.oneOrNone(
-                `SELECT * FROM reservas 
-                 WHERE id_impressora = $1 
+                `SELECT * FROM reserva_ferramenta
+                 WHERE id_ferramenta = $1 
                  AND id_horario = $2 
                  AND data_reserva = $3 
                  AND id != $4`,
-                [id_impressora, id_horario, data_reserva, id]
+                [id_ferramenta, id_horario, data_reserva, id]
             );
 
             if (existingReserva) {
@@ -108,8 +108,8 @@ class ReservaList {
             }
 
             const updatedReserva = await this.db.one(
-                "UPDATE reservas SET id_user = $1, id_ferramenta = $2, id_impressora = $3, id_horario = $4, data_reserva = $5, status_reserva = $6 WHERE id = $7 RETURNING *",
-                [id_user, id_ferramenta, id_impressora, id_horario, data_reserva, status_reserva, id]
+                "UPDATE reserva_ferramenta SET id_user = $1, id_ferramenta = $2, id_horario = $3, data_reserva = $4, status_reserva = $5 WHERE id = $6 RETURNING *",
+                [id_user, id_ferramenta, id_horario, data_reserva, status_reserva, id]
             );
 
             return updatedReserva;
@@ -122,7 +122,7 @@ class ReservaList {
     // Deletar uma reserva
     async deleteReserva_Ferramenta(id) {
         try {
-            await this.db.none("DELETE FROM reservas WHERE id = $1", id);
+            await this.db.none("DELETE FROM reserva_ferramenta WHERE id = $1", id);
         } catch (error) {
             console.error(`Erro ao deletar reserva ${id}:`, error);
             throw error;
@@ -130,4 +130,4 @@ class ReservaList {
     }
 }
 
-export default ReservaList;
+export default ReservaFerramentaList;

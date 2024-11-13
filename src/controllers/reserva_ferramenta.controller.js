@@ -1,4 +1,4 @@
-import ReservasRepository from "../models/reservas/ReservasList.js";
+import ReservasRepository from "../models/reservas/ReservasFerramentaList.js";
 import Joi from 'joi';
 
 const reservaSchema = Joi.object({
