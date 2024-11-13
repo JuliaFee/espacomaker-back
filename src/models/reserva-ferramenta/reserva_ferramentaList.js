@@ -50,36 +50,36 @@ class ReservaFerramentaList {
             // Verifique se o id_horario existe na tabela horarios
             console.log("Verificando se o horário existe...");
             const horario = await this.db.oneOrNone(
-                "SELECT * FROM horarios WHERE id = $1", 
-                [reserva.id_horario]
+                "SELECT * FROM horarios WHERE id = $1",
+                [reserva_ferramenta.id_horario] // Use reserva_ferramenta ao invés de reserva
             );
-
+    
             if (!horario) {
                 throw new Error("O horário informado não existe.");
             }
-            
+           
             // Verifica se já existe uma reserva para o mesmo horário
             console.log("Verificando se já existe uma reserva para esse horário...");
             const existingReserva = await this.db.oneOrNone(
-                `SELECT * FROM reserva_ferramenta 
-                 WHERE id_ferramenta = $1 
-                 AND id_horario = $2 
+                `SELECT * FROM reserva_ferramenta
+                 WHERE id_ferramenta = $1
+                 AND id_horario = $2
                  AND data_reserva = $3`,
                 [reserva_ferramenta.id_ferramenta, reserva_ferramenta.id_horario, reserva_ferramenta.data_reserva]
             );
-            
+           
             if (existingReserva) {
                 throw new Error("Já existe uma reserva para este horário.");
             }
-
+    
             // Inserir a nova reserva
             console.log("Criando nova reserva...");
             await this.db.none(
-                "INSERT INTO reserva_ferramenta (id_user, id_ferramenta, id_horario, data_reserva, status_reserva) VALUES ($1, $2, $3, $4, $5, $6)",
-                [reserva.id_user, reserva.id_ferramenta, reserva.id_horario, reserva.data_reserva, reserva.status_reserva]
+                "INSERT INTO reserva_ferramenta (id_user, id_ferramenta, id_horario, data_reserva, status_reserva) VALUES ($1, $2, $3, $4, $5)",
+                [reserva_ferramenta.id_user, reserva_ferramenta.id_ferramenta, reserva_ferramenta.id_horario, reserva_ferramenta.data_reserva, reserva_ferramenta.status_reserva]
             );
-            
-            return reserva_ferramenta;
+           
+            return reserva_ferramenta;  // Retorne o objeto reserva_ferramenta corretamente
         } catch (error) {
             console.error("Erro ao criar reserva:", error);
             throw error;

@@ -19,7 +19,6 @@ export const getReservas_Ferramenta = async (req, res) => {
             return res.status(404).send({ message: "Não há reservas" });
         }
 
-        // Formatar data para o padrão brasileiro
         const formatDateToBrazilian = (date) => {
             const day = String(date.getDate()).padStart(2, '0');
             const month = String(date.getMonth() + 1).padStart(2, '0');
@@ -36,9 +35,7 @@ export const getReservas_Ferramenta = async (req, res) => {
     } catch (error) {
         return res.status(500).send({ message: "Erro ao buscar reservas", error: error.message });
     }
-}
-
-
+};
 
 // Função para pegar uma reserva por ID
 export const getReservaById_Ferramenta = async (req, res) => {
@@ -64,10 +61,6 @@ export const getReservaById_Ferramenta = async (req, res) => {
     }
 };
 
-// Outras funções...
-
-// Exportar outras funções como 'addReserva', 'updateReserva', 'deleteReserva' da mesma forma.
-
 // Função para adicionar uma nova reserva
 export const addReserva_Ferramenta = async (req, res) => {
     try {
@@ -78,7 +71,6 @@ export const addReserva_Ferramenta = async (req, res) => {
 
         const { id_user, id_ferramenta, id_horario, data_reserva, status_reserva } = req.body;
 
-        // Validando a data
         const parsedDate = new Date(data_reserva);
         if (isNaN(parsedDate)) {
             return res.status(400).send({ message: "Data inválida" });
@@ -92,7 +84,6 @@ export const addReserva_Ferramenta = async (req, res) => {
             status_reserva
         };
 
-        // Adicionando a nova reserva
         const createdReserva_Ferramenta = await reservasRepository.addReserva_Ferramenta(newReserva);
         return res.status(201).send({ message: "Reserva criada com sucesso", reserva: createdReserva_Ferramenta });
     } catch (error) {
@@ -106,7 +97,6 @@ export const updateReserva_Ferramenta = async (req, res) => {
         const { id } = req.params;
         const { id_user, id_ferramenta, id_horario, data_reserva, status_reserva } = req.body;
 
-        // Validando a data
         const parsedDate = new Date(data_reserva);
         if (isNaN(parsedDate)) {
             return res.status(400).send({ message: "Data inválida" });
@@ -121,7 +111,6 @@ export const updateReserva_Ferramenta = async (req, res) => {
             id,
             id_user,
             id_ferramenta,
-            id_impressora,
             id_horario,
             parsedDate,
             status_reserva
