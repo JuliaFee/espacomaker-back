@@ -11,6 +11,15 @@ const reservaSchema = Joi.object({
 
 const reservasRepository = new ReservaFerramentaList();
 
+// Função auxiliar para formatar a data no padrão brasileiro sem alterar o dia
+const formatDateToBrazilian = (date) => {
+    const localDate = new Date(date); // Cria uma data com a mesma data, mantendo o horário local
+    const day = String(localDate.getDate()).padStart(2, '0');
+    const month = String(localDate.getMonth() + 1).padStart(2, '0');
+    const year = localDate.getFullYear();
+    return `${day}/${month}/${year}`;
+};
+
 // Função para buscar todas as reservas
 export const getReservas_Ferramenta = async (req, res) => {
     try {
@@ -19,16 +28,9 @@ export const getReservas_Ferramenta = async (req, res) => {
             return res.status(404).send({ message: "Não há reservas" });
         }
 
-        const formatDateToBrazilian = (date) => {
-            const day = String(date.getDate()).padStart(2, '0');
-            const month = String(date.getMonth() + 1).padStart(2, '0');
-            const year = date.getFullYear();
-            return `${day}/${month}/${year}`;
-        };
-
         const formattedReservas = reservas.map(reserva => ({
             ...reserva,
-            data_reserva: formatDateToBrazilian(new Date(reserva.data_reserva)),
+            data_reserva: formatDateToBrazilian(reserva.data_reserva),
         }));
 
         return res.status(200).send({ totalReservas: reservas.length, reservas: formattedReservas });
@@ -46,14 +48,7 @@ export const getReservaById_Ferramenta = async (req, res) => {
             return res.status(404).send({ message: "Reserva não encontrada" });
         }
 
-        const formatDateToBrazilian = (date) => {
-            const day = String(date.getDate()).padStart(2, '0');
-            const month = String(date.getMonth() + 1).padStart(2, '0');
-            const year = date.getFullYear();
-            return `${day}/${month}/${year}`;
-        };
-
-        reserva.data_reserva = formatDateToBrazilian(new Date(reserva.data_reserva));
+        reserva.data_reserva = formatDateToBrazilian(reserva.data_reserva);
 
         return res.status(200).send({ message: "Reserva encontrada", reserva });
     } catch (error) {
@@ -71,7 +66,7 @@ export const addReserva_Ferramenta = async (req, res) => {
 
         const { id_user, id_ferramenta, id_horario, data_reserva, status_reserva } = req.body;
 
-        const parsedDate = new Date(data_reserva);
+        const parsedDate = new Date(data_reserva + 'T00:00:00'); // Define a data explicitamente para meia-noite
         if (isNaN(parsedDate)) {
             return res.status(400).send({ message: "Data inválida" });
         }
@@ -97,7 +92,7 @@ export const updateReserva_Ferramenta = async (req, res) => {
         const { id } = req.params;
         const { id_user, id_ferramenta, id_horario, data_reserva, status_reserva } = req.body;
 
-        const parsedDate = new Date(data_reserva);
+        const parsedDate = new Date(data_reserva + 'T00:00:00'); // Define a data explicitamente para meia-noite
         if (isNaN(parsedDate)) {
             return res.status(400).send({ message: "Data inválida" });
         }
