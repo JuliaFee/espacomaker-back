@@ -62,7 +62,7 @@ CREATE TABLE reserva_ferramenta (
   FOREIGN KEY (id_horario) REFERENCES horarios (id)
 );
 
-CREATE TABLE reservas_impressora (
+CREATE TABLE reserva_impressora (
   id SERIAL PRIMARY KEY,
   id_user INT NOT NULL,
   id_impressora INT,
