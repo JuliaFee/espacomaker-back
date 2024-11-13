@@ -1,4 +1,4 @@
-import ReservasRepository from "../models/reserva-ferramenta/reserva_ferramentaList.js";
+import ReservaFerramentaList from "../models/reserva-ferramenta/reserva_ferramentaList.js";
 import Joi from 'joi';
 
 const reservaSchema = Joi.object({
@@ -9,7 +9,7 @@ const reservaSchema = Joi.object({
     status_reserva: Joi.boolean().required()
 });
 
-const reservasRepository = new ReservasRepository();
+const reservasRepository = new ReservaFerramentaList();
 
 // Função para buscar todas as reservas
 export const getReservas_Ferramenta = async (req, res) => {
