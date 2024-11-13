@@ -30,10 +30,10 @@ class horarioList {
     // Registra um novo horário
     async registerHorario(horario) {
         try {
-            const { id_impressora, id_ferramenta, hora_inicio, hora_fim } = horario;
+            const {  id_ferramenta, hora_inicio, hora_fim } = horario;
             await this.db.none(
-                "INSERT INTO horarios (id_impressora, id_ferramenta, hora_inicio, hora_fim) VALUES ($1, $2, $3, $4)",
-                [id_impressora, id_ferramenta, hora_inicio, hora_fim]
+                "INSERT INTO horarios ( id_ferramenta, hora_inicio, hora_fim) VALUES ($1, $2, $3)",
+                [ id_ferramenta, hora_inicio, hora_fim]
             );
             return horario;
         } catch (error) {
@@ -43,7 +43,7 @@ class horarioList {
     }
 
     // Atualiza um horário existente
-    async updateHorario(id, id_impressora, id_ferramenta, hora_inicio, hora_fim) {
+    async updateHorario(id, id_ferramenta, hora_inicio, hora_fim) {
         try {
             const horario = await this.getHorarioById(id);
             if (!horario) {
@@ -51,8 +51,8 @@ class horarioList {
             }
 
             const updatedHorario = await this.db.one(
-                "UPDATE horarios SET id_impressora = $1, id_ferramenta = $2, hora_inicio = $3, hora_fim = $4 WHERE id = $5 RETURNING *",
-                [id_impressora, id_ferramenta, hora_inicio, hora_fim, id]
+                "UPDATE horarios SET id_ferramenta = $1, hora_inicio = $2, hora_fim = $3 WHERE id = $4 RETURNING *",
+                [id_ferramenta, hora_inicio, hora_fim, id]
             );
             return updatedHorario;
         } catch (error) {
