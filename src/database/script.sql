@@ -44,7 +44,7 @@ CREATE TABLE ferramentas (
 CREATE TABLE horarios (
   id SERIAL PRIMARY KEY,
   hora_inicio TIME NOT NULL,
-  hora_fim TIME NOT NULL,
+  hora_fim TIME NOT NULL
 );
 
 CREATE TABLE reserva_ferramenta (
