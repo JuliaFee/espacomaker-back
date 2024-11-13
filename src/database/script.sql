@@ -158,5 +158,3 @@ INSERT INTO filamentos (id_impressora, tipo, cor, quantidade, valor_por_kg) VALU
 INSERT INTO filamentos (id_impressora, tipo, cor, quantidade, valor_por_kg) VALUES (3, 'PLA', 'Verde', 20.0, 30.0);
 INSERT INTO filamentos (id_impressora, tipo, cor, quantidade, valor_por_kg) VALUES (3, 'ABS', 'Vermelho', 5.0, 55.0);
 
--- Horários
-INSERT INTO horarios () VALUES ();

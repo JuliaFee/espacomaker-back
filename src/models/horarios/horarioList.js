@@ -32,7 +32,7 @@ class horarioList {
         try {
             const {  id_ferramenta, hora_inicio, hora_fim } = horario;
             await this.db.none(
-                "INSERT INTO horarios ( id_ferramenta, hora_inicio, hora_fim) VALUES ($1, $2, $3)",
+                "INSERT INTO horarios ( hora_inicio, hora_fim) VALUES ($1, $2)",
                 [ id_ferramenta, hora_inicio, hora_fim]
             );
             return horario;
@@ -43,7 +43,7 @@ class horarioList {
     }
 
     // Atualiza um horário existente
-    async updateHorario(id, id_ferramenta, hora_inicio, hora_fim) {
+    async updateHorario(id, hora_inicio, hora_fim) {
         try {
             const horario = await this.getHorarioById(id);
             if (!horario) {
@@ -51,8 +51,8 @@ class horarioList {
             }
 
             const updatedHorario = await this.db.one(
-                "UPDATE horarios SET id_ferramenta = $1, hora_inicio = $2, hora_fim = $3 WHERE id = $4 RETURNING *",
-                [id_ferramenta, hora_inicio, hora_fim, id]
+                "UPDATE horarios SET , hora_inicio = $1, hora_fim = $2 WHERE id = $3 RETURNING *",
+                 [ hora_inicio, hora_fim, id]
             );
             return updatedHorario;
         } catch (error) {

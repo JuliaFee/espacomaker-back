@@ -30,8 +30,8 @@ export const getHorarioById = async (req, res) => {
 
 export const addHorario = async (req, res) => {
     try {
-        const { id_ferramenta, hora_inicio, hora_fim } = req.body;
-        const newHorario = { id_ferramenta, hora_inicio, hora_fim };
+        const { hora_inicio, hora_fim } = req.body;
+        const newHorario = { hora_inicio, hora_fim };
         const horario = await horarioRepository.registerHorario(newHorario);
         return res.status(201).send({ message: "Horário criado com sucesso", horario });
     } catch (error) {
@@ -43,14 +43,14 @@ export const addHorario = async (req, res) => {
 export const updateHorario = async (req, res) => {
     try {
         const { id } = req.params;
-        const { id_ferramenta, hora_inicio, hora_fim } = req.body;
+        const { hora_inicio, hora_fim } = req.body;
         const horarioById = await horarioRepository.getHorarioById(id);
         if (!horarioById) {
             return res.status(404).send({ message: `Horário com ID ${id} não encontrado` });
         }
 
         const updatedHorario = await horarioRepository.updateHorario(
-            id, id_ferramenta, hora_inicio, hora_fim
+            id, hora_inicio, hora_fim
         );
         return res.status(200).send({ message: "Horário atualizado com sucesso", updatedHorario });
     } catch (error) {
