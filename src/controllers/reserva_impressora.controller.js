@@ -10,6 +10,16 @@ const reservaImpressoraSchema = Joi.object({
 
 const reservasRepository = new ReservasRepository();
 
+// Função auxiliar para formatar a data no padrão brasileiro
+const formatDateToBrazilian = (date) => {
+    const localDate = new Date(date); // Certifica-se de que a data está no horário local
+    const day = String(localDate.getDate()).padStart(2, '0');
+    const month = String(localDate.getMonth() + 1).padStart(2, '0');
+    const year = localDate.getFullYear();
+    return `${day}/${month}/${year}`;
+};
+
+// Função para buscar todas as reservas
 export const getReservas_Impressora = async (req, res) => {
     try {
         const reservas = await reservasRepository.getReservas_Impressora();
@@ -17,23 +27,16 @@ export const getReservas_Impressora = async (req, res) => {
             return res.status(404).send({ message: "Não há reservas" });
         }
 
-        const formatDateToBrazilian = (date) => {
-            const day = String(date.getDate()).padStart(2, '0');
-            const month = String(date.getMonth() + 1).padStart(2, '0');
-            const year = date.getFullYear();
-            return `${day}/${month}/${year}`;
-        };
-
         const formattedReservas = reservas.map(reserva => ({
             ...reserva,
-            data_reserva: formatDateToBrazilian(new Date(reserva.data_reserva)),
+            data_reserva: formatDateToBrazilian(reserva.data_reserva),
         }));
 
         return res.status(200).send({ totalReservas: reservas.length, reservas: formattedReservas });
     } catch (error) {
         return res.status(500).send({ message: "Erro ao buscar reservas", error: error.message });
     }
-}
+};
 
 // Função para pegar uma reserva por ID
 export const getReservaById_Impressora = async (req, res) => {
@@ -44,14 +47,7 @@ export const getReservaById_Impressora = async (req, res) => {
             return res.status(404).send({ message: "Reserva não encontrada" });
         }
 
-        const formatDateToBrazilian = (date) => {
-            const day = String(date.getDate()).padStart(2, '0');
-            const month = String(date.getMonth() + 1).padStart(2, '0');
-            const year = date.getFullYear();
-            return `${day}/${month}/${year}`;
-        };
-
-        reserva.data_reserva = formatDateToBrazilian(new Date(reserva.data_reserva));
+        reserva.data_reserva = formatDateToBrazilian(reserva.data_reserva);
 
         return res.status(200).send({ message: "Reserva encontrada", reserva });
     } catch (error) {
@@ -69,8 +65,8 @@ export const addReserva_Impressora = async (req, res) => {
 
         const { id_user, id_impressora, data_reserva, status_reserva } = req.body;
 
-        // Validando a data
-        const parsedDate = new Date(data_reserva);
+        // Definindo a data para meia-noite para evitar problemas de fuso horário
+        const parsedDate = new Date(data_reserva + 'T00:00:00');
         if (isNaN(parsedDate)) {
             return res.status(400).send({ message: "Data inválida" });
         }
@@ -83,19 +79,22 @@ export const addReserva_Impressora = async (req, res) => {
         };
 
         const createdReserva_Impressora = await reservasRepository.addReserva_Impressora(newReserva);
+        createdReserva_Impressora.data_reserva = formatDateToBrazilian(createdReserva_Impressora.data_reserva);
+       
         return res.status(201).send({ message: "Reserva criada com sucesso", reserva: createdReserva_Impressora });
     } catch (error) {
         return res.status(500).send({ message: "Erro ao criar reserva", error: error.message });
     }
 };
 
+// Função para atualizar uma reserva
 export const updateReserva_Impressora = async (req, res) => {
     try {
         const { id } = req.params;
         const { id_user, id_impressora, data_reserva, status_reserva } = req.body;
 
-        // Validando a data
-        const parsedDate = new Date(data_reserva);
+        // Definindo a data para meia-noite para evitar problemas de fuso horário
+        const parsedDate = new Date(data_reserva + 'T00:00:00');
         if (isNaN(parsedDate)) {
             return res.status(400).send({ message: "Data inválida" });
         }
@@ -113,12 +112,15 @@ export const updateReserva_Impressora = async (req, res) => {
             status_reserva
         );
 
+        updatedReserva.data_reserva = formatDateToBrazilian(updatedReserva.data_reserva);
+
         return res.status(200).send({ message: "Reserva atualizada com sucesso", updatedReserva });
     } catch (error) {
         return res.status(500).send({ message: "Erro ao atualizar reserva", error: error.message });
     }
 };
 
+// Função para deletar uma reserva
 export const deleteReserva_Impressora = async (req, res) => {
     try {
         const { id } = req.params;
@@ -131,4 +133,4 @@ export const deleteReserva_Impressora = async (req, res) => {
     } catch (error) {
         return res.status(500).send({ message: "Erro ao deletar reserva", error: error.message });
     }
-}
+};
