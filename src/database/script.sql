@@ -43,11 +43,8 @@ CREATE TABLE ferramentas (
 
 CREATE TABLE horarios (
   id SERIAL PRIMARY KEY,
-  id_ferramenta INT NOT NULL,
   hora_inicio TIME NOT NULL,
   hora_fim TIME NOT NULL,
-  FOREIGN KEY (id_ferramenta) REFERENCES ferramentas (id)
- 
 );
 
 CREATE TABLE reserva_ferramenta (
@@ -160,3 +157,6 @@ INSERT INTO filamentos (id_impressora, tipo, cor, quantidade, valor_por_kg) VALU
 INSERT INTO filamentos (id_impressora, tipo, cor, quantidade, valor_por_kg) VALUES (2, 'PETG', 'Azul', 12.0, 50.0);
 INSERT INTO filamentos (id_impressora, tipo, cor, quantidade, valor_por_kg) VALUES (3, 'PLA', 'Verde', 20.0, 30.0);
 INSERT INTO filamentos (id_impressora, tipo, cor, quantidade, valor_por_kg) VALUES (3, 'ABS', 'Vermelho', 5.0, 55.0);
+
+-- Horários
+INSERT INTO horarios () VALUES ();
