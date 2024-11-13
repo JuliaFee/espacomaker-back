@@ -8,31 +8,31 @@ export const generateToken = (user) => {
     tipo: user.tipo, 
   };
 
-  const token = jwt.sign(payload, process.env.SECRET_KEY, {
+  return jwt.sign(payload, process.env.SECRET_KEY, {
     expiresIn: '1h',
   });
-
-  return token;
 };
 
 export const login = async (req, res) => {
-  const listaUser = new UserList();
+  const listaUser  = new UserList();
   console.log('Login function called'); 
   try {
     const { email, senha } = req.body;
 
-    const user = await listaUser.getUserByEmail(email);
+    const user = await listaUser .getUserByEmail(email);
     if (!user) {
-      return res.status(404).send({ message: "Usuário não encontrado" });
+      return res.status(404).json({ message: "Usuário não encontrado" });
     }
 
-    if (user.senha !== senha) {
-      return res.status(401).send({ message: "Senha incorreta" });
+    // Here you would normally compare the hashed password using bcrypt
+    if (user.senha !== senha) {  // Replace with bcrypt comparison in production
+      return res.status(401).json({ message: "Senha incorreta" });
     }
 
     const token = generateToken(user);
-    return res.status(200).send({ message: "Login realizado com sucesso", token, tipo: user.tipo });
+    return res.status(200).json({ message: "Login realizado com sucesso", token, tipo: user.tipo });
   } catch (error) {
-    return res.status(500).send({ message: "Erro ao fazer login", error: error.message });
+    console.error('Login error:', error);
+    return res.status(500).json({ message: "Erro ao fazer login", error: error.message });
   }
 };
