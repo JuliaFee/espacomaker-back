@@ -1,6 +1,6 @@
 import db from "../../database/index.js";
 
-class ReservaList {
+class ReservaFerramentaList {
     constructor() {
         this.db = db;
     }
@@ -130,4 +130,4 @@ class ReservaList {
     }
 }
 
-export default ReservaList;
+export default ReservaFerramentaList;
