@@ -2,17 +2,17 @@
 
 ![ESPAÇO MAKER](https://www.google.com/url?sa=i&url=https%3A%2F%2Fplataforma.gpinovacao.senai.br%2Fplataforma%2Fdesafio%2F1165&psig=AOvVaw1c4WP6tmJdAO_VAkaQUraL&ust=1727954035512000&source=images&cd=vfe&opi=89978449&ved=0CBQQjRxqFwoTCOiwrsbI74gDFQAAAAAdAAAAABAE)
 
-## Descrição
+## Descrição 💥
 O **EspacoMaker-Back** é um sistema back-end desenvolvido em Node.js que oferece suporte ao gerenciamento de um espaço maker. Ele fornece funcionalidades para controle de ferramentas, impressoras, reservas, gerenciamento de usuários e um sistema de administração. O sistema visa facilitar o uso e a organização de recursos dentro de um ambiente colaborativo, permitindo a reserva de equipamentos e a supervisão das atividades por administradores.
 
-## Funcionalidades Principais
+## Funcionalidades Principais ♻
 - **Gerenciamento de Ferramentas**: Controle de ferramentas disponíveis no espaço maker, incluindo adição, remoção e atualização de dados.
 - **Gerenciamento de Impressoras**: Suporte para adicionar, remover e gerenciar impressoras disponíveis para uso.
 - **Sistema de Reservas**: Permite que os usuários reservem equipamentos, visualizem e cancelem reservas.
 - **Gerenciamento de Usuários**: Registro e controle de usuários, permitindo a atualização de dados e a exclusão de contas.
 - **Administração**: Controle exclusivo para administradores, possibilitando a gestão dos recursos e usuários do sistema.
 
-## Estrutura do Projeto
+## O que você encontrará nesse repositório? 👁‍🗨
 
 A estrutura do projeto é organizada da seguinte forma:
 
@@ -50,7 +50,7 @@ Antes de executar o projeto, você precisará ter instalado:
 - **Node.js** versão 14 ou superior
 - **PostgreSQL** versão 12 ou superior
 
-## Instalação e Execução
+## Como instalação e executar? 🚶‍♂️🚶‍♀️
 Siga os passos abaixo para configurar e rodar o projeto localmente:
 
 1. **Clone o repositório**:
@@ -76,7 +76,7 @@ Siga os passos abaixo para configurar e rodar o projeto localmente:
 
 5. O servidor estará rodando localmente na porta padrão (ex: `http://localhost:3000`).
 
-## API Endpoints
+## API Endpoints 🔸
 Aqui estão alguns dos principais endpoints disponíveis no projeto:
 
 - **/adm**: Rotas relacionadas às funcionalidades administrativas.
