@@ -1,5 +1,5 @@
-DROP TABLE IF EXISTS reserva-ferramenta CASCADE;
-DROP TABLE IF EXISTS reservas-impressora CASCADE;
+DROP TABLE IF EXISTS reserva_ferramenta CASCADE;
+DROP TABLE IF EXISTS reserva_impressora CASCADE;
 DROP TABLE IF EXISTS impressoras CASCADE;
 DROP TABLE IF EXISTS ferramentas CASCADE;
 DROP TABLE IF EXISTS users CASCADE;
@@ -69,7 +69,7 @@ CREATE TABLE reservas_impressora (
   data_reserva DATE NOT NULL,
   status_reserva BOOLEAN NOT NULL DEFAULT FALSE, 
   FOREIGN KEY (id_user) REFERENCES users (id),
-  FOREIGN KEY (id_impressora) REFERENCES impressoras (id),
+  FOREIGN KEY (id_impressora) REFERENCES impressoras (id)
 );
 
 
