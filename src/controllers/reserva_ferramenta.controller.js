@@ -130,7 +130,7 @@ export const deleteReserva_Ferramenta = async (req, res) => {
         if (!reserva) {
             return res.status(404).send({ message: "Reserva não encontrada" });
         }
-        await reservasRepository.deleteReserva(id);
+        await reservasRepository.deleteReserva_Ferramenta(id);
         return res.status(200).send({ message: "Reserva deletada com sucesso" });
     } catch (error) {
         return res.status(500).send({ message: "Erro ao deletar reserva", error: error.message });
