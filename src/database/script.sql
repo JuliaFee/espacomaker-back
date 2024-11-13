@@ -1,4 +1,5 @@
-DROP TABLE IF EXISTS reservas CASCADE;
+DROP TABLE IF EXISTS reserva-ferramenta CASCADE;
+DROP TABLE IF EXISTS reservas-impressora CASCADE;
 DROP TABLE IF EXISTS impressoras CASCADE;
 DROP TABLE IF EXISTS ferramentas CASCADE;
 DROP TABLE IF EXISTS users CASCADE;
@@ -42,28 +43,34 @@ CREATE TABLE ferramentas (
 
 CREATE TABLE horarios (
   id SERIAL PRIMARY KEY,
-  id_impressora INT,
-  id_ferramenta INT,
+  id_ferramenta INT NOT NULL,
   hora_inicio TIME NOT NULL,
   hora_fim TIME NOT NULL,
-  FOREIGN KEY (id_impressora) REFERENCES impressoras (id),
   FOREIGN KEY (id_ferramenta) REFERENCES ferramentas (id)
+ 
 );
 
-CREATE TABLE reservas (
+CREATE TABLE reserva_ferramenta (
   id SERIAL PRIMARY KEY,
   id_user INT NOT NULL,
   id_ferramenta INT,
-  id_impressora INT,
   id_horario INT,
   data_reserva DATE NOT NULL,
   status_reserva BOOLEAN NOT NULL DEFAULT FALSE, 
   FOREIGN KEY (id_user) REFERENCES users (id),
   FOREIGN KEY (id_ferramenta) REFERENCES ferramentas (id),
-  FOREIGN KEY (id_impressora) REFERENCES impressoras (id),
   FOREIGN KEY (id_horario) REFERENCES horarios (id)
 );
 
+CREATE TABLE reservas_impressora (
+  id SERIAL PRIMARY KEY,
+  id_user INT NOT NULL,
+  id_impressora INT,
+  data_reserva DATE NOT NULL,
+  status_reserva BOOLEAN NOT NULL DEFAULT FALSE, 
+  FOREIGN KEY (id_user) REFERENCES users (id),
+  FOREIGN KEY (id_impressora) REFERENCES impressoras (id),
+);
 
 
 -- Ferramentas
