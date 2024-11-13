@@ -18,8 +18,8 @@ router.get("/", (req, res) => {
 router.use("/ferramentas", ferramentaRouter);
 router.use("/horarios", horarioRouter);
 router.use("/impressora", impressoraRouter);
-router.use("/reservas-impressora", reservasRouterImpressora);
-router.use("/reservas-ferramenta", reservasRouterFerramenta);
+router.use("/reserva-impressora", reservasRouterImpressora);
+router.use("/reserva-ferramenta", reservasRouterFerramenta);
 router.use("/users", usersRouter);
 router.use("/filamentos", filamentoRouter);
 router.use("/login", authRouter); 
