@@ -31,8 +31,17 @@ export const getFerramentaById = async (req, res) => {
 /*post*/ 
 export const addFerramenta = async (req, res) => {
     try {
-        const { nome, descricao, img, statusF = true } = req.body; 
-        const newFerramenta = { nome, descricao, img, statusF };
+        const { nome, descricao, img, statusF } = req.body; 
+        
+        // Validar e converter statusF para boolean
+        const validStatusF = statusF === "true" || statusF === true;
+
+        const newFerramenta = { 
+            nome, 
+            descricao, 
+            img, 
+            statusF: validStatusF 
+        };
         const ferramenta = await ferramentaRepository.registerFerramenta(newFerramenta);
         return res.status(201).send({ message: "Ferramenta criada com sucesso", ferramenta });
     } catch (error) {
@@ -43,21 +52,37 @@ export const addFerramenta = async (req, res) => {
 /*put*/ 
 export const updateFerramenta = async (req, res) => {
     try {
+        console.log("Recebido no update:", req.params, req.body); // Log para depuração
+
         const { id } = req.params;
-        const { nome, descricao, img, statusF = true } = req.body; 
+        const { nome, descricao, img, statusF } = req.body;
 
         const ferramentaById = await ferramentaRepository.getFerramentaById(id);
+        console.log("Ferramenta encontrada:", ferramentaById); // Log para depuração
+
         if (!ferramentaById) {
             return res.status(404).send({ message: "Ferramenta não encontrada" });
         }
 
-        const updatedFerramenta = await ferramentaRepository.updateFerramenta(id, nome, descricao, img, statusF);
+        // Verificar se o statusF foi enviado, se não, manter o statusF atual da ferramenta
+        const validStatusF = (statusF === undefined || statusF === null) ? ferramentaById.statusF : statusF === 'true' || statusF === true;
+
+        console.log("Status final:", validStatusF); // Log para depuração
+
+        const updatedFerramenta = await ferramentaRepository.updateFerramenta(
+            id,
+            nome || ferramentaById.nome,
+            descricao || ferramentaById.descricao,
+            img || ferramentaById.img,
+            validStatusF // Garantir que statusF nunca seja null
+        );
+
         return res.status(200).send({ message: "Ferramenta atualizada com sucesso", updatedFerramenta });
     } catch (error) {
+        console.error("Erro ao atualizar ferramenta:", error.message); // Log para depuração
         return res.status(500).send({ message: "Erro ao atualizar ferramenta", error: error.message });
     }
 }
-
 
 /*delete*/ 
 export const deleteFerramenta = async (req, res) => {
