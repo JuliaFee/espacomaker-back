@@ -30,10 +30,10 @@ class horarioList {
     // Registra um novo horário
     async registerHorario(horario) {
         try {
-            const {  id_ferramenta, hora_inicio, hora_fim } = horario;
+            const { hora_inicio, hora_fim } = horario;  
             await this.db.none(
-                "INSERT INTO horarios ( hora_inicio, hora_fim) VALUES ($1, $2)",
-                [ id_ferramenta, hora_inicio, hora_fim]
+                "INSERT INTO horarios (hora_inicio, hora_fim) VALUES ($1, $2)", 
+                [hora_inicio, hora_fim]  
             );
             return horario;
         } catch (error) {
@@ -41,13 +41,15 @@ class horarioList {
             throw new Error("Falha ao registrar horário");
         }
     }
+    
+    
 
     // Atualiza um horário existente
     async updateHorario(id, hora_inicio, hora_fim) {
         try {
             const horario = await this.getHorarioById(id);
             if (!horario) {
-                return null; // Retorna null se o horário não for encontrado
+                return null; 
             }
 
             const updatedHorario = await this.db.one(
