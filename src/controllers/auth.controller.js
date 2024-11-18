@@ -19,7 +19,7 @@ export const login = async (req, res) => {
   try {
     const { email, senha } = req.body;
 
-    const user = await listaUser .getUserByEmail(email);
+    const user = await listaUser.loginFunction(email, senha);
     if (!user) {
       return res.status(404).json({ message: "Usuário não encontrado" });
     }

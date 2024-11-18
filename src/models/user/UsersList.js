@@ -27,6 +27,16 @@ export default class UserList {
     }
   }
 
+  async loginFunction (email, senha) {
+    try {
+      return await this.db.oneOrNone("SELECT * FROM users WHERE email = $1 AND senha = $2", [email, senha]);
+    } catch (error) {
+      console.error(`Login error:`, error.message);
+      throw error;
+    }
+
+  }
+
   async addUser(user) {
     try {
       await this.db.none(
