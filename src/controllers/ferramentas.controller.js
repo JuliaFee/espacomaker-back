@@ -1,7 +1,7 @@
 import FerramentaList from "../models/ferramentas/FerramentasList.js"; 
 const ferramentaRepository = new FerramentaList();
 
-/*get*/ 
+/* GET: Buscar todas as ferramentas */
 export const getFerramentas = async (req, res) => {
     try {
         const ferramentas = await ferramentaRepository.getFerramentas();
@@ -14,7 +14,7 @@ export const getFerramentas = async (req, res) => {
     }
 }
 
-/*get id*/ 
+/* GET: Buscar ferramenta por ID */
 export const getFerramentaById = async (req, res) => {
     try {
         const { id } = req.params;
@@ -28,19 +28,17 @@ export const getFerramentaById = async (req, res) => {
     }
 }
 
-/*post*/ 
+/* POST: Adicionar nova ferramenta */
 export const addFerramenta = async (req, res) => {
     try {
         const { nome, descricao, img, statusF } = req.body; 
         
-        // Validar e converter statusF para boolean
-        const validStatusF = statusF === "true" || statusF === true;
-
+        // Validar e garantir que statusF seja booleano
         const newFerramenta = { 
             nome, 
             descricao, 
             img, 
-            statusF: validStatusF 
+            statusF: statusF === "true" || statusF === true  // Garantir que seja booleano
         };
         const ferramenta = await ferramentaRepository.registerFerramenta(newFerramenta);
         return res.status(201).send({ message: "Ferramenta criada com sucesso", ferramenta });
@@ -49,7 +47,7 @@ export const addFerramenta = async (req, res) => {
     }
 }
 
-/*put*/ 
+/* PUT: Atualizar ferramenta existente */
 export const updateFerramenta = async (req, res) => {
     try {
         console.log("Recebido no update:", req.params, req.body); // Log para depuração
@@ -64,17 +62,13 @@ export const updateFerramenta = async (req, res) => {
             return res.status(404).send({ message: "Ferramenta não encontrada" });
         }
 
-        // Verificar se o statusF foi enviado, se não, manter o statusF atual da ferramenta
-        const validStatusF = (statusF === undefined || statusF === null) ? ferramentaById.statusF : statusF === 'true' || statusF === true;
-
-        console.log("Status final:", validStatusF); // Log para depuração
-
+        // Se o statusF não for fornecido, manter o statusF atual da ferramenta
         const updatedFerramenta = await ferramentaRepository.updateFerramenta(
             id,
             nome || ferramentaById.nome,
             descricao || ferramentaById.descricao,
             img || ferramentaById.img,
-            validStatusF // Garantir que statusF nunca seja null
+            statusF === undefined || statusF === null ? ferramentaById.statusF : statusF === "true" || statusF === true // Se não enviado, mantêm o atual
         );
 
         return res.status(200).send({ message: "Ferramenta atualizada com sucesso", updatedFerramenta });
@@ -84,7 +78,7 @@ export const updateFerramenta = async (req, res) => {
     }
 }
 
-/*delete*/ 
+/* DELETE: Deletar ferramenta */
 export const deleteFerramenta = async (req, res) => {
     try {
         const { id } = req.params;
