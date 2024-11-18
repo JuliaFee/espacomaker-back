@@ -31,15 +31,18 @@ export const getFerramentaById = async (req, res) => {
 /* POST: Adicionar nova ferramenta */
 export const addFerramenta = async (req, res) => {
     try {
-        const { nome, descricao, img, statusF } = req.body; 
-        
+        const { nome, descricao, img, statusF } = req.body;
+
         // Validar e garantir que statusF seja booleano
+        const validStatusF = statusF === "true" || statusF === true;
+
         const newFerramenta = { 
             nome, 
             descricao, 
             img, 
-            statusF: statusF === "true" || statusF === true  // Garantir que seja booleano
+            statusF: validStatusF  // Garantir que statusF seja booleano
         };
+
         const ferramenta = await ferramentaRepository.registerFerramenta(newFerramenta);
         return res.status(201).send({ message: "Ferramenta criada com sucesso", ferramenta });
     } catch (error) {
@@ -62,13 +65,15 @@ export const updateFerramenta = async (req, res) => {
             return res.status(404).send({ message: "Ferramenta não encontrada" });
         }
 
-        // Se o statusF não for fornecido, manter o statusF atual da ferramenta
+        // Verificar se statusF foi enviado. Se não, manter o valor atual.
+        const validStatusF = (statusF === undefined || statusF === null) ? ferramentaById.statusF : (statusF === "true" || statusF === true);
+
         const updatedFerramenta = await ferramentaRepository.updateFerramenta(
             id,
             nome || ferramentaById.nome,
             descricao || ferramentaById.descricao,
             img || ferramentaById.img,
-            statusF === undefined || statusF === null ? ferramentaById.statusF : statusF === "true" || statusF === true // Se não enviado, mantêm o atual
+            validStatusF // Garantir que statusF nunca seja null
         );
 
         return res.status(200).send({ message: "Ferramenta atualizada com sucesso", updatedFerramenta });
