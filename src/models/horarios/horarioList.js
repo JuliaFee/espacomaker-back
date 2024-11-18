@@ -2,7 +2,7 @@ import db from "../../database/index.js";
 
 class horarioList {
     constructor() {
-        this.db = db; // Banco de dados
+        this.db = db; 
     }
 
     // Obtém todos os horários

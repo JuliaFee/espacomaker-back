@@ -9,11 +9,11 @@ import {
   deleteHorario,
 } from '../controllers/horario.controller.js';
 
-router.get('/horarios', getHorarios);
-router.get('/horarios/:id', getHorarioById);
+router.get('/', getHorarios);
+router.get('/:id', getHorarioById);
 router.post('/', addHorario);
-router.put('/horarios/:id', updateHorario);
-router.delete('/horarios/:id', deleteHorario);
+router.put('/:id', updateHorario);
+router.delete('/:id', deleteHorario);
 
 
 export default router;
