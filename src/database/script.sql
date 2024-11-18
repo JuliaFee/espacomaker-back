@@ -158,3 +158,42 @@ INSERT INTO filamentos (id_impressora, tipo, cor, quantidade, valor_por_kg) VALU
 INSERT INTO filamentos (id_impressora, tipo, cor, quantidade, valor_por_kg) VALUES (3, 'PLA', 'Verde', 20.0, 30.0);
 INSERT INTO filamentos (id_impressora, tipo, cor, quantidade, valor_por_kg) VALUES (3, 'ABS', 'Vermelho', 5.0, 55.0);
 
+--Horários
+INSERT INTO horarios (hora_inicio, hora_fim) VALUES ('08:00', '08:30');
+INSERT INTO horarios (hora_inicio, hora_fim) VALUES ('08:30', '09:00');
+INSERT INTO horarios (hora_inicio, hora_fim) VALUES ('09:00', '09:30');
+INSERT INTO horarios (hora_inicio, hora_fim) VALUES ('09:30', '10:00');
+INSERT INTO horarios (hora_inicio, hora_fim) VALUES ('10:00', '10:30');
+INSERT INTO horarios (hora_inicio, hora_fim) VALUES ('10:30', '11:00');
+INSERT INTO horarios (hora_inicio, hora_fim) VALUES ('11:00', '11:30');
+INSERT INTO horarios (hora_inicio, hora_fim) VALUES ('11:30', '12:00');
+INSERT INTO horarios (hora_inicio, hora_fim) VALUES ('12:00', '12:30');
+INSERT INTO horarios (hora_inicio, hora_fim) VALUES ('12:30', '13:00');
+INSERT INTO horarios (hora_inicio, hora_fim) VALUES ('13:00', '13:30');
+INSERT INTO horarios (hora_inicio, hora_fim) VALUES ('14:30', '15:00');
+INSERT INTO horarios (hora_inicio, hora_fim) VALUES ('15:00', '15:30');
+INSERT INTO horarios (hora_inicio, hora_fim) VALUES ('15:30', '16:00');
+INSERT INTO horarios (hora_inicio, hora_fim) VALUES ('16:00', '16:30');
+INSERT INTO horarios (hora_inicio, hora_fim) VALUES ('16:30', '17:00');
+INSERT INTO horarios (hora_inicio, hora_fim) VALUES ('08:00', '09:00');
+INSERT INTO horarios (hora_inicio, hora_fim) VALUES ('09:00', '10:00');
+INSERT INTO horarios (hora_inicio, hora_fim) VALUES ('10:00', '11:00');
+INSERT INTO horarios (hora_inicio, hora_fim) VALUES ('11:00', '12:00');
+INSERT INTO horarios (hora_inicio, hora_fim) VALUES ('12:00', '13:00');
+INSERT INTO horarios (hora_inicio, hora_fim) VALUES ('13:00', '14:00');
+INSERT INTO horarios (hora_inicio, hora_fim) VALUES ('14:30', '15:30');
+INSERT INTO horarios (hora_inicio, hora_fim) VALUES ('15:30', '16:30');
+INSERT INTO horarios (hora_inicio, hora_fim) VALUES ('16:00', '17:00');
+INSERT INTO horarios (hora_inicio, hora_fim) VALUES ('08:00', '09:30');
+INSERT INTO horarios (hora_inicio, hora_fim) VALUES ('09:30', '11:00');
+INSERT INTO horarios (hora_inicio, hora_fim) VALUES ('11:00', '12:30');
+INSERT INTO horarios (hora_inicio, hora_fim) VALUES ('12:30', '14:00');
+INSERT INTO horarios (hora_inicio, hora_fim) VALUES ('14:30', '16:00');
+INSERT INTO horarios (hora_inicio, hora_fim) VALUES ('15:00', '16:30');
+INSERT INTO horarios (hora_inicio, hora_fim) VALUES ('15:30', '17:00');
+INSERT INTO horarios (hora_inicio, hora_fim) VALUES ('08:00', '10:00');
+INSERT INTO horarios (hora_inicio, hora_fim) VALUES ('10:00', '12:00');
+INSERT INTO horarios (hora_inicio, hora_fim) VALUES ('12:00', '14:00');
+INSERT INTO horarios (hora_inicio, hora_fim) VALUES ('14:30', '16:30');
+
+
