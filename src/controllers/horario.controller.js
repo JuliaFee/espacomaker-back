@@ -3,16 +3,18 @@ const horarioRepository = new horarioList();
 
 export const getHorarios = async (req, res) => {
     try {
-        const horarios = await horarioRepository.getHorarios();
+        const horarios = await horarioRepository.getHorarios();  
         if (!horarios || horarios.length === 0) {
-            return res.status(404).send({ message: "Não há horários disponíveis" });
+            return res.status(404).json({ message: "Não há horários disponíveis" });
         }
-        return res.status(200).send({ totalHorarios: horarios.length, horarios });
+        return res.status(200).json({ totalHorarios: horarios.length, horarios });
     } catch (error) {
         console.error("Erro ao buscar horários:", error);
-        return res.status(500).send({ message: "Erro ao buscar horários", error: error.message });
+        return res.status(500).json({ message: "Erro ao buscar horários", error: error.message });
     }
 }
+
+
 
 export const getHorarioById = async (req, res) => {
     try {
@@ -27,18 +29,18 @@ export const getHorarioById = async (req, res) => {
         return res.status(500).send({ message: "Erro ao buscar horário", error: error.message });
     }
 }
-
 export const addHorario = async (req, res) => {
     try {
-        const { hora_inicio, hora_fim } = req.body;
-        const newHorario = { hora_inicio, hora_fim };
-        const horario = await horarioRepository.registerHorario(newHorario);
+        const { hora_inicio, hora_fim } = req.body;  
+        const newHorario = { hora_inicio, hora_fim };  
+        const horario = await horarioRepository.registerHorario(newHorario);  
         return res.status(201).send({ message: "Horário criado com sucesso", horario });
     } catch (error) {
         console.error("Erro ao criar horário:", error);
         return res.status(500).send({ message: "Erro ao criar horário", error: error.message });
     }
 }
+
 
 export const updateHorario = async (req, res) => {
     try {
