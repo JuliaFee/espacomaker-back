@@ -17,28 +17,31 @@ O **EspacoMaker-Back** é um sistema back-end desenvolvido em Node.js que oferec
 A estrutura do projeto é organizada da seguinte forma:
 
 ### **Controllers**
-Os controladores são responsáveis pela lógica de negócios do sistema, manipulando as requisições e interações com o banco de dados:
-- `adm.controller.js`: Controlador das funções administrativas.
-- `ferramentas.controller.js`: Manipula o gerenciamento das ferramentas.
-- `impressora.controller.js`: Controla as operações relacionadas às impressoras.
-- `reservas.controller.js`: Lida com as reservas de equipamentos.
-- `users.controller.js`: Responsável pelo controle de usuários.
+Os controladores são responsáveis pela lógica de CRUD (Create, Read, Update, Delete) do sistema, manipulando as requisições e interações com o banco de dados:
+- `ferramentas.controller.js`
+- `filamento.controller.js`
+- `horario.controller.js`
+- `impressora.controller.js` 
+- `reserva_ferramenta`
+- `reserva_impressora`
 
 ### **Models**
-Os modelos representam as entidades do banco de dados. Aqui estão os principais modelos:
-- `Adm.js`: Modelo para administrar dados dos administradores.
-- `Ferramentas.js`: Modelo que define as ferramentas disponíveis.
-- `Impressora.js`: Modelo das impressoras cadastradas no sistema.
-- `Reservas.js`: Modelo das reservas feitas pelos usuários.
-- `Users.js`: Modelo para usuários comuns cadastrados no sistema.
+Os modelos representam as entidades do banco de dados. Realizando requizições SQL conversando diretamente no Banco de Dados.
+- `ferramentas`
+- `impressora`
+- `horarios`
+- `filamento`
+- `reserva-ferramenta`
+- `reserva-impressora`
 
 ### **Routes**
 As rotas definem os endpoints do sistema, permitindo interações com os controladores:
-- `adm.routes.js`: Rotas para as funções administrativas.
-- `ferramentas.routes.js`: Rotas para operações com ferramentas.
-- `impressora.routes.js`: Rotas para operações de impressoras.
-- `reservas.routes.js`: Rotas para reservas de equipamentos.
-- `users.routes.js`: Rotas para controle de usuários.
+- `ferramentas.routes.js`
+- `impressora.routes.js`
+- `horario.routes.js`
+- `filamento.routes.js`
+- `reserva_ferramenta.routes.js`
+- `reserva_impressora.routes.js`
 
 ### **Database**
 A pasta de banco de dados contém os scripts e configurações para interação com o PostgreSQL:
@@ -79,11 +82,12 @@ Siga os passos abaixo para configurar e rodar o projeto localmente:
 ## API Endpoints 🔸
 Aqui estão alguns dos principais endpoints disponíveis no projeto:
 
-- **/adm**: Rotas relacionadas às funcionalidades administrativas.
 - **/ferramentas**: Rotas para gestão de ferramentas.
+- **/horarios**: Rotas para gestão de horarios.
 - **/impressora**: Rotas para o controle das impressoras.
-- **/reservas**: Rotas para gerenciamento das reservas.
-- **/users**: Rotas para controle de usuários.
+- **/reserva_impressora**: Rotas para gerenciamento das reservas de impressora 3d.
+- **/reserva_ferramenta**: Rotas para gerenciamento das reservas de ferramentas.
+- **/filamento**: Rotas para controle de filamentos.
 
 ## Tecnologias Utilizadas
 - **Node.js**: Plataforma de desenvolvimento back-end.
